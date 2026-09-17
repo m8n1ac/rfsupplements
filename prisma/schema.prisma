@@ -1,0 +1,440 @@
+// RF Supplements Ops CRM — data model (spec §8).
+// WooCommerce is the system of record for store data; this database is the
+// system of record only for CRM data: notes, tasks, tags, inquiries, assignments.
+//
+// Money is DECIMAL(12,2) everywhere — never a float (spec §5).
+// All timestamps are stored in UTC. Reporting converts to STORE_TZ at query time.
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "mysql"
+}
+
+// ---------------------------------------------------------------- enums
+
+enum Role {
+  ADMIN
+  STAFF
+}
+
+enum ContactSource {
+  WOO_CUSTOMER
+  WOO_GUEST
+  FORM
+  MANUAL
+}
+
+enum InquiryStatus {
+  NEW
+  OPEN
+  WAITING
+  WON
+  CLOSED
+}
+
+enum NoteVisibility {
+  INTERNAL
+  WOO_PRIVATE
+  WOO_CUSTOMER
+}
+
+enum ActivityType {
+  ORDER_PLACED
+  ORDER_STATUS
+  REFUND
+  INQUIRY
+  NOTE
+  TASK_DONE
+  FIELD_EDIT
+}
+
+enum SyncMode {
+  INCREMENTAL
+  FULL
+}
+
+// ---------------------------------------------------------------- auth
+
+model User {
+  id           String    @id @default(cuid())
+  email        String    @unique
+  name         String
+  // Null until the user accepts an invite and sets a password.
+  passwordHash String?   @db.VarChar(255)
+  role         Role      @default(STAFF)
+  // Encrypted with APP_ENCRYPTION_KEY; null until TOTP enrollment completes.
+  totpSecret   String?   @db.Text
+  totpEnrolledAt DateTime?
+  active       Boolean   @default(true)
+  failedLogins Int       @default(0)
+  lockedUntil  DateTime?
+  lastLoginAt  DateTime?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  recoveryCodes  RecoveryCode[]
+  invites        Invite[]       @relation("InviteUser")
+  invitesCreated Invite[]       @relation("InviteCreatedBy")
+  ownedContacts  Contact[]      @relation("ContactOwner")
+  assignedInquiries Inquiry[]   @relation("InquiryAssignee")
+  notes          Note[]
+  tasksAssigned  Task[]         @relation("TaskAssignee")
+  tasksCreated   Task[]         @relation("TaskCreatedBy")
+  auditLogs      AuditLog[]
+
+  @@index([email])
+}
+
+// Eight single-use TOTP recovery codes per user, stored hashed (spec §9).
+model RecoveryCode {
+  id       String    @id @default(cuid())
+  userId   String
+  codeHash String    @db.VarChar(255)
+  usedAt   DateTime?
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+// Single-use invite link, expires 24h after creation (spec §9).
+model Invite {
+  id          String    @id @default(cuid())
+  userId      String
+  tokenHash   String    @unique @db.VarChar(255)
+  expiresAt   DateTime
+  acceptedAt  DateTime?
+  createdById String
+  createdAt   DateTime  @default(now())
+
+  user      User @relation("InviteUser", fields: [userId], references: [id], onDelete: Cascade)
+  createdBy User @relation("InviteCreatedBy", fields: [createdById], references: [id])
+
+  @@index([userId])
+  @@index([expiresAt])
+}
+
+// ---------------------------------------------------------------- contacts
+
+model Contact {
+  id            String        @id @default(cuid())
+  // Null for guest buyers and form-only contacts.
+  wooCustomerId Int?          @unique
+  email         String        @unique
+  firstName     String?
+  lastName      String?
+  phone         String?
+  company       String?
+  billing       Json?
+  shipping      Json?
+  source        ContactSource
+  ownerId       String?
+
+  ordersCount   Int      @default(0)
+  lifetimeValue Decimal  @default(0) @db.Decimal(12, 2)
+  avgOrderValue Decimal  @default(0) @db.Decimal(12, 2)
+  firstOrderAt  DateTime?
+  lastOrderAt   DateTime?
+
+  // Woo-sourced bookkeeping (spec §8). Null wooCustomerId => locally owned.
+  modifiedAtWoo DateTime?
+  deletedInWoo  Boolean   @default(false)
+  syncedAt      DateTime?
+  raw           Json?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  owner      User?        @relation("ContactOwner", fields: [ownerId], references: [id], onDelete: SetNull)
+  tags       ContactTag[]
+  orders     Order[]
+  inquiries  Inquiry[]
+  notes      Note[]
+  tasks      Task[]
+  activities Activity[]
+
+  @@index([lastOrderAt])
+  @@index([ownerId])
+  @@index([source])
+}
+
+model Tag {
+  id        String       @id @default(cuid())
+  name      String       @unique
+  createdAt DateTime     @default(now())
+  contacts  ContactTag[]
+}
+
+model ContactTag {
+  contactId String
+  tagId     String
+  createdAt DateTime @default(now())
+
+  contact Contact @relation(fields: [contactId], references: [id], onDelete: Cascade)
+  tag     Tag     @relation(fields: [tagId], references: [id], onDelete: Cascade)
+
+  @@id([contactId, tagId])
+  @@index([tagId])
+}
+
+// ---------------------------------------------------------------- catalog
+
+model Product {
+  id           String   @id @default(cuid())
+  wooId        Int      @unique
+  // Set on variations; null on simple and variable parents.
+  parentWooId  Int?
+  sku          String?
+  name         String   @db.Text
+  type         String
+  status       String
+  price        Decimal? @db.Decimal(12, 2)
+  regularPrice Decimal? @db.Decimal(12, 2)
+  salePrice    Decimal? @db.Decimal(12, 2)
+  stockStatus  String?
+  stockQuantity Int?
+  categories   Json?
+
+  modifiedAtWoo DateTime?
+  deletedInWoo  Boolean   @default(false)
+  syncedAt      DateTime?
+  raw           Json?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([parentWooId])
+  @@index([sku])
+  @@index([status])
+}
+
+// ---------------------------------------------------------------- orders
+
+model Order {
+  id                 String   @id @default(cuid())
+  wooId              Int      @unique
+  number             String
+  contactId          String?
+  status             String
+  currency           String   @db.VarChar(8)
+  total              Decimal  @db.Decimal(12, 2)
+  subtotal           Decimal  @db.Decimal(12, 2)
+  discountTotal      Decimal  @db.Decimal(12, 2)
+  shippingTotal      Decimal  @db.Decimal(12, 2)
+  taxTotal           Decimal  @db.Decimal(12, 2)
+  refundTotal        Decimal  @default(0) @db.Decimal(12, 2)
+  paymentMethod      String?
+  paymentMethodTitle String?
+  couponCodes        Json?
+  billing            Json?
+  shipping           Json?
+  customerNote       String?  @db.Text
+
+  createdAtWoo   DateTime
+  // The reporting basis: WooCommerce Analytics groups by date_paid (Gate 0, C1).
+  paidAtWoo      DateTime?
+  completedAtWoo DateTime?
+
+  modifiedAtWoo DateTime?
+  deletedInWoo  Boolean   @default(false)
+  syncedAt      DateTime?
+  raw           Json?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  contact    Contact?    @relation(fields: [contactId], references: [id], onDelete: SetNull)
+  items      OrderItem[]
+  refunds    Refund[]
+  notes      Note[]
+  tasks      Task[]
+
+  @@index([createdAtWoo])
+  @@index([status])
+  @@index([contactId])
+  // Not in spec §8's index list, but every revenue query groups by this column
+  // because of the C1 date_paid decision.
+  @@index([paidAtWoo])
+}
+
+model OrderItem {
+  id             String  @id @default(cuid())
+  orderId        String
+  wooLineItemId  Int
+  productWooId   Int?
+  variationWooId Int?
+  sku            String?
+  name           String  @db.Text
+  quantity       Int
+  subtotal       Decimal @db.Decimal(12, 2)
+  total          Decimal @db.Decimal(12, 2)
+
+  order Order @relation(fields: [orderId], references: [id], onDelete: Cascade)
+
+  @@unique([orderId, wooLineItemId])
+  @@index([productWooId])
+  @@index([sku])
+}
+
+model Refund {
+  id      String  @id @default(cuid())
+  wooId   Int     @unique
+  orderId String
+  amount  Decimal @db.Decimal(12, 2)
+  reason  String? @db.Text
+
+  createdAtWoo DateTime
+
+  modifiedAtWoo DateTime?
+  deletedInWoo  Boolean   @default(false)
+  syncedAt      DateTime?
+  raw           Json?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  order Order @relation(fields: [orderId], references: [id], onDelete: Cascade)
+
+  @@index([orderId])
+  @@index([createdAtWoo])
+}
+
+// ---------------------------------------------------------------- CRM
+
+model Inquiry {
+  id         String        @id @default(cuid())
+  // "<plugin>:<inboxId>", e.g. "cf7:1234" (Gate 0, B1 — Contact Form 7).
+  externalId String        @unique
+  formName   String
+  contactId  String?
+  message    String?       @db.Text
+  payload    Json
+  status     InquiryStatus @default(NEW)
+  assigneeId String?
+
+  submittedAt     DateTime
+  firstResponseAt DateTime?
+  closedAt        DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  contact  Contact? @relation(fields: [contactId], references: [id], onDelete: SetNull)
+  assignee User?    @relation("InquiryAssignee", fields: [assigneeId], references: [id], onDelete: SetNull)
+  notes    Note[]
+  tasks    Task[]
+
+  @@index([status, submittedAt])
+  @@index([contactId])
+  @@index([assigneeId])
+}
+
+model Note {
+  id         String         @id @default(cuid())
+  contactId  String?
+  orderId    String?
+  inquiryId  String?
+  body       String         @db.Text
+  authorId   String
+  visibility NoteVisibility @default(INTERNAL)
+  // Set once a WOO_PRIVATE or WOO_CUSTOMER note has been written back to Woo (§6.2).
+  wooNoteId  Int?
+  createdAt  DateTime       @default(now())
+
+  contact Contact? @relation(fields: [contactId], references: [id], onDelete: Cascade)
+  order   Order?   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  inquiry Inquiry? @relation(fields: [inquiryId], references: [id], onDelete: Cascade)
+  author  User     @relation(fields: [authorId], references: [id])
+
+  @@index([contactId])
+  @@index([orderId])
+  @@index([inquiryId])
+}
+
+model Task {
+  id          String    @id @default(cuid())
+  title       String    @db.Text
+  dueAt       DateTime?
+  contactId   String?
+  orderId     String?
+  inquiryId   String?
+  assigneeId  String
+  createdById String
+  doneAt      DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  contact   Contact? @relation(fields: [contactId], references: [id], onDelete: Cascade)
+  order     Order?   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  inquiry   Inquiry? @relation(fields: [inquiryId], references: [id], onDelete: Cascade)
+  assignee  User     @relation("TaskAssignee", fields: [assigneeId], references: [id])
+  createdBy User     @relation("TaskCreatedBy", fields: [createdById], references: [id])
+
+  @@index([assigneeId, doneAt, dueAt])
+  @@index([contactId])
+  @@index([orderId])
+  @@index([inquiryId])
+}
+
+// The contact timeline. Written by the sync and by action functions (spec §8).
+model Activity {
+  id         String       @id @default(cuid())
+  contactId  String
+  type       ActivityType
+  refId      String?
+  summary    String       @db.Text
+  occurredAt DateTime
+  createdAt  DateTime     @default(now())
+
+  contact Contact @relation(fields: [contactId], references: [id], onDelete: Cascade)
+
+  @@index([contactId, occurredAt])
+  @@index([type])
+}
+
+// ---------------------------------------------------------------- sync
+
+model SyncCursor {
+  resource            String    @id
+  lastModifiedGmt     DateTime?
+  consecutiveFailures Int       @default(0)
+  lastSuccessAt       DateTime?
+  updatedAt           DateTime  @updatedAt
+}
+
+model SyncRun {
+  id            String    @id @default(cuid())
+  resource      String
+  mode          SyncMode
+  startedAt     DateTime  @default(now())
+  finishedAt    DateTime?
+  fetched       Int       @default(0)
+  upserted      Int       @default(0)
+  markedDeleted Int       @default(0)
+  error         String?   @db.Text
+
+  @@index([resource, startedAt])
+  @@index([startedAt])
+}
+
+model AuditLog {
+  id       String   @id @default(cuid())
+  userId   String?
+  action   String
+  entity   String
+  entityId String?
+  before   Json?
+  after    Json?
+  at       DateTime @default(now())
+
+  user User? @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  @@index([userId])
+  @@index([entity, entityId])
+  @@index([at])
+}
