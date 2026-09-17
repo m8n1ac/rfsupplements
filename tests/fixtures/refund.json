@@ -1,41 +1,11 @@
 {
-  "amount": "46.15",
+  "id": 3730,
   "date_created": "2026-09-17T01:05:09",
   "date_created_gmt": "2026-09-17T01:05:09",
-  "fee_lines": [],
-  "id": 3730,
-  "line_items": [
-    {
-      "global_unique_id": "",
-      "id": 2978,
-      "image": {
-        "id": 3544,
-        "src": "https://rfsupplements.com/wp-content/uploads/2026/02/Wild-Lychee.png"
-      },
-      "meta_data": [
-        {
-          "display_key": "_refunded_item_id",
-          "display_value": "2974",
-          "id": 26151,
-          "key": "_refunded_item_id",
-          "value": "2974"
-        }
-      ],
-      "name": "Primal Pre-Workout 2.0 - Lychee",
-      "parent_name": "Primal Pre-Workout 2.0",
-      "price": 39.99,
-      "product_id": 1687,
-      "quantity": -1,
-      "sku": "PRIMAL-PRE-WORKOUT-2-0-LYCHEE",
-      "subtotal": "-39.99",
-      "subtotal_tax": "0.00",
-      "tax_class": "",
-      "taxes": [],
-      "total": "-39.99",
-      "total_tax": "0.00",
-      "variation_id": 1694
-    }
-  ],
+  "amount": "46.15",
+  "reason": "",
+  "refunded_by": 53,
+  "refunded_payment": true,
   "meta_data": [
     {
       "id": 16861,
@@ -47,49 +17,102 @@
       "key": "_wc_shipstation_refund_args",
       "value": {
         "amount": "46.15",
+        "reason": "",
+        "order_id": 3728,
+        "refund_id": 0,
         "line_items": {
           "2974": {
             "qty": "1",
-            "refund_tax": [],
-            "refund_total": "39.99"
+            "refund_total": "39.99",
+            "refund_tax": []
           },
           "2975": {
             "qty": 0,
-            "refund_tax": [],
-            "refund_total": "6.16"
+            "refund_total": "6.16",
+            "refund_tax": []
           }
         },
-        "order_id": 3728,
-        "reason": "",
-        "refund_id": 0,
         "refund_payment": true,
         "restock_items": true
       }
     }
   ],
-  "reason": "",
-  "refunded_by": 53,
-  "refunded_payment": true,
+  "line_items": [
+    {
+      "id": 2978,
+      "name": "Primal Pre-Workout 2.0 - Lychee",
+      "product_id": 1687,
+      "variation_id": 1694,
+      "quantity": -1,
+      "tax_class": "",
+      "subtotal": "-39.99",
+      "subtotal_tax": "0.00",
+      "total": "-39.99",
+      "total_tax": "0.00",
+      "taxes": [],
+      "meta_data": [
+        {
+          "id": 26151,
+          "key": "_refunded_item_id",
+          "value": "2974",
+          "display_key": "_refunded_item_id",
+          "display_value": "2974"
+        }
+      ],
+      "sku": "PRIMAL-PRE-WORKOUT-2-0-LYCHEE",
+      "global_unique_id": "",
+      "price": 39.99,
+      "image": {
+        "id": 3544,
+        "src": "https://rfsupplements.com/wp-content/uploads/2026/02/Wild-Lychee.png"
+      },
+      "parent_name": "Primal Pre-Workout 2.0"
+    }
+  ],
   "shipping_lines": [
     {
       "id": 2979,
+      "method_title": "Ground Saver",
+      "method_id": "wc-shippo-shipping",
       "instance_id": "0",
+      "total": "-6.16",
+      "total_tax": "0.00",
+      "taxes": [],
+      "tax_status": "taxable",
       "meta_data": [
         {
-          "display_key": "_refunded_item_id",
-          "display_value": "2975",
           "id": 26157,
           "key": "_refunded_item_id",
-          "value": "2975"
+          "value": "2975",
+          "display_key": "_refunded_item_id",
+          "display_value": "2975"
         }
-      ],
-      "method_id": "wc-shippo-shipping",
-      "method_title": "Ground Saver",
-      "tax_status": "taxable",
-      "taxes": [],
-      "total": "-6.16",
-      "total_tax": "0.00"
+      ]
     }
   ],
-  "tax_lines": []
+  "tax_lines": [],
+  "fee_lines": [],
+  "_links": {
+    "self": [
+      {
+        "href": "https://rfsupplements.com/wp-json/wc/v3/orders/3728/refunds/3730",
+        "targetHints": {
+          "allow": [
+            "GET",
+            "DELETE"
+          ]
+        }
+      }
+    ],
+    "collection": [
+      {
+        "href": "https://rfsupplements.com/wp-json/wc/v3/orders/3728/refunds"
+      }
+    ],
+    "up": [
+      {
+        "href": "https://rfsupplements.com/wp-json/wc/v3/orders/3728"
+      }
+    ]
+  }
 }

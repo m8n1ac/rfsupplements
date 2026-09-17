@@ -16,7 +16,9 @@
     "test": "vitest run",
     "user:invite": "tsx scripts/user-invite.ts",
     "test:e2e": "playwright test",
-    "sync": "tsx scripts/sync.ts"
+    "sync": "tsx scripts/sync.ts",
+    "fixtures:capture": "tsx scripts/capture-fixtures.ts",
+    "verify:orders": "tsx scripts/verify-orders.ts"
   },
   "dependencies": {
     "@node-rs/argon2": "^2.2.1",

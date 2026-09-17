@@ -14,7 +14,14 @@
  *
  * Form plugin: Contact Form 7. The spec was written against Elementor Pro Forms,
  * but Phase 0 found Elementor Pro is not installed and all five live forms are
- * CF7. The hook is `wpcf7_mail_sent`, CF7's successful-submission action.
+ * CF7.
+ *
+ * The hook is `wpcf7_submit`, filtered to the two statuses that mean "a real
+ * person submitted a valid form": mail_sent and mail_failed. `wpcf7_mail_sent`
+ * would have been the obvious choice, but it fires only when the SMTP send
+ * succeeds — so an outage at the mail relay would silently drop inquiries from
+ * the CRM as well as from the inbox. Capture is deliberately independent of
+ * email delivery. Spam and validation failures are still excluded.
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -32,7 +39,7 @@ final class RFS_CRM_Bridge {
 	}
 
 	public static function boot() {
-		add_action( 'wpcf7_mail_sent', array( __CLASS__, 'capture_cf7' ), 10, 1 );
+		add_action( 'wpcf7_submit', array( __CLASS__, 'capture_cf7' ), 10, 2 );
 		add_action( 'rest_api_init', array( __CLASS__, 'register_routes' ) );
 
 		// The table is created on demand in the contexts that can afford a
@@ -49,7 +56,11 @@ final class RFS_CRM_Bridge {
 
 		$table = self::table();
 
-		if ( $wpdb->get_var( $wpdb->prepare( 'SHOW TABLES LIKE %s', $table ) ) === $table ) {
+		// dbDelta is idempotent and adds missing columns, so the guard checks for
+		// the newest column rather than merely the table. It runs only in admin,
+		// REST and CLI contexts — never on the front-end submission path.
+		if ( $wpdb->get_var( $wpdb->prepare( 'SHOW TABLES LIKE %s', $table ) ) === $table
+			&& $wpdb->get_var( "SHOW COLUMNS FROM {$table} LIKE 'mail_status'" ) ) {
 			return;
 		}
 
@@ -68,6 +79,7 @@ final class RFS_CRM_Bridge {
 				fields LONGTEXT NOT NULL,
 				page_url TEXT NULL,
 				ip_hash CHAR(64) NULL,
+				mail_status VARCHAR(20) NOT NULL DEFAULT 'mail_sent',
 				PRIMARY KEY (id),
 				KEY modified_at_gmt (modified_at_gmt)
 			) {$charset};"
@@ -78,8 +90,18 @@ final class RFS_CRM_Bridge {
 	 * CF7 hands over the complete posted data via WPCF7_Submission.
 	 *
 	 * @param WPCF7_ContactForm $contact_form The submitted form.
+	 * @param array             $result       CF7's submission result.
 	 */
-	public static function capture_cf7( $contact_form ) {
+	public static function capture_cf7( $contact_form, $result = array() ) {
+		// mail_sent: delivered. mail_failed: accepted but the relay refused it —
+		// still a genuine inquiry, and the one case worth capturing hardest.
+		// Everything else (spam, validation_failed, acceptance_missing, aborted)
+		// is not a real submission.
+		$status = isset( $result['status'] ) ? $result['status'] : '';
+		if ( 'mail_sent' !== $status && 'mail_failed' !== $status ) {
+			return;
+		}
+
 		if ( ! class_exists( 'WPCF7_Submission' ) ) {
 			return;
 		}
@@ -114,9 +136,11 @@ final class RFS_CRM_Bridge {
 				'modified_at_gmt'  => $now,
 				'fields'           => wp_json_encode( $posted ),
 				'page_url'         => $submission->get_meta( 'url' ),
+				// Recorded so a relay outage is visible in the CRM rather than silent.
+				'mail_status'      => $status,
 				'ip_hash'          => self::hash_ip( $submission->get_meta( 'remote_ip' ) ),
 			),
-			array( '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s' )
+			array( '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s' )
 		);
 	}
 
@@ -211,6 +235,7 @@ final class RFS_CRM_Bridge {
 			'modified_at_gmt'  => str_replace( ' ', 'T', $row['modified_at_gmt'] ),
 			'fields'           => is_array( $fields ) ? $fields : array(),
 			'page_url'         => (string) $row['page_url'],
+			'mail_status'      => (string) $row['mail_status'],
 		);
 	}
 }

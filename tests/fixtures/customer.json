@@ -1,75 +1,59 @@
 {
-  "avatar_url": "scrubbed",
-  "billing": {
-    "address_1": "7 Testing Ln",
-    "address_2": "",
-    "city": "Springfield",
-    "company": "",
-    "country": "US",
-    "email": "riley.poe@example.com",
-    "first_name": "Alex",
-    "last_name": "Poe",
-    "phone": "555-0100",
-    "postcode": "00000",
-    "state": "AZ"
-  },
-  "date_created": "2026-05-18T03:22:02",
-  "date_created_gmt": "2026-05-18T03:22:02",
-  "date_modified": "2026-09-16T02:14:26",
-  "date_modified_gmt": "2026-09-16T02:14:26",
-  "email": "riley.poe@example.com",
-  "first_name": "Alex",
-  "id": 16,
-  "is_paying_customer": true,
-  "last_name": "Poe",
-  "meta_data": [
-    {
-      "id": 1092,
-      "key": "mailchimp_woocommerce_is_subscribed",
-      "value": "1"
-    },
-    {
-      "id": 1093,
-      "key": "mailchimp_woocommerce_marketing_status_updated_at",
-      "value": "1779074522"
-    },
-    {
-      "id": 1104,
-      "key": "default_password_nag",
-      "value": ""
-    },
-    {
-      "id": 1107,
-      "key": "wc_last_active",
-      "value": "1789524712"
-    },
-    {
-      "id": 1137,
-      "key": "shipping_method",
-      "value": [
-        "flexible_shipping_single:1"
-      ]
-    },
-    {
-      "id": 1139,
-      "key": "wc_authorize_net_cim_customer_profile_id",
-      "value": ""
-    }
-  ],
-  "orders_count": 4,
+  "id": 3,
+  "date_created": "2026-04-19T16:02:25",
+  "date_created_gmt": "2026-04-19T16:02:25",
+  "date_modified": "2026-04-19T16:02:30",
+  "date_modified_gmt": "2026-04-19T16:02:30",
+  "email": "alex.doe@example.com",
+  "first_name": "Riley",
+  "last_name": "Doe",
   "role": "customer",
-  "shipping": {
-    "address_1": "7 Testing Ln",
-    "address_2": "",
-    "city": "Springfield",
+  "username": "scrubbed",
+  "billing": {
+    "first_name": "Riley",
+    "last_name": "Doe",
     "company": "",
-    "country": "US",
-    "first_name": "Alex",
-    "last_name": "Poe",
-    "phone": "555-0100",
+    "address_1": "350 Fixture Blvd",
+    "address_2": "",
+    "city": "Rivertown",
     "postcode": "00000",
-    "state": "AZ"
+    "country": "US",
+    "state": "AZ",
+    "email": "alex.doe@example.com",
+    "phone": "555-0100"
   },
-  "total_spent": "457.74",
-  "username": "scrubbed"
+  "shipping": {
+    "first_name": "Riley",
+    "last_name": "Doe",
+    "company": "",
+    "address_1": "350 Fixture Blvd",
+    "address_2": "",
+    "city": "Rivertown",
+    "postcode": "00000",
+    "country": "US",
+    "state": "AZ",
+    "phone": "555-0100"
+  },
+  "is_paying_customer": true,
+  "avatar_url": "scrubbed",
+  "_links": {
+    "self": [
+      {
+        "href": "https://rfsupplements.com/wp-json/wc/v3/customers/3",
+        "targetHints": {
+          "allow": [
+            "GET",
+            "POST",
+            "PUT",
+            "PATCH"
+          ]
+        }
+      }
+    ],
+    "collection": [
+      {
+        "href": "https://rfsupplements.com/wp-json/wc/v3/customers"
+      }
+    ]
+  }
 }

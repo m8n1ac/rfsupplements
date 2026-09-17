@@ -1,823 +1,363 @@
 {
+  "id": 3740,
+  "parent_id": 0,
+  "status": "completed",
+  "currency": "USD",
+  "version": "11.1.0",
+  "prices_include_tax": false,
+  "date_created": "2026-09-17T17:30:40",
+  "date_modified": "2026-09-17T18:49:15",
+  "discount_total": "250.00",
+  "discount_tax": "0.00",
+  "shipping_total": "0.00",
+  "shipping_tax": "0.00",
+  "cart_tax": "0.00",
+  "total": "0.00",
+  "total_tax": "0.00",
+  "customer_id": 0,
+  "order_key": "wc_order_2qsl0kvKojCmq",
   "billing": {
+    "first_name": "Morgan",
+    "last_name": "Coe",
+    "company": "",
     "address_1": "7 Testing Ln",
     "address_2": "",
-    "city": "Springfield",
-    "company": "",
-    "country": "US",
-    "email": "riley.poe@example.com",
-    "first_name": "Alex",
-    "last_name": "Poe",
-    "phone": "555-0100",
+    "city": "Fairview",
+    "state": "AZ",
     "postcode": "00000",
-    "state": "AZ"
+    "country": "US",
+    "email": "",
+    "phone": ""
   },
-  "cart_hash": "scrubbed",
-  "cart_tax": "0.00",
-  "coupon_lines": [
-    {
-      "code": "roo100",
-      "discount": "200.00",
-      "discount_tax": "0.00",
-      "discount_type": "fixed_product",
-      "free_shipping": false,
-      "id": 2973,
-      "meta_data": [
-        {
-          "display_key": "coupon_info",
-          "display_value": "[2182,\"roo100\",\"fixed_product\",100]",
-          "id": 26105,
-          "key": "coupon_info",
-          "value": "[2182,\"roo100\",\"fixed_product\",100]"
-        }
-      ],
-      "nominal_amount": 100
-    }
-  ],
-  "created_via": "checkout",
-  "currency": "USD",
-  "customer_id": 0,
-  "customer_ip_address": "203.0.113.10",
+  "shipping": {
+    "first_name": "Morgan",
+    "last_name": "Doe",
+    "company": "",
+    "address_1": "22 Placeholder Rd",
+    "address_2": "",
+    "city": "Rivertown",
+    "state": "AZ",
+    "postcode": "00000",
+    "country": "US",
+    "phone": ""
+  },
+  "payment_method": "",
+  "payment_method_title": "",
+  "transaction_id": "",
+  "customer_ip_address": "",
+  "customer_user_agent": "",
+  "created_via": "admin",
   "customer_note": "",
-  "customer_user_agent": "Mozilla/5.0 (scrubbed)",
-  "date_completed": "2026-09-17T15:43:24",
-  "date_completed_gmt": "2026-09-17T15:43:24",
-  "date_created": "2026-09-16T21:25:53",
-  "date_created_gmt": "2026-09-16T21:25:53",
-  "date_modified": "2026-09-17T17:22:12",
-  "date_modified_gmt": "2026-09-17T17:22:12",
-  "date_paid": "2026-09-16T21:25:55",
-  "date_paid_gmt": "2026-09-16T21:25:55",
-  "discount_tax": "0.00",
-  "discount_total": "200.00",
-  "fee_lines": [],
-  "id": 3727,
-  "is_editable": false,
-  "line_items": [
-    {
-      "global_unique_id": "",
-      "id": 2970,
-      "image": {
-        "id": 3539,
-        "src": "https://rfsupplements.com/wp-content/uploads/2025/11/Lemonade.png"
-      },
-      "meta_data": [
-        {
-          "display_key": "Flavor",
-          "display_value": "Lemonade",
-          "id": 26084,
-          "key": "pa_flavor",
-          "value": "lemonade"
-        }
-      ],
-      "name": "Primal Elixir Hydration - Lemonade",
-      "parent_name": "Primal Elixir Hydration",
-      "price": 39.99,
-      "product_id": 1668,
-      "quantity": 2,
-      "sku": "PRIMAL-ELIXIR-HYDRATION-LEMONADE",
-      "subtotal": "79.98",
-      "subtotal_tax": "0.00",
-      "tax_class": "",
-      "taxes": [],
-      "total": "79.98",
-      "total_tax": "0.00",
-      "variation_id": 1670
-    },
-    {
-      "global_unique_id": "",
-      "id": 2971,
-      "image": {
-        "id": "2623",
-        "src": "https://rfsupplements.com/wp-content/uploads/2025/11/repair-product-img.webp"
-      },
-      "meta_data": [
-        {
-          "display_key": "_reduced_stock",
-          "display_value": "2",
-          "id": 26106,
-          "key": "_reduced_stock",
-          "value": "2"
-        }
-      ],
-      "name": "Primal Repair",
-      "parent_name": null,
-      "price": 150,
-      "product_id": 1685,
-      "quantity": 2,
-      "sku": "PRIMAL-REPAIR",
-      "subtotal": "500.00",
-      "subtotal_tax": "0.00",
-      "tax_class": "",
-      "taxes": [],
-      "total": "300.00",
-      "total_tax": "0.00",
-      "variation_id": 0
-    }
-  ],
+  "date_completed": "2026-09-17T17:32:43",
+  "date_paid": "2026-09-17T17:32:43",
+  "cart_hash": "",
+  "number": "3740",
   "meta_data": [
     {
-      "id": 16821,
-      "key": "_om_revenue_attribution_data",
-      "value": {
-        "transaction_id": 3727,
-        "value": "388.76"
-      }
-    },
-    {
-      "id": 16812,
-      "key": "_wc_authorize_net_cim_credit_card_account_four",
-      "value": "2613"
-    },
-    {
-      "id": 16813,
-      "key": "_wc_authorize_net_cim_credit_card_authorization_amount",
-      "value": "388.76"
-    },
-    {
-      "id": 16814,
-      "key": "_wc_authorize_net_cim_credit_card_authorization_code",
-      "value": "06647Q"
-    },
-    {
-      "id": 16816,
-      "key": "_wc_authorize_net_cim_credit_card_card_expiry_date",
-      "value": "29-07"
-    },
-    {
-      "id": 16817,
-      "key": "_wc_authorize_net_cim_credit_card_card_type",
-      "value": "mastercard"
-    },
-    {
-      "id": 16815,
-      "key": "_wc_authorize_net_cim_credit_card_charge_captured",
-      "value": "yes"
-    },
-    {
-      "id": 16811,
-      "key": "_wc_authorize_net_cim_credit_card_customer_id",
-      "value": ""
-    },
-    {
-      "id": 16810,
-      "key": "_wc_authorize_net_cim_credit_card_environment",
-      "value": "production"
-    },
-    {
-      "id": 16807,
-      "key": "_wc_authorize_net_cim_credit_card_retry_count",
-      "value": "0"
-    },
-    {
-      "id": 16809,
-      "key": "_wc_authorize_net_cim_credit_card_trans_date",
-      "value": "2026-09-16 21:25:55"
-    },
-    {
-      "id": 16808,
-      "key": "_wc_authorize_net_cim_credit_card_trans_id",
-      "value": "121828013023"
-    },
-    {
-      "id": 16804,
-      "key": "_wc_order_attribution_device_type",
-      "value": "Mobile"
-    },
-    {
-      "id": 16802,
-      "key": "_wc_order_attribution_session_count",
-      "value": "1"
-    },
-    {
-      "id": 16799,
-      "key": "_wc_order_attribution_session_entry",
-      "value": "https://rfsupplements.com/"
-    },
-    {
-      "id": 16801,
-      "key": "_wc_order_attribution_session_pages",
-      "value": "7"
-    },
-    {
-      "id": 16800,
-      "key": "_wc_order_attribution_session_start_time",
-      "value": "2026-09-16 21:19:07"
-    },
-    {
-      "id": 16797,
+      "id": 17010,
       "key": "_wc_order_attribution_source_type",
-      "value": "typein"
+      "value": "admin"
     },
     {
-      "id": 16803,
-      "key": "_wc_order_attribution_user_agent",
-      "value": "Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.6.1 Mobile/15E148 Safari/604.1"
-    },
-    {
-      "id": 16798,
-      "key": "_wc_order_attribution_utm_source",
-      "value": "(direct)"
-    },
-    {
-      "id": 16820,
+      "id": 17023,
       "key": "_wc_push_notification_sent",
-      "value": "1789593958"
+      "value": "1789666365"
     },
     {
-      "id": 16948,
+      "id": 17021,
       "key": "_wc_shipment_tracking_items",
       "value": [
         {
-          "custom_tracking_link": "https://tools.usps.com/go/TrackConfirmAction.action?tLabels=9234690187253100015750",
+          "tracking_provider": "",
           "custom_tracking_provider": "USPS - Ground Advantage",
-          "tracking_id": "9c9a5f53ec6b2389d77aaff6fc315979",
-          "tracking_number": "9234690187253100015750",
-          "tracking_provider": ""
+          "tracking_number": "9200190187253100016601",
+          "custom_tracking_link": "https://tools.usps.com/go/TrackConfirmAction.action?tLabels=9200190187253100016601",
+          "tracking_id": "112474428ce0dd2d8304fe65047485e8"
         }
       ]
     },
     {
-      "id": 16945,
+      "id": 17018,
       "key": "_wcshipping_customs_information",
       "value": {
         "shipment_0": {
-          "contentsType": "merchandise",
-          "isReturnToSender": false,
           "items": [
             {
-              "description": "Primal Elixir Hydration",
-              "dimensions": {
-                "height": "",
-                "length": "",
-                "width": ""
-              },
-              "hsTariffNumber": "",
-              "id": 2970,
-              "image": "https://rfsupplements.com/wp-content/uploads/2025/11/Lemonade.png",
+              "id": 3006,
+              "subtotal": "250.00",
+              "subtotal_tax": "0.00",
+              "total": "0.00",
+              "total_tax": "0.00",
+              "price": "0.00",
+              "quantity": 1,
+              "tax_class": "",
+              "name": "Alex Doe",
+              "product_id": 1679,
+              "sku": "PRIMAL-EVOLVE",
               "meta": {
                 "customs_info": {
-                  "description": "Primal Elixir Hydration",
+                  "description": "Primal Evolve",
                   "hs_tariff_number": "",
                   "origin_country": "US"
                 }
               },
-              "name": "Riley Poe",
-              "originCountry": "US",
-              "price": "39.99",
-              "product_id": 1670,
-              "quantity": 2,
-              "sku": "PRIMAL-ELIXIR-HYDRATION-LEMONADE",
-              "subItems": [
-                {
-                  "dimensions": {
-                    "height": "",
-                    "length": "",
-                    "width": ""
-                  },
-                  "id": "2970-sub-0",
-                  "image": "https://rfsupplements.com/wp-content/uploads/2025/11/Lemonade.png",
-                  "meta": {
-                    "customs_info": {
-                      "description": "Primal Elixir Hydration",
-                      "hs_tariff_number": "",
-                      "origin_country": "US"
-                    }
-                  },
-                  "name": "Riley Poe",
-                  "parentId": 2970,
-                  "price": "39.99",
-                  "product_id": 1670,
-                  "quantity": 1,
-                  "sku": "PRIMAL-ELIXIR-HYDRATION-LEMONADE",
-                  "subItems": [],
-                  "subtotal": "79.98",
-                  "subtotal_tax": "0.00",
-                  "tax_class": "",
-                  "total": "79.98",
-                  "total_tax": "0.00",
-                  "variation": [
-                    {
-                      "display_key": "Flavor",
-                      "display_value": "Lemonade\n",
-                      "key": "pa_flavor",
-                      "value": "lemonade"
-                    }
-                  ],
-                  "weight": ".6875"
-                },
-                {
-                  "dimensions": {
-                    "height": "",
-                    "length": "",
-                    "width": ""
-                  },
-                  "id": "2970-sub-1",
-                  "image": "https://rfsupplements.com/wp-content/uploads/2025/11/Lemonade.png",
-                  "meta": {
-                    "customs_info": {
-                      "description": "Primal Elixir Hydration",
-                      "hs_tariff_number": "",
-                      "origin_country": "US"
-                    }
-                  },
-                  "name": "Riley Poe",
-                  "parentId": 2970,
-                  "price": "39.99",
-                  "product_id": 1670,
-                  "quantity": 1,
-                  "sku": "PRIMAL-ELIXIR-HYDRATION-LEMONADE",
-                  "subItems": [],
-                  "subtotal": "79.98",
-                  "subtotal_tax": "0.00",
-                  "tax_class": "",
-                  "total": "79.98",
-                  "total_tax": "0.00",
-                  "variation": [
-                    {
-                      "display_key": "Flavor",
-                      "display_value": "Lemonade\n",
-                      "key": "pa_flavor",
-                      "value": "lemonade"
-                    }
-                  ],
-                  "weight": ".6875"
-                }
-              ],
-              "subtotal": "79.98",
-              "subtotal_tax": "0.00",
-              "tax_class": "",
-              "total": "79.98",
-              "total_tax": "0.00",
-              "variation": [
-                {
-                  "display_key": "Flavor",
-                  "display_value": "Lemonade\n",
-                  "key": "pa_flavor",
-                  "value": "lemonade"
-                }
-              ],
-              "weight": ".6875"
-            },
-            {
-              "description": "Primal Repair",
+              "image": "https://rfsupplements.com/wp-content/uploads/2025/11/primal-evolve-2.webp",
+              "weight": ".125",
               "dimensions": {
-                "height": "",
                 "length": "",
-                "width": ""
+                "width": "",
+                "height": ""
               },
-              "hsTariffNumber": "",
-              "id": 2971,
-              "image": "https://rfsupplements.com/wp-content/uploads/2025/11/repair-product-img.webp",
-              "meta": {
-                "customs_info": {
-                  "description": "Primal Repair",
-                  "hs_tariff_number": "",
-                  "origin_country": "US"
-                }
-              },
-              "name": "Morgan Coe",
-              "originCountry": "US",
-              "price": "150.00",
-              "product_id": 1685,
-              "quantity": 2,
-              "sku": "PRIMAL-REPAIR",
-              "subItems": [
-                {
-                  "dimensions": {
-                    "height": "",
-                    "length": "",
-                    "width": ""
-                  },
-                  "id": "2971-sub-0",
-                  "image": "https://rfsupplements.com/wp-content/uploads/2025/11/repair-product-img.webp",
-                  "meta": {
-                    "customs_info": {
-                      "description": "Primal Repair",
-                      "hs_tariff_number": "",
-                      "origin_country": "US"
-                    }
-                  },
-                  "name": "Morgan Coe",
-                  "parentId": 2971,
-                  "price": "150.00",
-                  "product_id": 1685,
-                  "quantity": 1,
-                  "sku": "PRIMAL-REPAIR",
-                  "subItems": [],
-                  "subtotal": "500.00",
-                  "subtotal_tax": "0.00",
-                  "tax_class": "",
-                  "total": "300.00",
-                  "total_tax": "0.00",
-                  "variation": [],
-                  "weight": ".125"
-                },
-                {
-                  "dimensions": {
-                    "height": "",
-                    "length": "",
-                    "width": ""
-                  },
-                  "id": "2971-sub-1",
-                  "image": "https://rfsupplements.com/wp-content/uploads/2025/11/repair-product-img.webp",
-                  "meta": {
-                    "customs_info": {
-                      "description": "Primal Repair",
-                      "hs_tariff_number": "",
-                      "origin_country": "US"
-                    }
-                  },
-                  "name": "Morgan Coe",
-                  "parentId": 2971,
-                  "price": "150.00",
-                  "product_id": 1685,
-                  "quantity": 1,
-                  "sku": "PRIMAL-REPAIR",
-                  "subItems": [],
-                  "subtotal": "500.00",
-                  "subtotal_tax": "0.00",
-                  "tax_class": "",
-                  "total": "300.00",
-                  "total_tax": "0.00",
-                  "variation": [],
-                  "weight": ".125"
-                }
-              ],
-              "subtotal": "500.00",
-              "subtotal_tax": "0.00",
-              "tax_class": "",
-              "total": "300.00",
-              "total_tax": "0.00",
               "variation": [],
-              "weight": ".125"
+              "subItems": [],
+              "description": "Primal Evolve",
+              "hsTariffNumber": "",
+              "originCountry": "US"
             }
           ],
-          "itn": "",
-          "restrictionType": "none"
+          "contentsType": "merchandise",
+          "restrictionType": "none",
+          "isReturnToSender": false,
+          "itn": ""
         }
       }
     },
     {
-      "id": 16938,
+      "id": 17011,
       "key": "_wcshipping_destination_normalized_hash",
-      "value": "9c0e74f052e6d4e89f3f976e2cb875ec"
+      "value": "e3f4b41e6bc1ff5961b334f2937cda16"
     },
     {
-      "id": 16947,
+      "id": 17020,
       "key": "_wcshipping_package_dimensions",
       "value": {
         "shipment_0": [
           {
-            "package_dimensions_unit_snapshot": "in",
-            "package_height": 6,
-            "package_length": 12,
-            "package_weight": 1.825,
+            "package_weight": 0.185,
             "package_weight_unit_snapshot": "lbs",
-            "package_width": 6
+            "package_dimensions_unit_snapshot": "in",
+            "package_length": 6,
+            "package_width": 6,
+            "package_height": 4
           }
         ]
       }
     },
     {
-      "id": 16944,
+      "id": 17017,
       "key": "_wcshipping_selected_destination",
       "value": {
         "shipment_0": {
-          "address": "22 Placeholder Rd",
-          "city": "Rivertown",
           "company": "",
-          "country": "US",
-          "name": "Riley Poe",
-          "phone": "555-0100",
+          "city": "Rivertown",
+          "state": "AZ",
           "postcode": "00000",
-          "residential": true,
-          "state": "AZ"
+          "country": "US",
+          "phone": "",
+          "name": "Morgan Coe",
+          "address": "22 Placeholder Rd",
+          "residential": true
         }
       }
     },
     {
-      "id": 16942,
+      "id": 17015,
       "key": "_wcshipping_selected_hazmat",
       "value": {
         "shipment_0": {
-          "category": "",
-          "isHazmat": false
+          "isHazmat": false,
+          "category": ""
         }
       }
     },
     {
-      "id": 16943,
+      "id": 17016,
       "key": "_wcshipping_selected_origin",
       "value": {
         "shipment_0": {
+          "company": "",
+          "name": "Jordan Roe",
+          "phone": "555-0100",
+          "email": "casey.noe@example.com",
+          "country": "US",
+          "state": "AZ",
           "address": "1 Sample Way",
           "address_2": "",
-          "city": "Northgate",
-          "company": "",
-          "country": "US",
-          "email": "riley.poe@example.com",
-          "id": "store_details",
-          "is_verified": true,
-          "name": "Alex Doe",
-          "phone": "555-0100",
+          "city": "Rivertown",
           "postcode": "00000",
-          "state": "AZ"
+          "id": "store_details",
+          "is_verified": true
         }
       }
     },
     {
-      "id": 16941,
+      "id": 17014,
       "key": "_wcshipping_selected_rates",
       "value": {
         "shipment_0": {
-          "parent": null,
           "rate": {
-            "carrier_id": "usps",
-            "caveats": [],
-            "delivery_date": "2026-09-23T00:00:00.000Z",
-            "delivery_date_guaranteed": false,
-            "delivery_days": 5,
-            "free_pickup": true,
-            "insurance": 100,
-            "is_return": false,
-            "is_selected": false,
-            "list_rate": 12.87,
-            "rate": 9.65,
-            "rate_id": "rate_6fd914cca6ca4f889c16d995a351f6e8",
-            "retail_rate": 19.05,
+            "rate_id": "rate_6f3a21f1fdf642a19e613282a061fed2",
             "service_id": "GroundAdvantage",
-            "shipment_id": "shp_baa8208f762a4b48a9df2c7ca6a5307d",
+            "carrier_id": "usps",
             "title": "USPS - Ground Advantage",
+            "rate": 5.43,
+            "retail_rate": 8.6,
+            "list_rate": 7.69,
+            "is_selected": false,
             "tracking": true,
+            "insurance": 100,
+            "free_pickup": true,
+            "caveats": [],
+            "shipment_id": "shp_5995c1fe733c4d5590a67284e91c02bd",
+            "is_return": false,
+            "delivery_days": 3,
+            "delivery_date_guaranteed": false,
+            "delivery_date": "2026-09-21T00:00:00.000Z",
             "type": ""
           },
+          "parent": null,
           "shipment_options": []
         }
       }
     },
     {
-      "id": 16946,
+      "id": 17019,
       "key": "_wcshipping_shipment_dates",
       "value": {
         "shipment_0": {
-          "estimated_delivery_date": null,
-          "shipping_date": "2026-09-17T00:00:00.000Z"
+          "shipping_date": "2026-09-17T00:00:00.000Z",
+          "estimated_delivery_date": null
         }
       }
     },
     {
-      "id": 16939,
+      "id": 17012,
       "key": "_wcshipping-shipments",
       "value": [
         [
           {
-            "id": 2970,
-            "subItems": [
-              "2970-sub-0",
-              "2970-sub-1"
-            ]
-          },
-          {
-            "id": 2971,
-            "subItems": [
-              "2971-sub-0",
-              "2971-sub-1"
-            ]
+            "id": 3006,
+            "subItems": []
           }
         ]
       ]
     },
     {
-      "id": 16793,
-      "key": "is_vat_exempt",
-      "value": "no"
-    },
-    {
-      "id": 16796,
-      "key": "mailchimp_woocommerce_is_subscribed",
-      "value": "1"
-    },
-    {
-      "id": 16940,
+      "id": 17013,
       "key": "wcshipping_labels",
       "value": [
         {
+          "label_id": 13337733,
+          "tracking": "9200190187253100016601",
+          "refundable_amount": 5.43,
+          "created": 1789666351000,
           "carrier_id": "usps",
-          "commercial_invoice_url": "",
-          "created": 1789659791000,
-          "created_date": 1789659795000,
-          "currency": "USD",
-          "expiry_date": 1805211795000,
-          "id": "0",
-          "is_commercial_invoice_submitted_electronically": false,
-          "is_letter": false,
-          "is_return": false,
-          "label_id": 13336869,
-          "main_receipt_id": 120909524,
-          "package_name": "1 Protein",
-          "product_ids": [
-            1670,
-            1685
-          ],
-          "product_names": [
-            "Primal Elixir Hydration",
-            "Primal Repair"
-          ],
-          "rate": 9.65,
-          "receipt_item_id": 186920714,
-          "refundable_amount": 9.65,
           "service_name": "USPS - Ground Advantage",
           "status": "PURCHASED",
-          "tracking": "9234690187253100015750"
+          "is_return": false,
+          "commercial_invoice_url": "",
+          "is_commercial_invoice_submitted_electronically": false,
+          "package_name": "1 Elixir",
+          "is_letter": false,
+          "product_names": [
+            "Primal Evolve"
+          ],
+          "product_ids": [
+            1679
+          ],
+          "id": "0",
+          "receipt_item_id": 186923920,
+          "created_date": 1789666354000,
+          "expiry_date": 1805218354000,
+          "main_receipt_id": 120911833,
+          "rate": 5.43,
+          "currency": "USD"
         }
       ]
     }
   ],
-  "needs_payment": false,
-  "needs_processing": true,
-  "number": "3727",
-  "order_key": "wc_order_D6g6z5wRrvOCR",
-  "parent_id": 0,
-  "payment_method": "authorize_net_cim_credit_card",
-  "payment_method_title": "Credit Card",
-  "payment_url": "https://rfsupplements.com/checkout/order-pay/3727/?pay_for_order=true&key=wc_order_D6g6z5wRrvOCR",
-  "prices_include_tax": false,
-  "refunds": [],
-  "shipping": {
-    "address_1": "7 Testing Ln",
-    "address_2": "",
-    "city": "Springfield",
-    "company": "",
-    "country": "US",
-    "first_name": "Alex",
-    "last_name": "Poe",
-    "phone": "555-0100",
-    "postcode": "00000",
-    "state": "AZ"
-  },
-  "shipping_lines": [
+  "line_items": [
     {
-      "id": 2972,
-      "instance_id": "0",
-      "meta_data": [
-        {
-          "display_key": "parcels",
-          "display_value": [
-            {
-              "boxName": "Combined Parcel",
-              "combined": "1",
-              "currency": "USD",
-              "destination": {
-                "address": "7 Testing Ln",
-                "address_1": "7 Testing Ln",
-                "city": "Rivertown",
-                "country": "US",
-                "name": "Alex Doe",
-                "phone": "555-0100",
-                "postcode": "00000",
-                "state": "AZ"
-              },
-              "freightClass": "150",
-              "height": "0.79",
-              "insurance": "no",
-              "items": {
-                "1670": {
-                  "height": "0",
-                  "id": "1670",
-                  "length": "0",
-                  "name": "Riley Poe",
-                  "productType": "variation",
-                  "quantity": "2",
-                  "sku": "PRIMAL-ELIXIR-HYDRATION-LEMONADE",
-                  "value": "39.99",
-                  "volume": "0",
-                  "weight": "0.69",
-                  "width": "0"
-                },
-                "1685": {
-                  "height": "0",
-                  "id": "1685",
-                  "length": "0",
-                  "name": "Morgan Coe",
-                  "productType": "simple",
-                  "quantity": "2",
-                  "sku": "PRIMAL-REPAIR",
-                  "value": "250",
-                  "volume": "0",
-                  "weight": "0.13",
-                  "width": "0"
-                }
-              },
-              "length": "7.87",
-              "mediaMail": "exclude",
-              "seller_id": "0",
-              "signature": "no",
-              "type": "parcel",
-              "value": "579.98",
-              "vendor_id": "0",
-              "volume": "48.930151",
-              "weight": "1.64",
-              "width": "7.87"
-            }
-          ],
-          "id": 26099,
-          "key": "parcels",
-          "value": [
-            {
-              "boxName": "Combined Parcel",
-              "combined": "1",
-              "currency": "USD",
-              "destination": {
-                "address": "7 Testing Ln",
-                "address_1": "7 Testing Ln",
-                "city": "Rivertown",
-                "country": "US",
-                "name": "Alex Doe",
-                "phone": "555-0100",
-                "postcode": "00000",
-                "state": "AZ"
-              },
-              "freightClass": "150",
-              "height": "0.79",
-              "insurance": "no",
-              "items": {
-                "1670": {
-                  "height": "0",
-                  "id": "1670",
-                  "length": "0",
-                  "name": "Riley Poe",
-                  "productType": "variation",
-                  "quantity": "2",
-                  "sku": "PRIMAL-ELIXIR-HYDRATION-LEMONADE",
-                  "value": "39.99",
-                  "volume": "0",
-                  "weight": "0.69",
-                  "width": "0"
-                },
-                "1685": {
-                  "height": "0",
-                  "id": "1685",
-                  "length": "0",
-                  "name": "Morgan Coe",
-                  "productType": "simple",
-                  "quantity": "2",
-                  "sku": "PRIMAL-REPAIR",
-                  "value": "250",
-                  "volume": "0",
-                  "weight": "0.13",
-                  "width": "0"
-                }
-              },
-              "length": "7.87",
-              "mediaMail": "exclude",
-              "seller_id": "0",
-              "signature": "no",
-              "type": "parcel",
-              "value": "579.98",
-              "vendor_id": "0",
-              "volume": "48.930151",
-              "weight": "1.64",
-              "width": "7.87"
-            }
-          ]
-        },
-        {
-          "display_key": "seller_id",
-          "display_value": "0",
-          "id": 26100,
-          "key": "seller_id",
-          "value": "0"
-        },
-        {
-          "display_key": "vendor_id",
-          "display_value": "0",
-          "id": 26101,
-          "key": "vendor_id",
-          "value": "0"
-        },
-        {
-          "display_key": "service",
-          "display_value": "ups_ground_saver",
-          "id": 26102,
-          "key": "service",
-          "value": "ups_ground_saver"
-        }
-      ],
-      "method_id": "wc-shippo-shipping",
-      "method_title": "Ground Saver",
-      "tax_status": "taxable",
+      "id": 3006,
+      "name": "Primal Evolve",
+      "product_id": 1679,
+      "variation_id": 0,
+      "quantity": 1,
+      "tax_class": "",
+      "subtotal": "250.00",
+      "subtotal_tax": "0.00",
+      "total": "0.00",
+      "total_tax": "0.00",
       "taxes": [],
-      "total": "8.78",
-      "total_tax": "0.00"
+      "meta_data": [],
+      "sku": "PRIMAL-EVOLVE",
+      "global_unique_id": "",
+      "price": 0,
+      "image": {
+        "id": "1953",
+        "src": "https://rfsupplements.com/wp-content/uploads/2025/11/primal-evolve-2.webp"
+      },
+      "parent_name": null
     }
   ],
-  "shipping_tax": "0.00",
-  "shipping_total": "8.78",
-  "status": "completed",
   "tax_lines": [],
-  "total": "388.76",
-  "total_tax": "0.00",
-  "transaction_id": "TXN-SCRUBBED",
-  "version": "11.1.0"
+  "shipping_lines": [],
+  "fee_lines": [],
+  "coupon_lines": [
+    {
+      "id": 3007,
+      "code": "rooclient",
+      "discount": "250.00",
+      "discount_tax": "0.00",
+      "meta_data": [
+        {
+          "id": 26368,
+          "key": "coupon_info",
+          "value": "[3738,\"rooclient\",\"percent\",100,true]",
+          "display_key": "coupon_info",
+          "display_value": "[3738,\"rooclient\",\"percent\",100,true]"
+        }
+      ],
+      "discount_type": "percent",
+      "nominal_amount": 100,
+      "free_shipping": true
+    }
+  ],
+  "refunds": [],
+  "payment_url": "https://rfsupplements.com/checkout/order-pay/3740/?pay_for_order=true&key=wc_order_2qsl0kvKojCmq",
+  "is_editable": false,
+  "needs_payment": false,
+  "needs_processing": true,
+  "date_created_gmt": "2026-09-17T17:30:40",
+  "date_modified_gmt": "2026-09-17T18:49:15",
+  "date_completed_gmt": "2026-09-17T17:32:43",
+  "date_paid_gmt": "2026-09-17T17:32:43",
+  "currency_symbol": "$",
+  "_links": {
+    "self": [
+      {
+        "href": "https://rfsupplements.com/wp-json/wc/v3/orders/3740",
+        "targetHints": {
+          "allow": [
+            "GET",
+            "POST",
+            "PUT",
+            "PATCH",
+            "DELETE"
+          ]
+        }
+      }
+    ],
+    "collection": [
+      {
+        "href": "https://rfsupplements.com/wp-json/wc/v3/orders"
+      }
+    ],
+    "email_templates": [
+      {
+        "embeddable": true,
+        "href": "https://rfsupplements.com/wp-json/wc/v3/orders/3740/actions/email_templates"
+      }
+    ]
+  }
 }

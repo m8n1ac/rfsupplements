@@ -1,86 +1,109 @@
 {
-  "attributes": [
-    {
-      "id": 2,
-      "name": "Size",
-      "option": "S",
-      "slug": "pa_size"
-    }
-  ],
-  "backordered": false,
-  "backorders": "no",
-  "backorders_allowed": false,
-  "date_created": "2025-11-20T18:59:22",
-  "date_modified": "2026-08-06T16:54:01",
+  "id": 2675,
+  "type": "variation",
+  "date_created": "2026-07-27T22:29:36",
+  "date_created_gmt": "2026-07-27T22:29:36",
+  "date_modified": "2026-08-18T20:08:34",
+  "date_modified_gmt": "2026-08-18T20:08:34",
+  "description": "<p>Crisp, tart, and deeply refreshing, featuring the vibrant taste of sour green apple. Packed with essential electrolytes and L-Glutamine to power daily hydration, support muscle recovery, and enhance endurance with zero sugar, zero carbs, and zero artificial filler.</p>\n",
+  "permalink": "https://rfsupplements.com/product/primal-elixir-hydration/?attribute_pa_flavor=green-apple",
+  "sku": "PRIMAL-ELIXIR-HYDRATION-GREENAPPLE",
+  "global_unique_id": "",
+  "price": "39.99",
+  "regular_price": "39.99",
+  "sale_price": "",
   "date_on_sale_from": null,
   "date_on_sale_from_gmt": null,
   "date_on_sale_to": null,
   "date_on_sale_to_gmt": null,
-  "description": "",
-  "dimensions": {
-    "height": "",
-    "length": "",
-    "width": ""
-  },
-  "download_expiry": -1,
-  "download_limit": -1,
+  "on_sale": false,
+  "status": "publish",
+  "purchasable": true,
+  "virtual": false,
   "downloadable": false,
   "downloads": [],
-  "id": 1807,
-  "image": {
-    "alt": "",
-    "date_created": "2025-11-11T01:56:52",
-    "date_created_gmt": "2025-11-11T01:56:52",
-    "date_modified": "2025-11-20T18:59:22",
-    "date_modified_gmt": "2025-11-20T18:59:22",
-    "id": 1984,
-    "name": "classic-rf-t-shirt-white",
-    "position": 0,
-    "src": "https://rfsupplements.com/wp-content/uploads/2025/11/classic-rf-t-shirt-white-1.webp"
-  },
-  "in_stock": false,
+  "download_limit": -1,
+  "download_expiry": -1,
+  "tax_status": "none",
+  "tax_class": "",
   "manage_stock": false,
-  "menu_order": 0,
+  "stock_quantity": null,
+  "stock_status": "instock",
+  "backorders": "no",
+  "backorders_allowed": false,
+  "backordered": false,
+  "low_stock_amount": null,
+  "weight": ".6875",
+  "dimensions": {
+    "length": "",
+    "width": "",
+    "height": ""
+  },
+  "shipping_class": "",
+  "shipping_class_id": 0,
+  "image": {
+    "id": 3538,
+    "date_created": "2026-08-18T20:05:50",
+    "date_created_gmt": "2026-08-18T20:05:50",
+    "date_modified": "2026-08-18T20:05:50",
+    "date_modified_gmt": "2026-08-18T20:05:50",
+    "src": "https://rfsupplements.com/wp-content/uploads/2026/07/Green-Apple.png",
+    "name": "Green Apple",
+    "alt": ""
+  },
+  "gallery_image_ids": [],
+  "attributes": [
+    {
+      "id": 5,
+      "name": "Flavor",
+      "slug": "pa_flavor",
+      "option": "Green Apple"
+    }
+  ],
+  "menu_order": 1,
   "meta_data": [
     {
-      "id": 37535,
-      "key": "_wp_page_template",
-      "value": "default"
-    },
-    {
-      "id": 83266,
-      "key": "fb_size",
-      "value": "S"
-    },
-    {
-      "id": 92672,
+      "id": 92799,
       "key": "_solid_affiliate_woocommerce_product_variation_referral_rate",
       "value": ""
     },
     {
-      "id": 92673,
+      "id": 92800,
       "key": "_solid_affiliate_woocommerce_product_variation_referral_rate_type",
       "value": "site_default"
     },
     {
-      "id": 92674,
+      "id": 92801,
       "key": "_solid_affiliate_woocommerce_is_product_variation_referrals_disabled",
       "value": ""
     }
   ],
-  "on_sale": false,
-  "permalink": "https://rfsupplements.com/product/classic-white-rf-t-shirt/?attribute_pa_size=s",
-  "price": "30",
-  "purchasable": true,
-  "regular_price": "30",
-  "sale_price": "",
-  "shipping_class": "",
-  "shipping_class_id": 0,
-  "sku": "CLASSIC-WHITE-RF-T-SHIRT-S",
-  "stock_quantity": null,
-  "tax_class": "",
-  "tax_status": "none",
-  "virtual": false,
-  "visible": true,
-  "weight": ".4375"
+  "name": "Green Apple",
+  "parent_id": 1668,
+  "_links": {
+    "self": [
+      {
+        "href": "https://rfsupplements.com/wp-json/wc/v3/products/1668/variations/2675",
+        "targetHints": {
+          "allow": [
+            "GET",
+            "POST",
+            "PUT",
+            "PATCH",
+            "DELETE"
+          ]
+        }
+      }
+    ],
+    "collection": [
+      {
+        "href": "https://rfsupplements.com/wp-json/wc/v3/products/1668/variations"
+      }
+    ],
+    "up": [
+      {
+        "href": "https://rfsupplements.com/wp-json/wc/v3/products/1668"
+      }
+    ]
+  }
 }

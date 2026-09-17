@@ -37,9 +37,11 @@ describe("schema validation", () => {
   });
 
   it("reads *_gmt dates as UTC", () => {
-    const order = wooOrder.parse(fixture("order-guest"));
-    expect(order.date_created_gmt.toISOString()).toBe("2026-09-10T19:08:27.000Z");
-    expect(order.date_paid_gmt?.toISOString()).toBe("2026-09-10T19:08:28.000Z");
+    const raw = fixture("order-guest") as { date_created_gmt: string };
+    const order = wooOrder.parse(raw);
+    // The zoneless Woo string is UTC, so it round-trips with a Z appended.
+    expect(order.date_created_gmt.toISOString()).toBe(`${raw.date_created_gmt}.000Z`);
+    expect(order.date_created_gmt.getTime()).not.toBeNaN();
   });
 
   it("rejects a record with a malformed money field", () => {
@@ -78,7 +80,7 @@ describe("mapGuestContact", () => {
 });
 
 describe("mapProduct", () => {
-  it("normalises the in_stock boolean to Woo's stock vocabulary", () => {
+  it("carries Woo's stock_status through unchanged", () => {
     const product = mapProduct(wooProduct.parse(fixture("product-simple")));
     expect(product.stockStatus).toBe("instock");
     expect(product.type).toBe("simple");
@@ -93,20 +95,23 @@ describe("mapProduct", () => {
 });
 
 describe("mapVariation", () => {
-  const parent = wooProduct.parse(fixture("product-variable"));
   const variation = wooVariation.parse(fixture("product-variation"));
+  // The captured variation belongs to product 1668, so the parent is fetched by
+  // id rather than assumed to be the product-variable fixture.
+  const parent = wooProduct.parse(fixture("product-parent"));
 
-  it("inherits name, status and parent from the parent product", () => {
+  it("composes the full name from the parent, since Woo sends only the option", () => {
+    expect(variation.name).toBe("Green Apple");
     const mapped = mapVariation(variation, parent);
-    expect(mapped.parentWooId).toBe(parent.id);
-    expect(mapped.status).toBe(parent.status);
+    expect(mapped.name).toBe(`${parent.name} - Green Apple`);
     expect(mapped.type).toBe("variation");
-    expect(mapped.name).toBe("Classic White RF T-shirt - S");
   });
 
-  it("carries the variation's own stock state, not the parent's", () => {
-    expect(variation.in_stock).toBe(false);
-    expect(mapVariation(variation, parent).stockStatus).toBe("outofstock");
+  it("takes status, parent and stock from the variation itself", () => {
+    const mapped = mapVariation(variation, parent);
+    expect(mapped.parentWooId).toBe(variation.parent_id);
+    expect(mapped.status).toBe(variation.status);
+    expect(mapped.stockStatus).toBe(variation.stock_status);
   });
 });
 
@@ -117,9 +122,10 @@ describe("mapOrder", () => {
 
     expect(mapped.wooId).toBe(order.id);
     expect(mapped.contactId).toBeNull();
-    expect(mapped.total).toBe("45.99");
+    // Passed through verbatim: no float ever touches it.
+    expect(mapped.total).toBe(order.total);
     expect(typeof mapped.total).toBe("string");
-    expect(mapped.status).toBe("completed");
+    expect(mapped.total).toMatch(/^-?\d+\.\d{2}$/);
   });
 
   it("sums the subtotal from line items", () => {
@@ -132,7 +138,28 @@ describe("mapOrder", () => {
 
   it("extracts coupon codes", () => {
     const order = wooOrder.parse(fixture("order-coupon"));
-    expect(mapOrder(order, null).couponCodes).toEqual(["roo100"]);
+    expect(order.coupon_lines.length).toBeGreaterThan(0);
+    expect(mapOrder(order, null).couponCodes).toEqual(
+      order.coupon_lines.map((line) => line.code),
+    );
+  });
+
+  it("takes refundTotal from the order's own refund summary, as a positive amount", () => {
+    const refunded = wooOrder.parse(fixture("order-refunded"));
+    expect(refunded.refunds.length).toBeGreaterThan(0);
+    // Woo reports it negative; the order stores the magnitude.
+    expect(Number(refunded.refunds[0].total)).toBeLessThan(0);
+    const expected = refunded.refunds
+      .reduce((sum, refund) => sum + Math.abs(Number(refund.total)), 0)
+      .toFixed(2);
+    expect(mapOrder(refunded, null).refundTotal).toBe(expected);
+    expect(Number(expected)).toBeGreaterThan(0);
+  });
+
+  it("reports no refund total for an order with none", () => {
+    const plain = wooOrder.parse(fixture("order-guest"));
+    expect(plain.refunds).toEqual([]);
+    expect(mapOrder(plain, null).refundTotal).toBe("0.00");
   });
 
   it("keeps paidAtWoo, which is the reporting basis", () => {

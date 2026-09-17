@@ -71,9 +71,7 @@ export function mapProduct(product: WooProduct): Prisma.ProductUncheckedCreateIn
     price: product.price,
     regularPrice: product.regular_price,
     salePrice: product.sale_price,
-    // This Woo version reports stock as a boolean; normalise it to Woo's own
-    // vocabulary so the column means the same thing everywhere.
-    stockStatus: product.in_stock ? "instock" : "outofstock",
+    stockStatus: product.stock_status,
     stockQuantity: product.stock_quantity,
     categories: product.categories as unknown as Prisma.InputJsonValue,
     modifiedAtWoo: product.date_modified_gmt ?? product.date_created_gmt,
@@ -83,9 +81,9 @@ export function mapProduct(product: WooProduct): Prisma.ProductUncheckedCreateIn
   };
 }
 
-// Variations come back without name, type, status or parent_id, so the parent
-// supplies them. The name is the parent's plus the chosen options, which is how
-// Woo itself renders a variation.
+// A variation's own `name` is just the chosen option, so the full name is
+// composed from the parent — the same label Woo puts on an order line. Status,
+// parent and dates come from the variation itself.
 export function mapVariation(
   variation: WooVariation,
   parent: WooProduct,
@@ -95,20 +93,18 @@ export function mapVariation(
 
   return {
     wooId: variation.id,
-    parentWooId: parent.id,
+    parentWooId: variation.parent_id,
     sku: blankToNull(variation.sku),
     name,
     type: "variation",
-    status: parent.status,
+    status: variation.status,
     price: variation.price,
     regularPrice: variation.regular_price,
     salePrice: variation.sale_price,
-    stockStatus: variation.in_stock ? "instock" : "outofstock",
+    stockStatus: variation.stock_status,
     stockQuantity: variation.stock_quantity,
     categories: parent.categories as unknown as Prisma.InputJsonValue,
-    // Variations expose no *_gmt fields; these are UTC only because the
-    // WordPress timezone is UTC, which Gate 0 (A2) fixes in place.
-    modifiedAtWoo: variation.date_modified ?? variation.date_created,
+    modifiedAtWoo: variation.date_modified_gmt ?? variation.date_created_gmt,
     deletedInWoo: false,
     syncedAt: new Date(),
     raw: variation as unknown as Prisma.InputJsonValue,
@@ -125,6 +121,12 @@ export function mapOrder(
     .reduce((sum, item) => sum + Number(item.subtotal), 0)
     .toFixed(2);
 
+  // Woo reports each refund total as a negative string; the order stores the
+  // positive magnitude, which is what every revenue query subtracts.
+  const refundTotal = order.refunds
+    .reduce((sum, refund) => sum + Math.abs(Number(refund.total)), 0)
+    .toFixed(2);
+
   return {
     wooId: order.id,
     number: order.number,
@@ -136,6 +138,7 @@ export function mapOrder(
     discountTotal: order.discount_total,
     shippingTotal: order.shipping_total,
     taxTotal: order.total_tax,
+    refundTotal,
     paymentMethod: blankToNull(order.payment_method),
     paymentMethodTitle: blankToNull(order.payment_method_title),
     couponCodes: order.coupon_lines.map((line) => line.code) as unknown as Prisma.InputJsonValue,

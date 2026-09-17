@@ -146,11 +146,11 @@
   "menu_order": 1,
   "price_html": "<span class=\"woocommerce-Price-amount amount\"><bdi><span class=\"woocommerce-Price-currencySymbol\" translate=\"no\">&#36;</span>39.99</bdi></span>",
   "related_ids": [
-    2359,
-    2361,
-    1687,
+    2352,
     3515,
-    1685
+    1705,
+    1698,
+    1687
   ],
   "meta_data": [
     {

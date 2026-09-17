@@ -1,243 +1,420 @@
 {
-  "attributes": [],
-  "average_rating": "0.00",
-  "backordered": false,
-  "backorders": "no",
-  "backorders_allowed": false,
-  "button_text": "",
+  "id": 2359,
+  "name": "Berberine",
+  "slug": "berberine",
+  "permalink": "https://rfsupplements.com/product/berberine/",
+  "date_created": "2026-03-02T23:11:40",
+  "date_created_gmt": "2026-03-02T23:11:40",
+  "date_modified": "2026-09-04T23:37:13",
+  "date_modified_gmt": "2026-09-04T23:37:13",
+  "type": "simple",
+  "status": "publish",
+  "featured": false,
   "catalog_visibility": "visible",
-  "categories": [
-    {
-      "id": 66,
-      "name": "Advanced Formulas",
-      "slug": "advanced-formulas"
-    },
-    {
-      "id": 74,
-      "name": "Hydration",
-      "slug": "hydration"
-    },
-    {
-      "id": 149,
-      "name": "New Products",
-      "slug": "new-products"
-    }
-  ],
-  "cross_sell_ids": [],
-  "date_created": "2026-08-14T18:54:23",
-  "date_created_gmt": "2026-08-14T18:54:23",
-  "date_modified": "2026-08-18T17:23:51",
-  "date_modified_gmt": "2026-08-18T17:23:51",
+  "description": "<div class=\"preworkout-overview\">\n<p>&nbsp;</p>\n</div>\n<p><!-- Faq Section --></p>\n<section id=\"faq\" class=\"faq section pt-2\">\n<div class=\"container\" data-aos=\"fade-up\" data-aos-delay=\"100\">\n<div class=\"row justify-content-left\">\n<div class=\"col\">\n<div class=\"faq-list\">\n<div class=\"faq-item\" data-aos=\"fade-up\" data-aos-delay=\"200\">\n<h3><span class=\"question\">Why take a Berberine supplement?</span><br />\n<i class=\"bi bi-plus-lg faq-toggle\"></i></h3>\n<div class=\"faq-content\">\n<p>Modern diets, stress, and inconsistent eating patterns can make it harder for the body to properly regulate glucose. A high-quality berberine supplement can help support metabolic pathways responsible for energy production and nutrient utilization.</p>\n<ul>\n<li>Body composition goals</li>\n<li>Managing carbohydrate intake</li>\n<li>Improving metabolic efficiency</li>\n<li>Supporting long-term wellness</li>\n</ul>\n</div>\n</div>\n<div class=\"faq-item\" data-aos=\"fade-up\" data-aos-delay=\"300\">\n<h3><span class=\"question\">How does Berberine work?</span><br />\n<i class=\"bi bi-plus-lg faq-toggle\"></i></h3>\n<div class=\"faq-content\">\n<p>Berberine supports the activation of AMPK, an enzyme involved in regulating metabolism. This pathway plays a key role in how the body:</p>\n<ul>\n<li>Processes glucose</li>\n<li>Uses fat for energy</li>\n<li>Responds to insulin</li>\n</ul>\n<p>By supporting this system, berberine may help promote more stable energy and improved nutrient partitioning throughout the day.</p>\n</div>\n</div>\n<div class=\"faq-item\" data-aos=\"fade-up\" data-aos-delay=\"400\">\n<h3><span class=\"question\">Who should use Berberine?</span><br />\n<i class=\"bi bi-plus-lg faq-toggle\"></i></h3>\n<div class=\"faq-content\">\n<ul>\n<li>Active individuals</li>\n<li>People focused on weight management</li>\n<li>Those monitoring blood sugar</li>\n<li>Anyone wanting deeper metabolic support</li>\n</ul>\n<p>It’s ideal for people who want real physiological support — not a quick fix.</p>\n</div>\n</div>\n</div>\n</div>\n</div>\n</div>\n</section>\n<p><!-- FAQ Section --></p>\n",
+  "short_description": "<div class=\"preworkout-overview\">\n<p><strong>Berberine Supplement for Blood Sugar &amp; Metabolic Support.</strong> Your metabolism determines how efficiently your body uses carbohydrates, stores energy, and supports overall performance. Our Berberine supplement is formulated to help promote healthy blood glucose levels and support metabolic efficiency — without relying on stimulants.</p>\n<p>Berberine is a naturally occurring plant compound widely studied for its role in supporting AMPK, often called the body’s metabolic regulator. When this pathway is supported, the body may utilize nutrients more effectively and maintain steadier energy throughout the day.</p>\n<ul>\n<li>Supports healthy blood glucose levels.</li>\n<li>Promotes metabolic efficiency.</li>\n<li>Helps support insulin sensitivity.</li>\n<li>Encourages steady, balanced energy.</li>\n<li>Supports cardiovascular wellness.</li>\n</ul>\n<p><strong>Real metabolic support — built for performance and long-term wellness.</strong></p>\n</div>\n",
+  "sku": "BERBERINE",
+  "price": "29.99",
+  "regular_price": "29.99",
+  "sale_price": "",
   "date_on_sale_from": null,
   "date_on_sale_from_gmt": null,
   "date_on_sale_to": null,
   "date_on_sale_to_gmt": null,
-  "default_attributes": [],
-  "description": "<section id=\"faq\" class=\"faq section pt-2\">\n<div class=\"container\">\n<div class=\"row justify-content-left\">\n<div class=\"col\">\n<div class=\"faq-list\">\n<div class=\"faq-item\">\n<h3><span class=\"question\">Who takes Primal Endurance?</span></h3>\n<div class=\"faq-content\">\n<p>PRIMAL ENDURANCE is made for <strong>runners, cyclists, CrossFit and HYROX athletes, and anyone taking on long or high-intensity training sessions</strong>. It’s ideal for athletes who need <strong>carbohydrate fuel and electrolytes during training or competition</strong> to help maintain energy, hydration, and performance.</p>\n</div>\n</div>\n<div class=\"faq-item\">\n<h3><span class=\"question\">How do I know if I should be taking Primal Endurance?</span></h3>\n<div class=\"faq-content\">\n<p>If your workouts last <strong>an hour or longer</strong>, involve sustained high-intensity effort, or you notice your energy dropping as training goes on, PRIMAL ENDURANCE can help support your fueling strategy. It’s designed for the days when <strong>water and electrolytes alone aren’t enough</strong> and your body needs carbohydrates to keep up with the demands of your training.</p>\n</div>\n</div>\n<div class=\"faq-item\">\n<h3><span class=\"question\">How much should I be taking?</span></h3>\n<div class=\"faq-content\">\n<p>Mix <strong>2 scoops of PRIMAL ENDURANCE with 20–24 oz of water per hour of exercise</strong> and sip consistently throughout your workout or competition. Your fueling needs depend on <strong>how long and hard you're training, your body size, sweat rate, and what other carbohydrates you're consuming</strong>. For shorter or easier sessions, you may need less; for longer endurance sessions, hot conditions, or higher-intensity efforts, you may need more fluid and/or additional carbohydrate fuel. <strong>Start with the recommended serving during training and adjust based on how you feel.</strong> If you're finishing with plenty of energy and your stomach feels good, your fueling strategy is likely working. If you're consistently fading late in long sessions, you may need more total carbohydrates; if you feel overly full or experience digestive discomfort, reduce your intake or concentration and build up gradually. <strong>Always test your fueling strategy during training before using it on race or competition day.</strong></p>\n</div>\n</div>\n<div class=\"faq-item\">\n<h3><span class=\"question\">Why isn't consuming electrolytes enough?</span></h3>\n<div class=\"faq-content\">\n<p>Electrolytes help you <strong>stay hydrated and replace minerals lost through sweat</strong>, but they don't provide the carbohydrate fuel your body relies on during prolonged exercise. For longer or more demanding training, PRIMAL ENDURANCE combines <strong>carbohydrates + electrolytes</strong> so you're supporting both sides of performance: <strong>fueling your muscles and maintaining hydration.</strong></p>\n</div>\n</div>\n<div class=\"faq-item\">\n<h3><span class=\"question\">I am a bodybuilder, Can I use Primal Endurance?</span></h3>\n<div class=\"faq-content\">\n<p><strong>Absolutely.</strong> While PRIMAL ENDURANCE is great for endurance athletes, it can also be used during long, high-volume, or intense lifting sessions when you need additional carbohydrate fuel and hydration. For a typical shorter strength workout, you may not need the full serving. PRIMAL ENDURANCE is most useful when training volume and duration increase, such as bodybuilding sessions, two-a-days, competition prep, or workouts lasting an hour or longer.</p>\n</div>\n</div>\n</div>\n</div>\n</div>\n</div>\n</section>\n",
-  "dimensions": {
-    "height": "",
-    "length": "",
-    "width": ""
-  },
-  "download_expiry": -1,
-  "download_limit": -1,
+  "on_sale": false,
+  "purchasable": true,
+  "total_sales": 11,
+  "virtual": false,
   "downloadable": false,
   "downloads": [],
+  "download_limit": -1,
+  "download_expiry": -1,
   "external_url": "",
-  "featured": false,
-  "grouped_products": [],
-  "id": 3515,
-  "images": [
+  "button_text": "",
+  "tax_status": "none",
+  "tax_class": "",
+  "manage_stock": false,
+  "stock_quantity": null,
+  "backorders": "no",
+  "backorders_allowed": false,
+  "backordered": false,
+  "low_stock_amount": null,
+  "sold_individually": false,
+  "weight": "",
+  "dimensions": {
+    "length": "",
+    "width": "",
+    "height": ""
+  },
+  "shipping_required": true,
+  "shipping_taxable": false,
+  "shipping_class": "",
+  "shipping_class_id": 0,
+  "reviews_allowed": true,
+  "average_rating": "0.00",
+  "rating_count": 0,
+  "upsell_ids": [],
+  "cross_sell_ids": [],
+  "parent_id": 0,
+  "purchase_note": "",
+  "categories": [
     {
-      "alt": "",
-      "date_created": "2026-08-18T17:23:30",
-      "date_created_gmt": "2026-08-18T17:23:30",
-      "date_modified": "2026-08-18T17:23:30",
-      "date_modified_gmt": "2026-08-18T17:23:30",
-      "id": 3533,
-      "name": "Endurance",
-      "position": 0,
-      "src": "https://rfsupplements.com/wp-content/uploads/2026/08/Endurance.png"
+      "id": 149,
+      "name": "New Products",
+      "slug": "new-products"
     },
     {
-      "alt": "",
-      "date_created": "2026-08-14T18:31:34",
-      "date_created_gmt": "2026-08-14T18:31:34",
-      "date_modified": "2026-08-14T18:31:34",
-      "date_modified_gmt": "2026-08-14T18:31:34",
-      "id": 3514,
-      "name": "ChatGPT Image Aug 14, 2026 at 11_27_37 AM",
-      "position": 1,
-      "src": "https://rfsupplements.com/wp-content/uploads/2026/08/ChatGPT-Image-Aug-14-2026-at-11_27_37-AM.png"
+      "id": 147,
+      "name": "Wellness",
+      "slug": "wellness"
     }
   ],
-  "in_stock": true,
-  "manage_stock": false,
-  "menu_order": 0,
-  "meta_data": [
+  "brands": [],
+  "tags": [
     {
-      "id": 96245,
-      "key": "_solid_affiliate_woocommerce_product_referral_rate_type",
-      "value": "site_default"
+      "id": 131,
+      "name": "Wellness",
+      "slug": "wellness"
+    }
+  ],
+  "images": [
+    {
+      "id": 3553,
+      "date_created": "2026-08-18T20:17:26",
+      "date_created_gmt": "2026-08-18T20:17:26",
+      "date_modified": "2026-08-18T20:17:26",
+      "date_modified_gmt": "2026-08-18T20:17:26",
+      "src": "https://rfsupplements.com/wp-content/uploads/2026/03/Berberine.png",
+      "name": "Berberine",
+      "alt": "",
+      "srcset": "https://rfsupplements.com/wp-content/uploads/2026/03/Berberine.png 1086w, https://rfsupplements.com/wp-content/uploads/2026/03/Berberine-300x400.png 300w, https://rfsupplements.com/wp-content/uploads/2026/03/Berberine-600x800.png 600w, https://rfsupplements.com/wp-content/uploads/2026/03/Berberine-225x300.png 225w, https://rfsupplements.com/wp-content/uploads/2026/03/Berberine-768x1024.png 768w",
+      "sizes": "(max-width: 1086px) 100vw, 1086px",
+      "thumbnail": "https://rfsupplements.com/wp-content/uploads/2026/03/Berberine-300x400.png"
     },
     {
-      "id": 96246,
+      "id": 2605,
+      "date_created": "2026-06-25T02:39:56",
+      "date_created_gmt": "2026-06-25T02:39:56",
+      "date_modified": "2026-06-25T02:39:56",
+      "date_modified_gmt": "2026-06-25T02:39:56",
+      "src": "https://rfsupplements.com/wp-content/uploads/2026/03/IMG_7558.jpeg",
+      "name": "Screenshot",
+      "alt": "",
+      "srcset": "https://rfsupplements.com/wp-content/uploads/2026/03/IMG_7558.jpeg 1290w, https://rfsupplements.com/wp-content/uploads/2026/03/IMG_7558-300x353.jpeg 300w, https://rfsupplements.com/wp-content/uploads/2026/03/IMG_7558-600x707.jpeg 600w, https://rfsupplements.com/wp-content/uploads/2026/03/IMG_7558-255x300.jpeg 255w, https://rfsupplements.com/wp-content/uploads/2026/03/IMG_7558-870x1024.jpeg 870w, https://rfsupplements.com/wp-content/uploads/2026/03/IMG_7558-768x904.jpeg 768w",
+      "sizes": "(max-width: 1290px) 100vw, 1290px",
+      "thumbnail": "https://rfsupplements.com/wp-content/uploads/2026/03/IMG_7558-300x353.jpeg"
+    }
+  ],
+  "attributes": [],
+  "default_attributes": [],
+  "variations": [],
+  "grouped_products": [],
+  "menu_order": 0,
+  "price_html": "<span class=\"woocommerce-Price-amount amount\"><bdi><span class=\"woocommerce-Price-currencySymbol\" translate=\"no\">&#36;</span>29.99</bdi></span>",
+  "related_ids": [
+    1705,
+    3515,
+    2355,
+    1668,
+    2361
+  ],
+  "meta_data": [
+    {
+      "id": 54574,
+      "key": "_wp_page_template",
+      "value": "default"
+    },
+    {
+      "id": 54594,
+      "key": "__is_newly_created_product",
+      "value": "1"
+    },
+    {
+      "id": 82278,
       "key": "header_width",
       "value": "container"
     },
     {
-      "id": 96247,
+      "id": 82279,
       "key": "header_bg",
       "value": {
-        "attachment": "",
         "color": "",
         "image": "",
-        "position": "",
         "repeat": "",
+        "attachment": "",
+        "position": "",
         "size": ""
       }
     },
     {
-      "id": 96248,
+      "id": 82280,
       "key": "header_top_bg",
       "value": {
-        "attachment": "",
         "color": "",
         "image": "",
-        "position": "",
         "repeat": "",
+        "attachment": "",
+        "position": "",
         "size": ""
       }
     },
     {
-      "id": 96249,
+      "id": 82281,
       "key": "header_main_bg",
       "value": {
-        "attachment": "",
         "color": "",
         "image": "",
-        "position": "",
         "repeat": "",
+        "attachment": "",
+        "position": "",
         "size": ""
       }
     },
     {
-      "id": 96250,
+      "id": 82282,
       "key": "header_bottom_bg",
       "value": {
-        "attachment": "",
         "color": "",
         "image": "",
-        "position": "",
         "repeat": "",
+        "attachment": "",
+        "position": "",
         "size": ""
       }
     },
     {
-      "id": 96251,
+      "id": 82283,
       "key": "header_top_in_sticky",
       "value": "0"
     },
     {
-      "id": 96252,
+      "id": 82284,
       "key": "header_main_in_sticky",
       "value": "0"
     },
     {
-      "id": 96253,
+      "id": 82285,
       "key": "header_bottom_in_sticky",
       "value": "0"
     },
     {
-      "id": 96254,
+      "id": 82286,
       "key": "page_header_background",
       "value": {
-        "attachment": "",
         "color": "",
         "image": "",
-        "position": "",
         "repeat": "",
+        "attachment": "",
+        "position": "",
         "size": ""
       }
     },
     {
-      "id": 96271,
+      "id": 82287,
+      "key": "_monsterinsights_sitenote_active",
+      "value": "0"
+    },
+    {
+      "id": 82288,
       "key": "om_disable_all_campaigns",
       "value": ""
     },
     {
-      "id": 96272,
+      "id": 82289,
       "key": "_yoast_wpseo_primary_product_brand",
       "value": ""
     },
     {
-      "id": 96273,
+      "id": 82290,
       "key": "_yoast_wpseo_primary_product_cat",
-      "value": "74"
+      "value": ""
     },
     {
-      "id": 96274,
+      "id": 82291,
       "key": "_yoast_wpseo_content_score",
-      "value": "30"
+      "value": "90"
     },
     {
-      "id": 96275,
+      "id": 82292,
       "key": "_yoast_wpseo_estimated-reading-time-minutes",
-      "value": "2"
+      "value": "1"
     },
     {
-      "id": 96386,
-      "key": "_monsterinsights_sitenote_active",
-      "value": "0"
+      "id": 92116,
+      "key": "_solid_affiliate_woocommerce_product_referral_rate_type",
+      "value": "site_default"
     }
   ],
-  "name": "Primal Endurance",
-  "on_sale": false,
-  "parent_id": 0,
-  "permalink": "https://rfsupplements.com/product/primal-endurance/",
-  "price": "59.99",
-  "price_html": "<span class=\"woocommerce-Price-amount amount\"><bdi><span class=\"woocommerce-Price-currencySymbol\" translate=\"no\">&#36;</span>59.99</bdi></span>",
-  "purchasable": true,
-  "purchase_note": "",
-  "rating_count": 0,
-  "regular_price": "59.99",
-  "related_ids": [
-    2352,
-    1668,
-    2355,
-    2357,
-    1685
-  ],
-  "reviews_allowed": true,
-  "sale_price": "",
-  "shipping_class": "",
-  "shipping_class_id": 0,
-  "shipping_required": true,
-  "shipping_taxable": true,
-  "short_description": "<p>Carbohydrate fuel + electrolytes built for long training, race days, and high-output performance.</p>\n<p>When your training goes longer, water alone may not be enough. PRIMAL ENDURANCE  is an advanced carbohydrate and electrolyte drink designed to give endurance and performance athletes an easy-to-drink source of fuel during demanding workouts.</p>\n<p>Each serving delivers 46g of carbohydrates plus sodium, potassium, and magnesium** to help fuel working muscles, support hydration, and keep you fueled as the miles, rounds, or hours add up.</p>\n<p>From long-distance running and cycling to HYROX, CrossFit, and high-volume training, PRIMAL ENDURANCE makes it simple to combine carbohydrates and electrolytes in one drink.</p>\n<p>FUEL + HYDRATION IN ONE</p>\n<p>Instead of juggling your carb fuel and hydration separately, PRIMAL ENDURANCE combines both into one performance-focused formula.</p>\n<p>46g Carbohydrates<br />\nA convenient source of carbohydrates to help fuel working muscles and meet the increased energy demands of prolonged exercise.</p>\n<p>500mg Sodium + 175mg Potassium + 50mg Magnesium<br />\nThree key electrolytes that support hydration and help replace electrolytes lost through sweat.</p>\n<p>5g Dextrose<br />\nA fast-digesting carbohydrate source that provides readily available fuel during demanding training and endurance exercise.</p>\n<p>600mg Apple Pectin<br />\nSoluble fiber that complements the carbohydrate blend while supporting digestive health during your fueling strategy.</p>\n<p>BUILT FOR THE LONG HAUL</p>\n<p>PRIMAL ENDURANCE is designed for the training sessions and events where maintaining your fueling strategy matters most.</p>\n<p>Go longer. Stay fueled. Finish strong.</p>\n",
-  "sku": "",
-  "slug": "primal-endurance",
-  "sold_individually": false,
-  "status": "publish",
-  "stock_quantity": null,
-  "tags": [
-    {
-      "id": 133,
-      "name": "Endurance",
-      "slug": "endurance"
+  "stock_status": "instock",
+  "has_options": false,
+  "post_password": "",
+  "global_unique_id": "",
+  "yoast_head": "<!-- This site is optimized with the Yoast SEO plugin v28.1 - https://yoast.com/product/yoast-seo-wordpress/ -->\n<title>Berberine - rfsupplements</title>\n<meta name=\"robots\" content=\"index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1\" />\n<link rel=\"canonical\" href=\"https://rfsupplements.com/product/berberine/\" />\n<meta property=\"og:locale\" content=\"en_US\" />\n<meta property=\"og:type\" content=\"article\" />\n<meta property=\"og:title\" content=\"Berberine - rfsupplements\" />\n<meta property=\"og:description\" content=\"Berberine Supplement for Blood Sugar &amp; Metabolic Support. Your metabolism determines how efficiently your body uses carbohydrates, stores energy, and supports overall performance. Our Berberine supplement is formulated to help promote healthy blood glucose levels and support metabolic efficiency — without relying on stimulants.  Berberine is a naturally occurring plant compound widely studied for its role in supporting AMPK, often called the body’s metabolic regulator. When this pathway is supported, the body may utilize nutrients more effectively and maintain steadier energy throughout the day.   Supports healthy blood glucose levels.  Promotes metabolic efficiency.  Helps support insulin sensitivity.  Encourages steady, balanced energy.  Supports cardiovascular wellness.  Real metabolic support — built for performance and long-term wellness.\" />\n<meta property=\"og:url\" content=\"https://rfsupplements.com/product/berberine/\" />\n<meta property=\"og:site_name\" content=\"rfsupplements\" />\n<meta property=\"article:publisher\" content=\"https://www.facebook.com/rooformancesupplements/\" />\n<meta property=\"article:modified_time\" content=\"2026-09-04T23:37:13+00:00\" />\n<meta property=\"og:image\" content=\"https://rfsupplements.com/wp-content/uploads/2026/03/Berberine.png\" />\n\t<meta property=\"og:image:width\" content=\"1086\" />\n\t<meta property=\"og:image:height\" content=\"1448\" />\n\t<meta property=\"og:image:type\" content=\"image/png\" />\n<meta name=\"twitter:card\" content=\"summary_large_image\" />\n<meta name=\"twitter:label1\" content=\"Est. reading time\" />\n\t<meta name=\"twitter:data1\" content=\"1 minute\" />\n<script type=\"application/ld+json\" class=\"yoast-schema-graph\">{\"@context\":\"https:\\/\\/schema.org\",\"@graph\":[{\"@type\":\"WebPage\",\"@id\":\"https:\\/\\/rfsupplements.com\\/product\\/berberine\\/\",\"url\":\"https:\\/\\/rfsupplements.com\\/product\\/berberine\\/\",\"name\":\"Berberine - rfsupplements\",\"isPartOf\":{\"@id\":\"https:\\/\\/rfsupplements.com\\/#website\"},\"primaryImageOfPage\":{\"@id\":\"https:\\/\\/rfsupplements.com\\/product\\/berberine\\/#primaryimage\"},\"image\":{\"@id\":\"https:\\/\\/rfsupplements.com\\/product\\/berberine\\/#primaryimage\"},\"thumbnailUrl\":\"https:\\/\\/rfsupplements.com\\/wp-content\\/uploads\\/2026\\/03\\/Berberine.png\",\"datePublished\":\"2026-03-02T23:11:40+00:00\",\"dateModified\":\"2026-09-04T23:37:13+00:00\",\"breadcrumb\":{\"@id\":\"https:\\/\\/rfsupplements.com\\/product\\/berberine\\/#breadcrumb\"},\"inLanguage\":\"en-US\",\"potentialAction\":[{\"@type\":\"ReadAction\",\"target\":[\"https:\\/\\/rfsupplements.com\\/product\\/berberine\\/\"]}]},{\"@type\":\"ImageObject\",\"inLanguage\":\"en-US\",\"@id\":\"https:\\/\\/rfsupplements.com\\/product\\/berberine\\/#primaryimage\",\"url\":\"https:\\/\\/rfsupplements.com\\/wp-content\\/uploads\\/2026\\/03\\/Berberine.png\",\"contentUrl\":\"https:\\/\\/rfsupplements.com\\/wp-content\\/uploads\\/2026\\/03\\/Berberine.png\",\"width\":1086,\"height\":1448},{\"@type\":\"BreadcrumbList\",\"@id\":\"https:\\/\\/rfsupplements.com\\/product\\/berberine\\/#breadcrumb\",\"itemListElement\":[{\"@type\":\"ListItem\",\"position\":1,\"name\":\"Home\",\"item\":\"https:\\/\\/rfsupplements.com\\/\"},{\"@type\":\"ListItem\",\"position\":2,\"name\":\"Shop\",\"item\":\"https:\\/\\/rfsupplements.com\\/shop\\/\"},{\"@type\":\"ListItem\",\"position\":3,\"name\":\"Berberine\"}]},{\"@type\":\"WebSite\",\"@id\":\"https:\\/\\/rfsupplements.com\\/#website\",\"url\":\"https:\\/\\/rfsupplements.com\\/\",\"name\":\"rfsupplements\",\"description\":\"\",\"publisher\":{\"@id\":\"https:\\/\\/rfsupplements.com\\/#organization\"},\"potentialAction\":[{\"@type\":\"SearchAction\",\"target\":{\"@type\":\"EntryPoint\",\"urlTemplate\":\"https:\\/\\/rfsupplements.com\\/?s={search_term_string}\"},\"query-input\":{\"@type\":\"PropertyValueSpecification\",\"valueRequired\":true,\"valueName\":\"search_term_string\"}}],\"inLanguage\":\"en-US\"},{\"@type\":\"Organization\",\"@id\":\"https:\\/\\/rfsupplements.com\\/#organization\",\"name\":\"rfsupplements\",\"url\":\"https:\\/\\/rfsupplements.com\\/\",\"logo\":{\"@type\":\"ImageObject\",\"inLanguage\":\"en-US\",\"@id\":\"https:\\/\\/rfsupplements.com\\/#\\/schema\\/logo\\/image\\/\",\"url\":\"https:\\/\\/rfsupplements.com\\/wp-content\\/uploads\\/2025\\/10\\/retina_logo.webp\",\"contentUrl\":\"https:\\/\\/rfsupplements.com\\/wp-content\\/uploads\\/2025\\/10\\/retina_logo.webp\",\"width\":144,\"height\":125,\"caption\":\"rfsupplements\"},\"image\":{\"@id\":\"https:\\/\\/rfsupplements.com\\/#\\/schema\\/logo\\/image\\/\"},\"sameAs\":[\"https:\\/\\/www.facebook.com\\/rooformancesupplements\\/\",\"https:\\/\\/www.instagram.com\\/rf_supps\\/?hl=en\"]}]}</script>\n<!-- / Yoast SEO plugin. -->",
+  "yoast_head_json": {
+    "title": "Berberine - rfsupplements",
+    "robots": {
+      "index": "index",
+      "follow": "follow",
+      "max-snippet": "max-snippet:-1",
+      "max-image-preview": "max-image-preview:large",
+      "max-video-preview": "max-video-preview:-1"
     },
-    {
-      "id": 130,
-      "name": "Strength",
-      "slug": "strength"
+    "canonical": "https://rfsupplements.com/product/berberine/",
+    "og_locale": "en_US",
+    "og_type": "article",
+    "og_title": "Berberine - rfsupplements",
+    "og_description": "Berberine Supplement for Blood Sugar &amp; Metabolic Support. Your metabolism determines how efficiently your body uses carbohydrates, stores energy, and supports overall performance. Our Berberine supplement is formulated to help promote healthy blood glucose levels and support metabolic efficiency — without relying on stimulants.  Berberine is a naturally occurring plant compound widely studied for its role in supporting AMPK, often called the body’s metabolic regulator. When this pathway is supported, the body may utilize nutrients more effectively and maintain steadier energy throughout the day.   Supports healthy blood glucose levels.  Promotes metabolic efficiency.  Helps support insulin sensitivity.  Encourages steady, balanced energy.  Supports cardiovascular wellness.  Real metabolic support — built for performance and long-term wellness.",
+    "og_url": "https://rfsupplements.com/product/berberine/",
+    "og_site_name": "rfsupplements",
+    "article_publisher": "https://www.facebook.com/rooformancesupplements/",
+    "article_modified_time": "2026-09-04T23:37:13+00:00",
+    "og_image": [
+      {
+        "width": 1086,
+        "height": 1448,
+        "url": "https://rfsupplements.com/wp-content/uploads/2026/03/Berberine.png",
+        "type": "image/png"
+      }
+    ],
+    "twitter_card": "summary_large_image",
+    "twitter_misc": {
+      "Est. reading time": "1 minute"
+    },
+    "schema": {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebPage",
+          "@id": "https://rfsupplements.com/product/berberine/",
+          "url": "https://rfsupplements.com/product/berberine/",
+          "name": "Berberine - rfsupplements",
+          "isPartOf": {
+            "@id": "https://rfsupplements.com/#website"
+          },
+          "primaryImageOfPage": {
+            "@id": "https://rfsupplements.com/product/berberine/#primaryimage"
+          },
+          "image": {
+            "@id": "https://rfsupplements.com/product/berberine/#primaryimage"
+          },
+          "thumbnailUrl": "https://rfsupplements.com/wp-content/uploads/2026/03/Berberine.png",
+          "datePublished": "2026-03-02T23:11:40+00:00",
+          "dateModified": "2026-09-04T23:37:13+00:00",
+          "breadcrumb": {
+            "@id": "https://rfsupplements.com/product/berberine/#breadcrumb"
+          },
+          "inLanguage": "en-US",
+          "potentialAction": [
+            {
+              "@type": "ReadAction",
+              "target": [
+                "https://rfsupplements.com/product/berberine/"
+              ]
+            }
+          ]
+        },
+        {
+          "@type": "ImageObject",
+          "inLanguage": "en-US",
+          "@id": "https://rfsupplements.com/product/berberine/#primaryimage",
+          "url": "https://rfsupplements.com/wp-content/uploads/2026/03/Berberine.png",
+          "contentUrl": "https://rfsupplements.com/wp-content/uploads/2026/03/Berberine.png",
+          "width": 1086,
+          "height": 1448
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": "https://rfsupplements.com/product/berberine/#breadcrumb",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://rfsupplements.com/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Shop",
+              "item": "https://rfsupplements.com/shop/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "Berberine"
+            }
+          ]
+        },
+        {
+          "@type": "WebSite",
+          "@id": "https://rfsupplements.com/#website",
+          "url": "https://rfsupplements.com/",
+          "name": "rfsupplements",
+          "description": "",
+          "publisher": {
+            "@id": "https://rfsupplements.com/#organization"
+          },
+          "potentialAction": [
+            {
+              "@type": "SearchAction",
+              "target": {
+                "@type": "EntryPoint",
+                "urlTemplate": "https://rfsupplements.com/?s={search_term_string}"
+              },
+              "query-input": {
+                "@type": "PropertyValueSpecification",
+                "valueRequired": true,
+                "valueName": "search_term_string"
+              }
+            }
+          ],
+          "inLanguage": "en-US"
+        },
+        {
+          "@type": "Organization",
+          "@id": "https://rfsupplements.com/#organization",
+          "name": "rfsupplements",
+          "url": "https://rfsupplements.com/",
+          "logo": {
+            "@type": "ImageObject",
+            "inLanguage": "en-US",
+            "@id": "https://rfsupplements.com/#/schema/logo/image/",
+            "url": "https://rfsupplements.com/wp-content/uploads/2025/10/retina_logo.webp",
+            "contentUrl": "https://rfsupplements.com/wp-content/uploads/2025/10/retina_logo.webp",
+            "width": 144,
+            "height": 125,
+            "caption": "rfsupplements"
+          },
+          "image": {
+            "@id": "https://rfsupplements.com/#/schema/logo/image/"
+          },
+          "sameAs": [
+            "https://www.facebook.com/rooformancesupplements/",
+            "https://www.instagram.com/rf_supps/?hl=en"
+          ]
+        }
+      ]
     }
-  ],
-  "tax_class": "",
-  "tax_status": "taxable",
-  "total_sales": 16,
-  "type": "simple",
-  "upsell_ids": [],
-  "variations": [],
-  "virtual": false,
-  "weight": ""
+  },
+  "_links": {
+    "self": [
+      {
+        "href": "https://rfsupplements.com/wp-json/wc/v3/products/2359",
+        "targetHints": {
+          "allow": [
+            "GET",
+            "POST",
+            "PUT",
+            "PATCH",
+            "DELETE"
+          ]
+        }
+      }
+    ],
+    "collection": [
+      {
+        "href": "https://rfsupplements.com/wp-json/wc/v3/products"
+      }
+    ]
+  }
 }

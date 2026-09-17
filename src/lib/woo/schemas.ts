@@ -6,10 +6,9 @@ import { z } from "zod";
 //
 // Two things about this store's Woo version, both confirmed against the Phase 0
 // fixtures:
-//   - products report stock as an `in_stock` boolean, not a `stock_status` string
-//   - variations carry no *_gmt date fields at all, so their timestamps are read
-//     from `date_modified`. That is only correct while the WordPress timezone is
-//     UTC, which Gate 0 (A2) requires and this project must not change.
+// Shapes here are validated against fixtures captured from the live API by
+// scripts/capture-fixtures.ts, not hand-written, because hand-kept fixtures
+// drift from the API and give false confidence.
 
 // Woo emits "2026-09-10T19:08:27" with no zone marker. The *_gmt fields are UTC.
 export const wooDate = z
@@ -68,7 +67,7 @@ export const wooProduct = z
     price: moneyOrEmpty,
     regular_price: moneyOrEmpty,
     sale_price: moneyOrEmpty,
-    in_stock: z.boolean(),
+    stock_status: z.string(),
     stock_quantity: z.number().int().nullable(),
     categories: z.array(z.object({ id: z.number().int(), name: z.string(), slug: z.string() }).loose()),
     date_created_gmt: wooDate,
@@ -76,20 +75,23 @@ export const wooProduct = z
   })
   .loose();
 
-// The variations endpoint returns a reduced record: no name, type, status,
-// parent_id, categories, or *_gmt dates. The mapper fills those from the parent.
+// A variation carries its own status, parent_id and dates. Its `name` is only
+// the chosen option ("Green Apple"), so the mapper composes the full name from
+// the parent, matching how Woo labels the same item on an order line.
 export const wooVariation = z
   .object({
     id: z.number().int(),
+    parent_id: z.number().int(),
+    status: z.string(),
     sku: z.string(),
     price: moneyOrEmpty,
     regular_price: moneyOrEmpty,
     sale_price: moneyOrEmpty,
-    in_stock: z.boolean(),
+    stock_status: z.string(),
     stock_quantity: z.number().int().nullable(),
     attributes: z.array(z.object({ name: z.string(), option: z.string() }).loose()),
-    date_created: wooDate,
-    date_modified: wooDateNullable,
+    date_created_gmt: wooDate,
+    date_modified_gmt: wooDateNullable,
   })
   .loose();
 
@@ -107,6 +109,13 @@ export const wooLineItem = z
   .loose();
 
 export const wooCouponLine = z.object({ code: z.string() }).loose();
+
+// Every order carries a summary of its refunds. It has no date, so it is not
+// enough to build a Refund row, but it tells the sync which orders to fetch
+// details for — 3 requests instead of one per order.
+export const wooRefundSummary = z
+  .object({ id: z.number().int(), total: z.string() })
+  .loose();
 
 export const wooOrder = z
   .object({
@@ -126,6 +135,7 @@ export const wooOrder = z
     shipping: address,
     line_items: z.array(wooLineItem),
     coupon_lines: z.array(wooCouponLine),
+    refunds: z.array(wooRefundSummary),
     date_created_gmt: wooDate,
     date_modified_gmt: wooDateNullable,
     date_paid_gmt: wooDateNullable,
@@ -153,6 +163,9 @@ export const bridgeSubmission = z
     modified_at_gmt: wooDate,
     fields: z.record(z.string(), z.unknown()),
     page_url: z.string(),
+    // "mail_failed" means the inquiry is real but the relay refused the email,
+    // so the CRM is the only place it exists.
+    mail_status: z.string(),
   })
   .loose();
 

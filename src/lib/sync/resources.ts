@@ -102,7 +102,6 @@ export async function syncCustomers(since: Date | null): Promise<SyncResult> {
     for await (const page of paginate("/wc/v3/customers", wooCustomer, {
       orderby: "registered_date",
       order: "desc",
-      role: "all",
     })) {
       counts.fetched += page.length;
       for (const customer of page) {
@@ -121,7 +120,6 @@ export async function syncCustomers(since: Date | null): Promise<SyncResult> {
       const { items } = await fetchPage("/wc/v3/customers", wooCustomer, {
         include: batch.join(","),
         per_page: PER_PAGE,
-        role: "all",
       });
       counts.fetched += items.length;
       for (const customer of items) {
@@ -136,7 +134,6 @@ export async function syncCustomers(since: Date | null): Promise<SyncResult> {
   for await (const page of paginate("/wc/v3/customers", wooCustomer, {
     orderby: "registered_date",
     order: "desc",
-    role: "all",
   })) {
     counts.fetched += page.length;
     let reachedKnown = false;
@@ -230,21 +227,26 @@ async function upsertOrder(order: WooOrder, contactId: string | null): Promise<v
   });
 }
 
-// Refunds are read per order rather than from a global endpoint, because Woo
-// only exposes them nested (spec §6.1). Only orders touched since the cursor
-// are re-read.
+// Refunds are read per order, because Woo only exposes them nested (spec §6.1).
+// Every order payload already carries a refund summary, so only the orders that
+// actually have one are fetched — 3 requests on this store, not 557.
 export async function syncRefunds(since: Date | null): Promise<SyncResult> {
   const counts = { ...NEWLY_SEEN };
   const seenWooIds: number[] = [];
 
-  const orders = await prisma.order.findMany({
+  const candidates = await prisma.order.findMany({
     where: since === null ? {} : { modifiedAtWoo: { gte: since } },
-    select: { id: true, wooId: true, contactId: true },
+    select: { id: true, wooId: true, contactId: true, raw: true },
+  });
+
+  const withRefunds = candidates.filter((order) => {
+    const refunds = (order.raw as { refunds?: unknown[] } | null)?.refunds;
+    return Array.isArray(refunds) && refunds.length > 0;
   });
 
   const touchedContacts: string[] = [];
 
-  for (const order of orders) {
+  for (const order of withRefunds) {
     const { items } = await fetchPage(`/wc/v3/orders/${order.wooId}/refunds`, wooRefund, {
       per_page: PER_PAGE,
     });
@@ -261,16 +263,13 @@ export async function syncRefunds(since: Date | null): Promise<SyncResult> {
       counts.upserted += 1;
     }
 
-    // Order.refundTotal is the sum of its refunds, kept on the order so revenue
-    // queries never have to join.
-    const total = items.reduce((sum, refund) => sum + Number(refund.amount), 0).toFixed(2);
-    await prisma.order.update({ where: { id: order.id }, data: { refundTotal: total } });
-
     if (order.contactId) {
       touchedContacts.push(order.contactId);
     }
   }
 
+  // Order.refundTotal is set from the summary in the orders step, so there is
+  // nothing to write back here.
   await recomputeContactStats(touchedContacts);
   return { counts, seenWooIds };
 }
