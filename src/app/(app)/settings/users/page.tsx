@@ -28,7 +28,6 @@ export default async function UsersPage() {
       active: true,
       lastLoginAt: true,
       passwordHash: true,
-      totpEnrolledAt: true,
     },
   });
 
@@ -72,7 +71,7 @@ export default async function UsersPage() {
             </TableHeader>
             <TableBody>
               {users.map((user) => {
-                const pending = !user.passwordHash || !user.totpEnrolledAt;
+                const pending = !user.passwordHash;
                 return (
                   <TableRow key={user.id}>
                     <TableCell>{user.name}</TableCell>

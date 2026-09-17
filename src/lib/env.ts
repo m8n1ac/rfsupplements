@@ -7,7 +7,6 @@ const schema = z.object({
   DATABASE_URL: z.string().min(1),
   AUTH_SECRET: z.string().min(32),
   AUTH_URL: z.url(),
-  APP_ENCRYPTION_KEY: z.string().regex(/^[0-9a-f]{64}$/, "must be 32 bytes of hex"),
   STORE_TZ: z.string().min(1),
   SMTP_HOST: z.string().min(1),
   SMTP_PORT: z.coerce.number().int().positive(),

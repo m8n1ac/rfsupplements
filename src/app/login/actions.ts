@@ -16,7 +16,6 @@ export async function login(_prev: LoginState, formData: FormData): Promise<Logi
     await signIn("credentials", {
       email: formData.get("email"),
       password: formData.get("password"),
-      code: formData.get("code"),
       redirect: false,
     });
   } catch (error) {

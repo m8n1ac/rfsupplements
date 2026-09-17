@@ -16,7 +16,7 @@ const createUserSchema = z.object({
 });
 
 // Admins create users; there is no self-signup (spec §9). The new user receives
-// a single-use invite and sets their own password and TOTP.
+// a single-use invite and sets their own password.
 export async function createUser(
   _prev: UserFormState,
   formData: FormData,
@@ -66,13 +66,13 @@ export async function resendInvite(
   const userId = String(formData.get("userId") ?? "");
   const user = await prisma.user.findUnique({
     where: { id: userId },
-    select: { id: true, email: true, name: true, passwordHash: true, totpEnrolledAt: true },
+    select: { id: true, email: true, name: true, passwordHash: true },
   });
 
   if (!user) {
     return { error: "No such user", notice: null };
   }
-  if (user.passwordHash && user.totpEnrolledAt) {
+  if (user.passwordHash) {
     return { error: `${user.email} has already completed setup`, notice: null };
   }
 

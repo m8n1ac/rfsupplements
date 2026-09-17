@@ -66,9 +66,6 @@ model User {
   // Null until the user accepts an invite and sets a password.
   passwordHash String?   @db.VarChar(255)
   role         Role      @default(STAFF)
-  // Encrypted with APP_ENCRYPTION_KEY; null until TOTP enrollment completes.
-  totpSecret   String?   @db.Text
-  totpEnrolledAt DateTime?
   active       Boolean   @default(true)
   failedLogins Int       @default(0)
   lockedUntil  DateTime?
@@ -76,7 +73,6 @@ model User {
   createdAt    DateTime  @default(now())
   updatedAt    DateTime  @updatedAt
 
-  recoveryCodes  RecoveryCode[]
   invites        Invite[]       @relation("InviteUser")
   invitesCreated Invite[]       @relation("InviteCreatedBy")
   ownedContacts  Contact[]      @relation("ContactOwner")
@@ -87,19 +83,6 @@ model User {
   auditLogs      AuditLog[]
 
   @@index([email])
-}
-
-// Eight single-use TOTP recovery codes per user, stored hashed (spec §9).
-model RecoveryCode {
-  id       String    @id @default(cuid())
-  userId   String
-  codeHash String    @db.VarChar(255)
-  usedAt   DateTime?
-  createdAt DateTime @default(now())
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@index([userId])
 }
 
 // Single-use invite link, expires 24h after creation (spec §9).

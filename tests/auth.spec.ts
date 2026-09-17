@@ -1,5 +1,4 @@
 import { expect, test, type Page } from "@playwright/test";
-import { generate } from "otplib";
 import { prisma } from "../src/lib/db";
 import { createTestUser, deleteTestUsers, TEST_PASSWORD, type TestUser } from "./users";
 
@@ -23,27 +22,20 @@ async function signIn(page: Page, user: TestUser, password = TEST_PASSWORD): Pro
   await page.goto("/login");
   await page.fill("#email", user.email);
   await page.fill("#password", password);
-  await page.fill("#code", await generate({ secret: user.secret }));
   await page.click('button[type="submit"]');
 }
 
-test("signs in with a password and a TOTP code", async ({ page }) => {
+test("signs in with email and password", async ({ page }) => {
   await signIn(page, admin);
   await expect(page).toHaveURL("/");
   await expect(page.getByRole("heading", { name: "Dashboard" })).toBeVisible();
 });
 
-test("rejects a correct password with a wrong TOTP code", async ({ page }) => {
-  await page.goto("/login");
-  await page.fill("#email", admin.email);
-  await page.fill("#password", TEST_PASSWORD);
-  await page.fill("#code", "000000");
-  await page.click('button[type="submit"]');
-
+test("rejects a wrong password", async ({ page }) => {
+  await signIn(page, admin, "not-the-right-password");
   await expect(page.getByText(/did not work/i)).toBeVisible();
   await expect(page).toHaveURL(/\/login/);
 
-  // Undo the failed-attempt counter so it cannot bleed into the lockout test.
   await prisma.user.update({
     where: { email: admin.email },
     data: { failedLogins: 0, lockedUntil: null },
@@ -62,12 +54,24 @@ test("STAFF gets a server-side 403 from Settings", async ({ page }) => {
 
 test("ADMIN can load Settings", async ({ page }) => {
   await signIn(page, admin);
-  // Wait for the sign-in redirect to land before navigating on.
   await expect(page).toHaveURL("/");
 
   const response = await page.goto("/settings/users");
   expect(response?.status()).toBe(200);
   await expect(page.getByRole("heading", { name: "Users" })).toBeVisible();
+});
+
+test("a deactivated user is signed out on their next request", async ({ page }) => {
+  await signIn(page, staff);
+  await expect(page).toHaveURL("/");
+
+  // requireUser() reloads from the database, so this takes effect immediately.
+  await prisma.user.update({ where: { email: staff.email }, data: { active: false } });
+
+  await page.goto("/");
+  await expect(page).toHaveURL(/\/login/);
+
+  await prisma.user.update({ where: { email: staff.email }, data: { active: true } });
 });
 
 test("locks the account after 5 bad passwords", async ({ page }) => {

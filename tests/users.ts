@@ -1,7 +1,5 @@
 import { prisma } from "../src/lib/db";
-import { encrypt } from "../src/lib/crypto";
 import { hashPassword } from "../src/lib/password";
-import { createTotpSecret } from "../src/lib/totp";
 import type { Role } from "../src/generated/prisma/enums";
 
 // Test accounts are seeded directly, bypassing the invite flow, so the auth
@@ -9,24 +7,20 @@ import type { Role } from "../src/generated/prisma/enums";
 // real address, and are removed again in teardown.
 export const TEST_PASSWORD = "e2e-password-not-a-secret";
 
-export type TestUser = { email: string; secret: string };
+export type TestUser = { email: string };
 
 export async function createTestUser(email: string, role: Role): Promise<TestUser> {
-  const secret = createTotpSecret();
-
-  await prisma.user.deleteMany({ where: { email } });
+  await deleteTestUsers(email);
   await prisma.user.create({
     data: {
       email,
       name: `E2E ${role}`,
       role,
       passwordHash: await hashPassword(TEST_PASSWORD),
-      totpSecret: encrypt(secret),
-      totpEnrolledAt: new Date(),
     },
   });
 
-  return { email, secret };
+  return { email };
 }
 
 // Invite.createdBy is Restrict on purpose: production deactivates users, it

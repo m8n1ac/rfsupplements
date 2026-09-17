@@ -1,12 +1,14 @@
 import type { Metadata } from "next";
 import { redirect } from "next/navigation";
-import { auth } from "@/lib/auth";
+import { getCurrentUser } from "@/lib/require-user";
 import { LoginForm } from "@/app/login/login-form";
 
 export const metadata: Metadata = { title: "Sign in · RF Supplements Ops" };
 
 export default async function LoginPage() {
-  if (await auth()) {
+  // Checks the database, not just the cookie, so a session belonging to a
+  // deactivated account lands on the sign-in form instead of bouncing.
+  if (await getCurrentUser()) {
     redirect("/");
   }
   return (

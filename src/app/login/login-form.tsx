@@ -35,17 +35,6 @@ export function LoginForm() {
               required
             />
           </div>
-          <div className="grid gap-2">
-            <Label htmlFor="code">Authenticator code</Label>
-            <Input
-              id="code"
-              name="code"
-              inputMode="text"
-              autoComplete="one-time-code"
-              placeholder="6-digit code, or a recovery code"
-              required
-            />
-          </div>
           {state.error ? (
             <Alert variant="destructive">
               <AlertDescription>{state.error}</AlertDescription>

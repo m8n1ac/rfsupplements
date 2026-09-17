@@ -22,7 +22,7 @@ async function main(): Promise<void> {
 
   const user = await prisma.user.findUnique({
     where: { email },
-    select: { id: true, name: true, active: true, passwordHash: true, totpEnrolledAt: true },
+    select: { id: true, name: true, active: true, passwordHash: true },
   });
 
   if (!user) {
@@ -31,7 +31,7 @@ async function main(): Promise<void> {
   if (!user.active) {
     throw new Error(`${email} is deactivated. Reactivate them first.`);
   }
-  if (user.passwordHash && user.totpEnrolledAt) {
+  if (user.passwordHash) {
     throw new Error(
       `${email} has already completed setup. Use a password/2FA reset instead of an invite.`,
     );

@@ -62,3 +62,28 @@
   chain, and the last Gate 1 item.
 - A window to run the actual reboot test.
 - Darrin's own TOTP enrolment, via the invite link handed over separately.
+
+---
+
+## Amendment — 2026-09-17: 2FA cancelled
+
+Darrin cancelled the §9 TOTP requirement after Gate 1. Sign-in is now email and
+password only.
+
+Removed rather than disabled, per engineering rules 3 and 4: the `totpSecret`
+and `totpEnrolledAt` columns and the whole `RecoveryCode` table are dropped by
+migration `20260917213215_remove_2fa`, and `src/lib/totp.ts`, `src/lib/crypto.ts`,
+`APP_ENCRYPTION_KEY`, `otplib` and `qrcode` are gone. The invite link now sets a
+password and finishes.
+
+**What now stands between a guessed password and full access:** the 5-attempt /
+15-minute account lockout, and the nginx `limit_req` of 10/min on `/api/auth/`.
+There is no second factor. This system holds customer PII and revenue data and
+is reachable from the internet.
+
+**A bug this surfaced, now fixed.** A deactivated user's JWT stayed valid, so
+`requireUser()` sent them to `/login`, which saw the session and sent them back
+to `/` — an infinite redirect rather than a sign-out. Both paths now share
+`getCurrentUser()`, which resolves the session against the database. Covered by
+"a deactivated user is signed out on their next request". The bug predated the
+2FA change; it simply had no test.
