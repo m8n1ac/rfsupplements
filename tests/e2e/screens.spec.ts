@@ -169,3 +169,26 @@ test("the search API refuses an unauthenticated caller", async ({ request }) => 
   const response = await request.get("/api/search?q=test", { maxRedirects: 0 });
   expect(response.status()).not.toBe(200);
 });
+
+test("navigation is a sidebar on desktop and a drawer on a phone", async ({ page }) => {
+  await signIn(page, admin);
+
+  // Desktop: the sidebar is present and marks the current page.
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto("/orders");
+  const sidebarOrders = page.locator("aside").getByRole("link", { name: "Orders" });
+  await expect(sidebarOrders).toBeVisible();
+  await expect(sidebarOrders).toHaveAttribute("aria-current", "page");
+
+  // Phone: the sidebar is gone and the drawer opens instead.
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/orders");
+  await expect(page.locator("aside")).toBeHidden();
+
+  await page.getByRole("button", { name: "Open menu" }).click();
+  const drawerContacts = page.getByRole("dialog").getByRole("link", { name: "Contacts" });
+  await expect(drawerContacts).toBeVisible();
+
+  await drawerContacts.click();
+  await expect(page).toHaveURL("/contacts");
+});
