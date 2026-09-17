@@ -1,0 +1,363 @@
+{
+  "billing": {
+    "address_1": "7 Testing Ln",
+    "address_2": "",
+    "city": "Springfield",
+    "company": "",
+    "country": "US",
+    "email": "riley.poe@example.com",
+    "first_name": "Alex",
+    "last_name": "Poe",
+    "phone": "555-0100",
+    "postcode": "00000",
+    "state": "AZ"
+  },
+  "cart_hash": "scrubbed",
+  "cart_tax": "0.00",
+  "coupon_lines": [],
+  "created_via": "checkout",
+  "currency": "USD",
+  "customer_id": 53,
+  "customer_ip_address": "203.0.113.10",
+  "customer_note": "",
+  "customer_user_agent": "Mozilla/5.0 (scrubbed)",
+  "date_completed": null,
+  "date_completed_gmt": null,
+  "date_created": "2026-09-16T23:29:24",
+  "date_created_gmt": "2026-09-16T23:29:24",
+  "date_modified": "2026-09-17T01:05:14",
+  "date_modified_gmt": "2026-09-17T01:05:14",
+  "date_paid": "2026-09-16T23:29:25",
+  "date_paid_gmt": "2026-09-16T23:29:25",
+  "discount_tax": "0.00",
+  "discount_total": "0.00",
+  "fee_lines": [],
+  "id": 3728,
+  "is_editable": false,
+  "line_items": [
+    {
+      "global_unique_id": "",
+      "id": 2974,
+      "image": {
+        "id": 3544,
+        "src": "https://rfsupplements.com/wp-content/uploads/2026/02/Wild-Lychee.png"
+      },
+      "meta_data": [
+        {
+          "display_key": "Flavor",
+          "display_value": "Lychee",
+          "id": 26116,
+          "key": "pa_flavor",
+          "value": "lychee"
+        }
+      ],
+      "name": "Primal Pre-Workout 2.0 - Lychee",
+      "parent_name": "Primal Pre-Workout 2.0",
+      "price": 39.99,
+      "product_id": 1687,
+      "quantity": 1,
+      "sku": "PRIMAL-PRE-WORKOUT-2-0-LYCHEE",
+      "subtotal": "39.99",
+      "subtotal_tax": "0.00",
+      "tax_class": "",
+      "taxes": [],
+      "total": "39.99",
+      "total_tax": "0.00",
+      "variation_id": 1694
+    }
+  ],
+  "meta_data": [
+    {
+      "id": 16849,
+      "key": "_om_revenue_attribution_data",
+      "value": {
+        "transaction_id": 3728,
+        "value": "46.15"
+      }
+    },
+    {
+      "id": 16840,
+      "key": "_wc_authorize_net_cim_credit_card_account_four",
+      "value": "1485"
+    },
+    {
+      "id": 16841,
+      "key": "_wc_authorize_net_cim_credit_card_authorization_amount",
+      "value": "46.15"
+    },
+    {
+      "id": 16842,
+      "key": "_wc_authorize_net_cim_credit_card_authorization_code",
+      "value": "07751D"
+    },
+    {
+      "id": 16844,
+      "key": "_wc_authorize_net_cim_credit_card_card_expiry_date",
+      "value": "28-12"
+    },
+    {
+      "id": 16845,
+      "key": "_wc_authorize_net_cim_credit_card_card_type",
+      "value": "visa"
+    },
+    {
+      "id": 16843,
+      "key": "_wc_authorize_net_cim_credit_card_charge_captured",
+      "value": "yes"
+    },
+    {
+      "id": 16839,
+      "key": "_wc_authorize_net_cim_credit_card_customer_id",
+      "value": ""
+    },
+    {
+      "id": 16838,
+      "key": "_wc_authorize_net_cim_credit_card_environment",
+      "value": "production"
+    },
+    {
+      "id": 16835,
+      "key": "_wc_authorize_net_cim_credit_card_retry_count",
+      "value": "0"
+    },
+    {
+      "id": 16837,
+      "key": "_wc_authorize_net_cim_credit_card_trans_date",
+      "value": "2026-09-16 23:29:25"
+    },
+    {
+      "id": 16836,
+      "key": "_wc_authorize_net_cim_credit_card_trans_id",
+      "value": "121828170496"
+    },
+    {
+      "id": 16859,
+      "key": "_wc_authorize_net_cim_credit_card_void_amount",
+      "value": "46.15"
+    },
+    {
+      "id": 16860,
+      "key": "_wc_authorize_net_cim_credit_card_void_trans_id",
+      "value": "121828170496"
+    },
+    {
+      "id": 16832,
+      "key": "_wc_order_attribution_device_type",
+      "value": "Desktop"
+    },
+    {
+      "id": 16830,
+      "key": "_wc_order_attribution_session_count",
+      "value": "7"
+    },
+    {
+      "id": 16827,
+      "key": "_wc_order_attribution_session_entry",
+      "value": "https://rfsupplements.com/"
+    },
+    {
+      "id": 16829,
+      "key": "_wc_order_attribution_session_pages",
+      "value": "15"
+    },
+    {
+      "id": 16828,
+      "key": "_wc_order_attribution_session_start_time",
+      "value": "2026-09-01 16:16:56"
+    },
+    {
+      "id": 16825,
+      "key": "_wc_order_attribution_source_type",
+      "value": "typein"
+    },
+    {
+      "id": 16831,
+      "key": "_wc_order_attribution_user_agent",
+      "value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36"
+    },
+    {
+      "id": 16826,
+      "key": "_wc_order_attribution_utm_source",
+      "value": "(direct)"
+    },
+    {
+      "id": 16848,
+      "key": "_wc_push_notification_sent",
+      "value": "1789601371"
+    },
+    {
+      "id": 16822,
+      "key": "is_vat_exempt",
+      "value": "no"
+    }
+  ],
+  "needs_payment": false,
+  "needs_processing": true,
+  "number": "3728",
+  "order_key": "wc_order_O5heDF8YvApCo",
+  "parent_id": 0,
+  "payment_method": "authorize_net_cim_credit_card",
+  "payment_method_title": "Credit Card",
+  "payment_url": "https://rfsupplements.com/checkout/order-pay/3728/?pay_for_order=true&key=wc_order_O5heDF8YvApCo",
+  "prices_include_tax": false,
+  "refunds": [
+    {
+      "id": 3730,
+      "reason": "",
+      "total": "-46.15",
+      "total_tax": "0.00"
+    }
+  ],
+  "shipping": {
+    "address_1": "7 Testing Ln",
+    "address_2": "",
+    "city": "Springfield",
+    "company": "",
+    "country": "US",
+    "first_name": "Alex",
+    "last_name": "Poe",
+    "phone": "555-0100",
+    "postcode": "00000",
+    "state": "AZ"
+  },
+  "shipping_lines": [
+    {
+      "id": 2975,
+      "instance_id": "0",
+      "meta_data": [
+        {
+          "display_key": "parcels",
+          "display_value": [
+            {
+              "boxName": "Product",
+              "currency": "USD",
+              "destination": {
+                "address": "1 Sample Way",
+                "address_1": "1 Sample Way",
+                "city": "Springfield",
+                "company": "",
+                "country": "US",
+                "email": "riley.poe@example.com",
+                "name": "Alex Doe",
+                "phone": "555-0100",
+                "postcode": "00000",
+                "state": "AZ"
+              },
+              "freightClass": "150",
+              "height": "0.79",
+              "insurance": "no",
+              "items": {
+                "1694": {
+                  "height": "0",
+                  "id": "1694",
+                  "length": "0",
+                  "name": "Jordan Roe",
+                  "productType": "variation",
+                  "quantity": "1",
+                  "sku": "PRIMAL-PRE-WORKOUT-2-0-LYCHEE",
+                  "value": "39.99",
+                  "volume": "0",
+                  "weight": "0.63",
+                  "width": "0"
+                }
+              },
+              "length": "7.87",
+              "mediaMail": "exclude",
+              "seller_id": "0",
+              "signature": "no",
+              "type": "parcel",
+              "value": "39.99",
+              "vendor_id": "0",
+              "volume": "48.930151",
+              "weight": "0.63",
+              "width": "7.87"
+            }
+          ],
+          "id": 26122,
+          "key": "parcels",
+          "value": [
+            {
+              "boxName": "Product",
+              "currency": "USD",
+              "destination": {
+                "address": "1 Sample Way",
+                "address_1": "1 Sample Way",
+                "city": "Springfield",
+                "company": "",
+                "country": "US",
+                "email": "riley.poe@example.com",
+                "name": "Alex Doe",
+                "phone": "555-0100",
+                "postcode": "00000",
+                "state": "AZ"
+              },
+              "freightClass": "150",
+              "height": "0.79",
+              "insurance": "no",
+              "items": {
+                "1694": {
+                  "height": "0",
+                  "id": "1694",
+                  "length": "0",
+                  "name": "Jordan Roe",
+                  "productType": "variation",
+                  "quantity": "1",
+                  "sku": "PRIMAL-PRE-WORKOUT-2-0-LYCHEE",
+                  "value": "39.99",
+                  "volume": "0",
+                  "weight": "0.63",
+                  "width": "0"
+                }
+              },
+              "length": "7.87",
+              "mediaMail": "exclude",
+              "seller_id": "0",
+              "signature": "no",
+              "type": "parcel",
+              "value": "39.99",
+              "vendor_id": "0",
+              "volume": "48.930151",
+              "weight": "0.63",
+              "width": "7.87"
+            }
+          ]
+        },
+        {
+          "display_key": "seller_id",
+          "display_value": "0",
+          "id": 26123,
+          "key": "seller_id",
+          "value": "0"
+        },
+        {
+          "display_key": "vendor_id",
+          "display_value": "0",
+          "id": 26124,
+          "key": "vendor_id",
+          "value": "0"
+        },
+        {
+          "display_key": "service",
+          "display_value": "ups_ground_saver",
+          "id": 26125,
+          "key": "service",
+          "value": "ups_ground_saver"
+        }
+      ],
+      "method_id": "wc-shippo-shipping",
+      "method_title": "Ground Saver",
+      "tax_status": "taxable",
+      "taxes": [],
+      "total": "6.16",
+      "total_tax": "0.00"
+    }
+  ],
+  "shipping_tax": "0.00",
+  "shipping_total": "6.16",
+  "status": "cancelled",
+  "tax_lines": [],
+  "total": "46.15",
+  "total_tax": "0.00",
+  "transaction_id": "TXN-SCRUBBED",
+  "version": "11.1.0"
+}

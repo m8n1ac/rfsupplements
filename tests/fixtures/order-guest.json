@@ -1,0 +1,462 @@
+{
+  "billing": {
+    "address_1": "7 Testing Ln",
+    "address_2": "",
+    "city": "Springfield",
+    "company": "",
+    "country": "US",
+    "email": "riley.poe@example.com",
+    "first_name": "Alex",
+    "last_name": "Poe",
+    "phone": "555-0100",
+    "postcode": "00000",
+    "state": "AZ"
+  },
+  "cart_hash": "scrubbed",
+  "cart_tax": "0.00",
+  "coupon_lines": [],
+  "created_via": "apple_pay",
+  "currency": "USD",
+  "customer_id": 0,
+  "customer_ip_address": "203.0.113.10",
+  "customer_note": "",
+  "customer_user_agent": "Mozilla/5.0 (scrubbed)",
+  "date_completed": "2026-09-10T19:21:59",
+  "date_completed_gmt": "2026-09-10T19:21:59",
+  "date_created": "2026-09-10T19:08:27",
+  "date_created_gmt": "2026-09-10T19:08:27",
+  "date_modified": "2026-09-10T19:21:59",
+  "date_modified_gmt": "2026-09-10T19:21:59",
+  "date_paid": "2026-09-10T19:08:28",
+  "date_paid_gmt": "2026-09-10T19:08:28",
+  "discount_tax": "0.00",
+  "discount_total": "0.00",
+  "fee_lines": [],
+  "id": 3700,
+  "is_editable": false,
+  "line_items": [
+    {
+      "global_unique_id": "",
+      "id": 2934,
+      "image": {
+        "id": 3538,
+        "src": "https://rfsupplements.com/wp-content/uploads/2026/07/Green-Apple.png"
+      },
+      "meta_data": [
+        {
+          "display_key": "Flavor",
+          "display_value": "Green Apple",
+          "id": 25809,
+          "key": "pa_flavor",
+          "value": "green-apple"
+        }
+      ],
+      "name": "Primal Elixir Hydration - Green Apple",
+      "parent_name": "Primal Elixir Hydration",
+      "price": 39.99,
+      "product_id": 1668,
+      "quantity": 1,
+      "sku": "PRIMAL-ELIXIR-HYDRATION-GREENAPPLE",
+      "subtotal": "39.99",
+      "subtotal_tax": "0.00",
+      "tax_class": "",
+      "taxes": [],
+      "total": "39.99",
+      "total_tax": "0.00",
+      "variation_id": 2675
+    }
+  ],
+  "meta_data": [
+    {
+      "id": 16539,
+      "key": "_om_revenue_attribution_data",
+      "value": {
+        "transaction_id": 3700,
+        "value": "45.99"
+      }
+    },
+    {
+      "id": 16533,
+      "key": "_wc_authorize_net_cim_credit_card_account_four",
+      "value": "0415"
+    },
+    {
+      "id": 16534,
+      "key": "_wc_authorize_net_cim_credit_card_authorization_amount",
+      "value": "45.99"
+    },
+    {
+      "id": 16535,
+      "key": "_wc_authorize_net_cim_credit_card_authorization_code",
+      "value": "731949"
+    },
+    {
+      "id": 16536,
+      "key": "_wc_authorize_net_cim_credit_card_charge_captured",
+      "value": "yes"
+    },
+    {
+      "id": 16532,
+      "key": "_wc_authorize_net_cim_credit_card_customer_id",
+      "value": ""
+    },
+    {
+      "id": 16531,
+      "key": "_wc_authorize_net_cim_credit_card_environment",
+      "value": "production"
+    },
+    {
+      "id": 16528,
+      "key": "_wc_authorize_net_cim_credit_card_retry_count",
+      "value": "0"
+    },
+    {
+      "id": 16530,
+      "key": "_wc_authorize_net_cim_credit_card_trans_date",
+      "value": "2026-09-10 19:08:28"
+    },
+    {
+      "id": 16529,
+      "key": "_wc_authorize_net_cim_credit_card_trans_id",
+      "value": "121819555960"
+    },
+    {
+      "id": 16538,
+      "key": "_wc_push_notification_sent",
+      "value": "1789067311"
+    },
+    {
+      "id": 16550,
+      "key": "_wc_shipment_tracking_items",
+      "value": [
+        {
+          "custom_tracking_link": "https://tools.usps.com/go/TrackConfirmAction.action?tLabels=9200190187252201352595",
+          "custom_tracking_provider": "USPS - Ground Advantage",
+          "tracking_id": "7b221eac87045b9154504a08e97abd4d",
+          "tracking_number": "9200190187252201352595",
+          "tracking_provider": ""
+        }
+      ]
+    },
+    {
+      "id": 16547,
+      "key": "_wcshipping_customs_information",
+      "value": {
+        "shipment_0": []
+      }
+    },
+    {
+      "id": 16540,
+      "key": "_wcshipping_destination_normalized_hash",
+      "value": "6410b3118401ceaf04b1611b52a319e2"
+    },
+    {
+      "id": 16549,
+      "key": "_wcshipping_package_dimensions",
+      "value": {
+        "shipment_0": [
+          {
+            "package_dimensions_unit_snapshot": "in",
+            "package_height": 4,
+            "package_length": 6,
+            "package_weight": 0.7475,
+            "package_weight_unit_snapshot": "lbs",
+            "package_width": 6
+          }
+        ]
+      }
+    },
+    {
+      "id": 16546,
+      "key": "_wcshipping_selected_destination",
+      "value": {
+        "shipment_0": {
+          "address": "7 Testing Ln",
+          "address_2": "",
+          "city": "Springfield",
+          "company": "",
+          "country": "US",
+          "email": "riley.poe@example.com",
+          "name": "Jordan Roe",
+          "phone": "555-0100",
+          "postcode": "00000",
+          "state": "AZ"
+        }
+      }
+    },
+    {
+      "id": 16544,
+      "key": "_wcshipping_selected_hazmat",
+      "value": {
+        "shipment_0": {
+          "category": "",
+          "isHazmat": false
+        }
+      }
+    },
+    {
+      "id": 16545,
+      "key": "_wcshipping_selected_origin",
+      "value": {
+        "shipment_0": {
+          "address": "1 Sample Way",
+          "address_2": "",
+          "city": "Northgate",
+          "company": "",
+          "country": "US",
+          "email": "riley.poe@example.com",
+          "id": "UNKNOWN_ORIGIN_ID",
+          "is_verified": true,
+          "name": "Alex Doe",
+          "phone": "555-0100",
+          "postcode": "00000",
+          "state": "AZ"
+        }
+      }
+    },
+    {
+      "id": 16543,
+      "key": "_wcshipping_selected_rates",
+      "value": {
+        "shipment_0": {
+          "parent": null,
+          "rate": {
+            "carrier_id": "usps",
+            "caveats": [],
+            "delivery_date": "2026-09-14T00:00:00.000Z",
+            "delivery_date_guaranteed": false,
+            "delivery_days": 2,
+            "free_pickup": true,
+            "insurance": 100,
+            "is_return": false,
+            "is_selected": false,
+            "list_rate": 6.93,
+            "rate": 6,
+            "rate_id": "rate_fd18f120edc5428ab166144c6c71a88d",
+            "retail_rate": 9.55,
+            "service_id": "GroundAdvantage",
+            "shipment_id": "shp_6b5544618e9b4ac88e1333b137addf34",
+            "title": "USPS - Ground Advantage",
+            "tracking": true,
+            "type": ""
+          },
+          "shipment_options": []
+        }
+      }
+    },
+    {
+      "id": 16548,
+      "key": "_wcshipping_shipment_dates",
+      "value": {
+        "shipment_0": {
+          "estimated_delivery_date": null,
+          "shipping_date": null
+        }
+      }
+    },
+    {
+      "id": 16541,
+      "key": "_wcshipping-shipments",
+      "value": [
+        [
+          {
+            "id": 2934,
+            "subItems": []
+          }
+        ]
+      ]
+    },
+    {
+      "id": 16527,
+      "key": "is_vat_exempt",
+      "value": "no"
+    },
+    {
+      "id": 16542,
+      "key": "wcshipping_labels",
+      "value": [
+        {
+          "carrier_id": "usps",
+          "commercial_invoice_url": "",
+          "created": 1789068111000,
+          "created_date": 1789068116000,
+          "currency": "USD",
+          "expiry_date": 1804620115000,
+          "id": "0",
+          "is_commercial_invoice_submitted_electronically": false,
+          "is_letter": false,
+          "is_return": false,
+          "label_id": 13302422,
+          "main_receipt_id": 120712485,
+          "package_name": "1 Elixir",
+          "product_ids": [
+            2675
+          ],
+          "product_names": [
+            "Primal Elixir Hydration"
+          ],
+          "rate": 6,
+          "receipt_item_id": 186650868,
+          "refundable_amount": 6,
+          "service_name": "USPS - Ground Advantage",
+          "status": "PURCHASED",
+          "tracking": "9200190187252201352595"
+        }
+      ]
+    }
+  ],
+  "needs_payment": false,
+  "needs_processing": true,
+  "number": "3700",
+  "order_key": "wc_order_dHgVZAAwOfnHY",
+  "parent_id": 0,
+  "payment_method": "authorize_net_cim_credit_card",
+  "payment_method_title": "Credit Card",
+  "payment_url": "https://rfsupplements.com/checkout/order-pay/3700/?pay_for_order=true&key=wc_order_dHgVZAAwOfnHY",
+  "prices_include_tax": false,
+  "refunds": [],
+  "shipping": {
+    "address_1": "7 Testing Ln",
+    "address_2": "",
+    "city": "Springfield",
+    "company": "",
+    "country": "US",
+    "first_name": "Alex",
+    "last_name": "Poe",
+    "phone": "555-0100",
+    "postcode": "00000",
+    "state": "AZ"
+  },
+  "shipping_lines": [
+    {
+      "id": 2935,
+      "instance_id": "0",
+      "meta_data": [
+        {
+          "display_key": "parcels",
+          "display_value": [
+            {
+              "boxName": "Product",
+              "currency": "USD",
+              "destination": {
+                "city": "Springfield",
+                "country": "US",
+                "name": "Riley Poe",
+                "phone": "555-0100",
+                "postcode": "00000",
+                "state": "AZ"
+              },
+              "freightClass": "150",
+              "height": "0.79",
+              "insurance": "no",
+              "items": {
+                "2675": {
+                  "height": "0",
+                  "id": "2675",
+                  "length": "0",
+                  "name": "Jordan Roe",
+                  "productType": "variation",
+                  "quantity": "1",
+                  "sku": "PRIMAL-ELIXIR-HYDRATION-GREENAPPLE",
+                  "value": "39.99",
+                  "volume": "0",
+                  "weight": "0.69",
+                  "width": "0"
+                }
+              },
+              "length": "7.87",
+              "mediaMail": "exclude",
+              "seller_id": "0",
+              "signature": "no",
+              "type": "parcel",
+              "value": "39.99",
+              "vendor_id": "0",
+              "volume": "48.930151",
+              "weight": "0.69",
+              "width": "7.87"
+            }
+          ],
+          "id": 25815,
+          "key": "parcels",
+          "value": [
+            {
+              "boxName": "Product",
+              "currency": "USD",
+              "destination": {
+                "city": "Springfield",
+                "country": "US",
+                "name": "Riley Poe",
+                "phone": "555-0100",
+                "postcode": "00000",
+                "state": "AZ"
+              },
+              "freightClass": "150",
+              "height": "0.79",
+              "insurance": "no",
+              "items": {
+                "2675": {
+                  "height": "0",
+                  "id": "2675",
+                  "length": "0",
+                  "name": "Jordan Roe",
+                  "productType": "variation",
+                  "quantity": "1",
+                  "sku": "PRIMAL-ELIXIR-HYDRATION-GREENAPPLE",
+                  "value": "39.99",
+                  "volume": "0",
+                  "weight": "0.69",
+                  "width": "0"
+                }
+              },
+              "length": "7.87",
+              "mediaMail": "exclude",
+              "seller_id": "0",
+              "signature": "no",
+              "type": "parcel",
+              "value": "39.99",
+              "vendor_id": "0",
+              "volume": "48.930151",
+              "weight": "0.69",
+              "width": "7.87"
+            }
+          ]
+        },
+        {
+          "display_key": "seller_id",
+          "display_value": "0",
+          "id": 25816,
+          "key": "seller_id",
+          "value": "0"
+        },
+        {
+          "display_key": "vendor_id",
+          "display_value": "0",
+          "id": 25817,
+          "key": "vendor_id",
+          "value": "0"
+        },
+        {
+          "display_key": "service",
+          "display_value": "usps_ground_advantage",
+          "id": 25818,
+          "key": "service",
+          "value": "usps_ground_advantage"
+        }
+      ],
+      "method_id": "wc-shippo-shipping",
+      "method_title": "Ground Advantage",
+      "tax_status": "taxable",
+      "taxes": [],
+      "total": "6.00",
+      "total_tax": "0.00"
+    }
+  ],
+  "shipping_tax": "0.00",
+  "shipping_total": "6.00",
+  "status": "completed",
+  "tax_lines": [],
+  "total": "45.99",
+  "total_tax": "0.00",
+  "transaction_id": "TXN-SCRUBBED",
+  "version": "11.1.0"
+}

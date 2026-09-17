@@ -1,0 +1,58 @@
+[
+  {
+    "customer_note": false,
+    "date_created": "2026-09-10T19:22:00",
+    "date_created_gmt": "2026-09-10T19:22:00",
+    "id": 4574,
+    "note": "Email \"Completed order\" sent."
+  },
+  {
+    "customer_note": false,
+    "date_created": "2026-09-10T19:22:00",
+    "date_created_gmt": "2026-09-10T19:22:00",
+    "id": 4575,
+    "note": "Order status changed from Processing to Completed."
+  },
+  {
+    "customer_note": false,
+    "date_created": "2026-09-10T19:08:31",
+    "date_created_gmt": "2026-09-10T19:08:31",
+    "id": 4573,
+    "note": "Email \"Processing order\" sent."
+  },
+  {
+    "customer_note": false,
+    "date_created": "2026-09-10T19:08:30",
+    "date_created_gmt": "2026-09-10T19:08:30",
+    "id": 4572,
+    "note": "Email \"New order\" sent."
+  },
+  {
+    "customer_note": false,
+    "date_created": "2026-09-10T19:08:28",
+    "date_created_gmt": "2026-09-10T19:08:28",
+    "id": 4570,
+    "note": "Authorize.Net Credit Card  Charge Approved: Account ending in 0000 (Transaction ID 000000000000)"
+  },
+  {
+    "customer_note": false,
+    "date_created": "2026-09-10T19:08:28",
+    "date_created_gmt": "2026-09-10T19:08:28",
+    "id": 4571,
+    "note": "Payment via Credit Card (000000000000)."
+  },
+  {
+    "customer_note": false,
+    "date_created": "2026-09-10T19:08:27",
+    "date_created_gmt": "2026-09-10T19:08:27",
+    "id": 4568,
+    "note": "\n        <div class=\"solid-affiliate_woocommerce_order_note\">\n            <img src=\"https://solidaffiliate.com/brand/logo@2x.png\" height=\"24\" width=\"auto\" alt=\"Solid Affiliate logo\">\n            <hr>\n            <p style=\"margin-top:10px\"><strong>No referral was created for this order.</strong> These notes were returned: </p>\n            <ul><li>No auto referrals were created for this order.</li><li>No linked lifetimes commissions affiliate found for this customer.</li><li>No coupon was associated with this order.</li><li>No Visit cookie was found.</li></ul><div class=\"order_note-pill-1\">\n                <span>Conclusion</span>\n                <p>Referral was not created for this order because none of the referral checks passed.</p>\n            </div></div>\n    "
+  },
+  {
+    "customer_note": false,
+    "date_created": "2026-09-10T19:08:27",
+    "date_created_gmt": "2026-09-10T19:08:27",
+    "id": 4569,
+    "note": "Apple Pay payment authorized."
+  }
+]

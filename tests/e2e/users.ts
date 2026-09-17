@@ -1,6 +1,6 @@
-import { prisma } from "../src/lib/db";
-import { hashPassword } from "../src/lib/password";
-import type { Role } from "../src/generated/prisma/enums";
+import { prisma } from "@/lib/db";
+import { hashPassword } from "@/lib/password";
+import type { Role } from "@/generated/prisma/enums";
 
 // Test accounts are seeded directly, bypassing the invite flow, so the auth
 // tests stay focused on sign-in. They use a .test domain that can never be a

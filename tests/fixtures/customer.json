@@ -1,0 +1,75 @@
+{
+  "avatar_url": "scrubbed",
+  "billing": {
+    "address_1": "7 Testing Ln",
+    "address_2": "",
+    "city": "Springfield",
+    "company": "",
+    "country": "US",
+    "email": "riley.poe@example.com",
+    "first_name": "Alex",
+    "last_name": "Poe",
+    "phone": "555-0100",
+    "postcode": "00000",
+    "state": "AZ"
+  },
+  "date_created": "2026-05-18T03:22:02",
+  "date_created_gmt": "2026-05-18T03:22:02",
+  "date_modified": "2026-09-16T02:14:26",
+  "date_modified_gmt": "2026-09-16T02:14:26",
+  "email": "riley.poe@example.com",
+  "first_name": "Alex",
+  "id": 16,
+  "is_paying_customer": true,
+  "last_name": "Poe",
+  "meta_data": [
+    {
+      "id": 1092,
+      "key": "mailchimp_woocommerce_is_subscribed",
+      "value": "1"
+    },
+    {
+      "id": 1093,
+      "key": "mailchimp_woocommerce_marketing_status_updated_at",
+      "value": "1779074522"
+    },
+    {
+      "id": 1104,
+      "key": "default_password_nag",
+      "value": ""
+    },
+    {
+      "id": 1107,
+      "key": "wc_last_active",
+      "value": "1789524712"
+    },
+    {
+      "id": 1137,
+      "key": "shipping_method",
+      "value": [
+        "flexible_shipping_single:1"
+      ]
+    },
+    {
+      "id": 1139,
+      "key": "wc_authorize_net_cim_customer_profile_id",
+      "value": ""
+    }
+  ],
+  "orders_count": 4,
+  "role": "customer",
+  "shipping": {
+    "address_1": "7 Testing Ln",
+    "address_2": "",
+    "city": "Springfield",
+    "company": "",
+    "country": "US",
+    "first_name": "Alex",
+    "last_name": "Poe",
+    "phone": "555-0100",
+    "postcode": "00000",
+    "state": "AZ"
+  },
+  "total_spent": "457.74",
+  "username": "scrubbed"
+}

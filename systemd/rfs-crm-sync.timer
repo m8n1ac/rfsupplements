@@ -1,0 +1,12 @@
+[Unit]
+Description=Run the incremental inbound sync every 60 seconds
+
+[Timer]
+OnBootSec=2min
+OnUnitActiveSec=60s
+AccuracySec=5s
+# Never let two syncs overlap.
+Unit=rfs-crm-sync.service
+
+[Install]
+WantedBy=timers.target

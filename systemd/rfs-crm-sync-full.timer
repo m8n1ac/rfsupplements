@@ -1,0 +1,14 @@
+[Unit]
+Description=Run the full inbound sync nightly
+
+[Timer]
+# 11:30 UTC = 04:30 America/Los_Angeles, genuinely off-peak and clear of
+# rfs-backup.timer (03:13 UTC) and rfs-snapshot.timer (03:48 UTC) on this
+# 2-vCPU box (Gate 0, A2).
+OnCalendar=*-*-* 11:30:00 UTC
+Persistent=true
+AccuracySec=1min
+Unit=rfs-crm-sync-full.service
+
+[Install]
+WantedBy=timers.target

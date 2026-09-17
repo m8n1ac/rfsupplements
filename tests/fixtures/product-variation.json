@@ -1,0 +1,86 @@
+{
+  "attributes": [
+    {
+      "id": 2,
+      "name": "Size",
+      "option": "S",
+      "slug": "pa_size"
+    }
+  ],
+  "backordered": false,
+  "backorders": "no",
+  "backorders_allowed": false,
+  "date_created": "2025-11-20T18:59:22",
+  "date_modified": "2026-08-06T16:54:01",
+  "date_on_sale_from": null,
+  "date_on_sale_from_gmt": null,
+  "date_on_sale_to": null,
+  "date_on_sale_to_gmt": null,
+  "description": "",
+  "dimensions": {
+    "height": "",
+    "length": "",
+    "width": ""
+  },
+  "download_expiry": -1,
+  "download_limit": -1,
+  "downloadable": false,
+  "downloads": [],
+  "id": 1807,
+  "image": {
+    "alt": "",
+    "date_created": "2025-11-11T01:56:52",
+    "date_created_gmt": "2025-11-11T01:56:52",
+    "date_modified": "2025-11-20T18:59:22",
+    "date_modified_gmt": "2025-11-20T18:59:22",
+    "id": 1984,
+    "name": "classic-rf-t-shirt-white",
+    "position": 0,
+    "src": "https://rfsupplements.com/wp-content/uploads/2025/11/classic-rf-t-shirt-white-1.webp"
+  },
+  "in_stock": false,
+  "manage_stock": false,
+  "menu_order": 0,
+  "meta_data": [
+    {
+      "id": 37535,
+      "key": "_wp_page_template",
+      "value": "default"
+    },
+    {
+      "id": 83266,
+      "key": "fb_size",
+      "value": "S"
+    },
+    {
+      "id": 92672,
+      "key": "_solid_affiliate_woocommerce_product_variation_referral_rate",
+      "value": ""
+    },
+    {
+      "id": 92673,
+      "key": "_solid_affiliate_woocommerce_product_variation_referral_rate_type",
+      "value": "site_default"
+    },
+    {
+      "id": 92674,
+      "key": "_solid_affiliate_woocommerce_is_product_variation_referrals_disabled",
+      "value": ""
+    }
+  ],
+  "on_sale": false,
+  "permalink": "https://rfsupplements.com/product/classic-white-rf-t-shirt/?attribute_pa_size=s",
+  "price": "30",
+  "purchasable": true,
+  "regular_price": "30",
+  "sale_price": "",
+  "shipping_class": "",
+  "shipping_class_id": 0,
+  "sku": "CLASSIC-WHITE-RF-T-SHIRT-S",
+  "stock_quantity": null,
+  "tax_class": "",
+  "tax_status": "none",
+  "virtual": false,
+  "visible": true,
+  "weight": ".4375"
+}

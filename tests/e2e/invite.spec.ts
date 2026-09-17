@@ -1,6 +1,6 @@
 import { expect, test } from "@playwright/test";
-import { prisma } from "../src/lib/db";
-import { createInvite } from "../src/lib/invite";
+import { prisma } from "@/lib/db";
+import { createInvite } from "@/lib/invite";
 import { deleteTestUsers } from "./users";
 
 // Covers the invite link end to end: open it, set a password, then sign in with

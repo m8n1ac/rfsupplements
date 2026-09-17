@@ -12,7 +12,8 @@ const LINKS = [
   { href: "/contacts", label: "Contacts", adminOnly: false },
   { href: "/inquiries", label: "Inquiries", adminOnly: false },
   { href: "/tasks", label: "Tasks", adminOnly: false },
-  { href: "/settings/users", label: "Settings", adminOnly: true },
+  { href: "/settings/users", label: "Users", adminOnly: true },
+  { href: "/settings/sync", label: "Sync", adminOnly: true },
 ] as const;
 
 export function AppNav({ user }: { user: CurrentUser }) {

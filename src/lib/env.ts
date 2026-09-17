@@ -8,6 +8,10 @@ const schema = z.object({
   AUTH_SECRET: z.string().min(32),
   AUTH_URL: z.url(),
   STORE_TZ: z.string().min(1),
+  // WooCommerce REST, authenticated by the crm-sync Application Password (§7).
+  WOO_BASE_URL: z.url(),
+  WOO_USER: z.string().min(1),
+  WOO_APP_PASSWORD: z.string().min(1),
   SMTP_HOST: z.string().min(1),
   SMTP_PORT: z.coerce.number().int().positive(),
   SMTP_USER: z.string().min(1),

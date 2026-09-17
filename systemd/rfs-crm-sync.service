@@ -1,0 +1,20 @@
+[Unit]
+Description=RF Supplements Ops CRM — incremental inbound sync
+After=network-online.target mariadb.service
+Wants=network-online.target
+Requires=mariadb.service
+
+[Service]
+Type=oneshot
+User=ubuntu
+Group=ubuntu
+WorkingDirectory=/opt/rfs-crm
+EnvironmentFile=/opt/rfs-crm/.env
+Environment=NODE_ENV=production
+ExecStart=/usr/bin/npm run sync -- --mode=incremental
+
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=full
+ProtectHome=read-only
+ReadWritePaths=/opt/rfs-crm

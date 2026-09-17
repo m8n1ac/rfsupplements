@@ -1,0 +1,152 @@
+{
+  "attributes": [
+    {
+      "id": 2,
+      "name": "Size",
+      "options": [
+        "2XL",
+        "3XL",
+        "4XL",
+        "L",
+        "M",
+        "S",
+        "XL"
+      ],
+      "position": 0,
+      "slug": "pa_size",
+      "variation": true,
+      "visible": true
+    }
+  ],
+  "average_rating": "0.00",
+  "backordered": false,
+  "backorders": "no",
+  "backorders_allowed": false,
+  "button_text": "",
+  "catalog_visibility": "visible",
+  "categories": [
+    {
+      "id": 87,
+      "name": "Merch",
+      "slug": "merch"
+    }
+  ],
+  "cross_sell_ids": [],
+  "date_created": "2025-11-20T18:59:22",
+  "date_created_gmt": "2025-11-20T18:59:22",
+  "date_modified": "2026-08-06T16:54:01",
+  "date_modified_gmt": "2026-08-06T16:54:01",
+  "date_on_sale_from": null,
+  "date_on_sale_from_gmt": null,
+  "date_on_sale_to": null,
+  "date_on_sale_to_gmt": null,
+  "default_attributes": [],
+  "description": "<div class=\"product-description rf-tee-white\">\n<p>Refresh your essentials with our <strong>Classic White RF T-Shirt</strong>, crafted from high-quality, breathable cotton for everyday comfort and performance. Whether you're pushing through a workout or relaxing at home, the soft fabric keeps you cool and comfortable.</p>\n<p>The crisp white color delivers a clean, versatile look that pairs easily with any outfit. Designed with a relaxed, athletic fit, this tee allows for plenty of freedom of movement while maintaining a flattering silhouette. Reinforced stitching and durable construction help it keep its shape and brightness through frequent washes.</p>\n<p><strong>Simple, timeless, and built for your daily rotation.</strong></p>\n</div>\n",
+  "dimensions": {
+    "height": "",
+    "length": "",
+    "width": ""
+  },
+  "download_expiry": -1,
+  "download_limit": -1,
+  "downloadable": false,
+  "downloads": [],
+  "external_url": "",
+  "featured": false,
+  "grouped_products": [],
+  "id": 1805,
+  "images": [
+    {
+      "alt": "",
+      "date_created": "2025-11-11T01:56:52",
+      "date_created_gmt": "2025-11-11T01:56:52",
+      "date_modified": "2025-11-20T18:59:22",
+      "date_modified_gmt": "2025-11-20T18:59:22",
+      "id": 1984,
+      "name": "classic-rf-t-shirt-white",
+      "position": 0,
+      "src": "https://rfsupplements.com/wp-content/uploads/2025/11/classic-rf-t-shirt-white-1.webp"
+    }
+  ],
+  "in_stock": true,
+  "manage_stock": false,
+  "menu_order": 8,
+  "meta_data": [
+    {
+      "id": 37507,
+      "key": "__is_newly_created_product",
+      "value": ""
+    },
+    {
+      "id": 37511,
+      "key": "_wp_page_template",
+      "value": "default"
+    },
+    {
+      "id": 37534,
+      "key": "__first_variation_id",
+      "value": "1813"
+    },
+    {
+      "id": 83249,
+      "key": "fb_size",
+      "value": "2XL | 3XL | 4XL | L | M | S | XL"
+    },
+    {
+      "id": 83258,
+      "key": "_wc_facebook_sync_enabled_v2",
+      "value": "yes"
+    },
+    {
+      "id": 83260,
+      "key": "fb_visibility",
+      "value": "yes"
+    }
+  ],
+  "name": "Classic White RF T-shirt",
+  "on_sale": false,
+  "parent_id": 0,
+  "permalink": "https://rfsupplements.com/product/classic-white-rf-t-shirt/",
+  "price": "30",
+  "price_html": "<span class=\"woocommerce-Price-amount amount\"><bdi><span class=\"woocommerce-Price-currencySymbol\" translate=\"no\">&#36;</span>30.00</bdi></span>",
+  "purchasable": true,
+  "purchase_note": "",
+  "rating_count": 0,
+  "regular_price": "",
+  "related_ids": [
+    1752,
+    1745,
+    1801,
+    1738,
+    1709
+  ],
+  "reviews_allowed": true,
+  "sale_price": "",
+  "shipping_class": "",
+  "shipping_class_id": 0,
+  "shipping_required": true,
+  "shipping_taxable": false,
+  "short_description": "<p>Refresh your essentials with our <strong>Classic White RF T-Shirt</strong>, crafted from high-quality, breathable cotton for everyday comfort and performance. Whether you&#8217;re pushing through a workout or relaxing at home, the soft fabric keeps you cool and comfortable.</p>\n",
+  "sku": "CLASSIC-WHITE-RF-T-SHIRT",
+  "slug": "classic-white-rf-t-shirt",
+  "sold_individually": false,
+  "status": "publish",
+  "stock_quantity": null,
+  "tags": [],
+  "tax_class": "",
+  "tax_status": "none",
+  "total_sales": 0,
+  "type": "variable",
+  "upsell_ids": [],
+  "variations": [
+    1807,
+    1808,
+    1809,
+    1810,
+    1811,
+    1812,
+    1813
+  ],
+  "virtual": false,
+  "weight": ".4375"
+}

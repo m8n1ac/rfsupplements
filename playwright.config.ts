@@ -4,7 +4,7 @@ import "dotenv/config";
 // Tests run against the real deployment, so they exercise nginx as well as the
 // app — which is the point for the 403 and the security headers.
 export default defineConfig({
-  testDir: "./tests",
+  testDir: "./tests/e2e",
   fullyParallel: false,
   workers: 1,
   reporter: [["list"]],

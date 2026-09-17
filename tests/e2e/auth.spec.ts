@@ -1,5 +1,5 @@
 import { expect, test, type Page } from "@playwright/test";
-import { prisma } from "../src/lib/db";
+import { prisma } from "@/lib/db";
 import { createTestUser, deleteTestUsers, TEST_PASSWORD, type TestUser } from "./users";
 
 const ADMIN_EMAIL = "e2e-admin@rfs.test";

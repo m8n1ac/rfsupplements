@@ -1,0 +1,95 @@
+{
+  "amount": "46.15",
+  "date_created": "2026-09-17T01:05:09",
+  "date_created_gmt": "2026-09-17T01:05:09",
+  "fee_lines": [],
+  "id": 3730,
+  "line_items": [
+    {
+      "global_unique_id": "",
+      "id": 2978,
+      "image": {
+        "id": 3544,
+        "src": "https://rfsupplements.com/wp-content/uploads/2026/02/Wild-Lychee.png"
+      },
+      "meta_data": [
+        {
+          "display_key": "_refunded_item_id",
+          "display_value": "2974",
+          "id": 26151,
+          "key": "_refunded_item_id",
+          "value": "2974"
+        }
+      ],
+      "name": "Primal Pre-Workout 2.0 - Lychee",
+      "parent_name": "Primal Pre-Workout 2.0",
+      "price": 39.99,
+      "product_id": 1687,
+      "quantity": -1,
+      "sku": "PRIMAL-PRE-WORKOUT-2-0-LYCHEE",
+      "subtotal": "-39.99",
+      "subtotal_tax": "0.00",
+      "tax_class": "",
+      "taxes": [],
+      "total": "-39.99",
+      "total_tax": "0.00",
+      "variation_id": 1694
+    }
+  ],
+  "meta_data": [
+    {
+      "id": 16861,
+      "key": "_refund_type",
+      "value": "full"
+    },
+    {
+      "id": 16862,
+      "key": "_wc_shipstation_refund_args",
+      "value": {
+        "amount": "46.15",
+        "line_items": {
+          "2974": {
+            "qty": "1",
+            "refund_tax": [],
+            "refund_total": "39.99"
+          },
+          "2975": {
+            "qty": 0,
+            "refund_tax": [],
+            "refund_total": "6.16"
+          }
+        },
+        "order_id": 3728,
+        "reason": "",
+        "refund_id": 0,
+        "refund_payment": true,
+        "restock_items": true
+      }
+    }
+  ],
+  "reason": "",
+  "refunded_by": 53,
+  "refunded_payment": true,
+  "shipping_lines": [
+    {
+      "id": 2979,
+      "instance_id": "0",
+      "meta_data": [
+        {
+          "display_key": "_refunded_item_id",
+          "display_value": "2975",
+          "id": 26157,
+          "key": "_refunded_item_id",
+          "value": "2975"
+        }
+      ],
+      "method_id": "wc-shippo-shipping",
+      "method_title": "Ground Saver",
+      "tax_status": "taxable",
+      "taxes": [],
+      "total": "-6.16",
+      "total_tax": "0.00"
+    }
+  ],
+  "tax_lines": []
+}
