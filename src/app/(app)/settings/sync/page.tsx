@@ -12,6 +12,7 @@ import {
 import { prisma } from "@/lib/db";
 import { requireUser } from "@/lib/require-user";
 import { RESOURCES } from "@/lib/sync/engine";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 import { RunFullSyncButton } from "@/app/(app)/settings/sync/run-full-sync";
 
 export const metadata: Metadata = { title: "Sync · RF Supplements Ops" };
@@ -29,6 +30,17 @@ export default async function SyncPage() {
   ]);
 
   const byResource = new Map(cursors.map((cursor) => [cursor.resource, cursor]));
+
+  // A run that dies before it can write a SyncRun row — a bad import, a missing
+  // env var — never increments consecutiveFailures, so the failure alert would
+  // never fire. Staleness is the signal that catches that case: the incremental
+  // timer runs every 60 seconds, so anything past 15 minutes is wrong.
+  const STALE_AFTER_MS = 15 * 60_000;
+  const now = new Date();
+  const stale = RESOURCES.filter((resource) => {
+    const lastSuccess = byResource.get(resource)?.lastSuccessAt;
+    return !lastSuccess || now.getTime() - lastSuccess.getTime() > STALE_AFTER_MS;
+  });
 
   return (
     <div className="grid gap-6">
@@ -48,6 +60,15 @@ export default async function SyncPage() {
           </CardDescription>
         </CardHeader>
         <CardContent className="grid gap-4">
+          {stale.length > 0 ? (
+            <Alert variant="destructive">
+              <AlertDescription>
+                No successful run in the last 15 minutes for: {stale.join(", ")}. Check
+                <code className="mx-1">journalctl -u rfs-crm-sync.service</code>
+                — a run that crashes before it starts leaves no record here.
+              </AlertDescription>
+            </Alert>
+          ) : null}
           <Table>
             <TableHeader>
               <TableRow>
@@ -67,7 +88,7 @@ export default async function SyncPage() {
                     <TableCell className="text-muted-foreground">
                       {stamp(cursor?.lastModifiedGmt ?? null)}
                     </TableCell>
-                    <TableCell className="text-muted-foreground">
+                    <TableCell className={stale.includes(resource) ? "text-destructive" : "text-muted-foreground"}>
                       {stamp(cursor?.lastSuccessAt ?? null)}
                     </TableCell>
                     <TableCell>
