@@ -1,3 +1,6 @@
+// The database client never belongs in a client bundle.
+import "server-only";
+
 import { PrismaMariaDb } from "@prisma/adapter-mariadb";
 import { PrismaClient } from "@/generated/prisma/client";
 import { env } from "@/lib/env";

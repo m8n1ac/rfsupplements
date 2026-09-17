@@ -1,3 +1,7 @@
+// Importing this from a client component is a build error, not a runtime
+// surprise in someone's browser: the validated environment is server-only.
+import "server-only";
+
 import { z } from "zod";
 
 // Environment is a trust boundary (engineering rule 11), so it is validated once,
