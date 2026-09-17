@@ -13,7 +13,8 @@
     "db:migrate:dev": "prisma migrate dev",
     "db:generate": "prisma generate",
     "user:create": "tsx scripts/user-create.ts",
-    "test": "playwright test"
+    "test": "playwright test",
+    "user:invite": "tsx scripts/user-invite.ts"
   },
   "dependencies": {
     "@node-rs/argon2": "^2.2.1",
