@@ -221,7 +221,13 @@ which he has done rather than assuming:
    2403 shows $5,000 gross live and 0 in the lookup. **Do not change
    `src/lib/metrics/` to match stale tables**; August already matches to the
    cent.
-4. **Read the runbook** (`README.md`) — Gate 6 asks for Darrin's review of it.
+3. **Read the runbook** (`README.md`) — Gate 6 asks for Darrin's review of it.
+
+Gate 2 closed on 2026-09-18. The bridge was reinstalled on the `wpcf7_submit`
+hook and a real browser submission reached the CRM as an Inquiry in 17 seconds.
+It attached to the submitter's existing `WOO_GUEST` contact rather than creating
+a duplicate `FORM` one, which is the matching rule working on live data. The
+response carries `mail_status`, which is the proof the new hook is running.
 
 Gate 1's reboot test passed on 2026-09-18: the box was rebooted and every
 service, both stores, the CRM and all three timers returned unattended, with the
