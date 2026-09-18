@@ -40,6 +40,17 @@ async function signIn(page: Page): Promise<void> {
 
 test.beforeAll(async () => {
   admin = await createTestUser(ADMIN_EMAIL, "ADMIN");
+
+  // Phase 6 removes the store fixtures at handover. Skip with an instruction
+  // rather than failing with a confusing 404 from WooCommerce.
+  const order = await woo(`/wc/v3/orders/${TEST_ORDER_WOO_ID}`);
+  const customer = await woo(`/wc/v3/customers/${TEST_CUSTOMER_WOO_ID}`);
+  const missing = Boolean(order.code) || Boolean(customer.code);
+
+  test.skip(
+    missing,
+    "Store test fixtures are absent. Recreate them with: npm run fixtures:store -- --create",
+  );
 });
 
 test.afterAll(async () => {

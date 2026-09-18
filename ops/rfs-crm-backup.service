@@ -1,0 +1,11 @@
+[Unit]
+Description=RF Supplements Ops CRM — nightly database backup to S3
+After=network-online.target mariadb.service
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/sbin/rfs-crm-backup.sh run
+# A failed backup must be visible, not silent.
+StandardOutput=journal
+StandardError=journal

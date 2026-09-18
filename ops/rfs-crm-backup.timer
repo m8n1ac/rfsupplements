@@ -1,0 +1,13 @@
+[Unit]
+Description=Back up the Ops CRM database nightly
+
+[Timer]
+# 04:10 UTC — clear of rfs-backup (03:13), rfs-snapshot (03:45) and the CRM's
+# own full sync (11:30) on this 2-vCPU box.
+OnCalendar=*-*-* 04:10:00 UTC
+Persistent=true
+AccuracySec=1min
+Unit=rfs-crm-backup.service
+
+[Install]
+WantedBy=timers.target

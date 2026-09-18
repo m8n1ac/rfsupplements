@@ -32,6 +32,13 @@ rm -rf .next/standalone/.next/static .next/standalone/public
 cp -r .next/static .next/standalone/.next/static
 cp -r public .next/standalone/public
 
+# The build runs as ubuntu; the service runs as the rfs-crm system account, so
+# the fresh output has to stay group-readable for it.
+echo "==> Fixing ownership for the service account"
+sudo chown -R ubuntu:rfs-crm "$APP_DIR"
+sudo chmod -R g+rX "$APP_DIR"
+sudo chmod 640 "$APP_DIR/.env"
+
 echo "==> Restarting $SERVICE"
 sudo systemctl restart "$SERVICE"
 

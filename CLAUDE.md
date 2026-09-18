@@ -45,9 +45,22 @@ npm run user:create -- --email … --name "…" --role ADMIN|STAFF
 npm run user:invite -- --email …   # reissue an invite; the way back in
 ```
 
-Service: `rfs-crm` (Next standalone on 127.0.0.1:3100). Timers:
-`rfs-crm-sync.timer` (60s) and `rfs-crm-sync-full.timer` (11:30 UTC = 04:30
-Pacific, clear of the 03:15 backup and 03:45 snapshot).
+```
+npm run fixtures:store -- --create|--remove   # the store's test order/product/customer
+sudo /usr/local/sbin/rfs-crm-backup.sh run|restore-test|latest
+```
+
+Service: `rfs-crm`, running as the **`rfs-crm` system account** (no login shell)
+with secrets in `/etc/rfs-crm/env`, not in the app directory. Deploys still run
+as `ubuntu`, which is why `/opt/rfs-crm` is group-readable by `rfs-crm` and
+`deploy.sh` re-applies that after every build.
+
+Timers: `rfs-crm-sync.timer` (60s), `rfs-crm-sync-full.timer` (11:30 UTC = 04:30
+Pacific) and `rfs-crm-backup.timer` (04:10 UTC), all clear of the existing
+`rfs-backup` (03:13) and `rfs-snapshot` (03:45).
+
+The operator runbook is `README.md`: deploy, add a user, rotate the app
+password, run a sync, restore a backup.
 
 ## Things that will bite you
 
@@ -71,6 +84,17 @@ Pacific, clear of the 03:15 backup and 03:45 snapshot).
 - **A generated shadcn component can be wrong.** `CommandDialog` shipped without
   its `Command` wrapper, so ⌘K threw on open. These files are vendored — fix
   them in place and say why in a comment.
+- **The e2e suite pauses `rfs-crm-sync.timer`** (`tests/e2e/global-setup.ts`).
+  The stale-write tests need the CRM's copy to stay older than the store's, and
+  a 60-second sync repairs exactly that. Stopping the timer does not stop a run
+  already in flight, so it waits for one.
+- **MariaDB's root uses unix_socket auth.** Passing `-h 127.0.0.1` forces TCP and
+  the socket plugin never applies, so admin commands must omit `-h`.
+- **Three dependency overrides**, all in `package.json` so `npm ci` reproduces
+  them: `nodemailer` held forward past its advisories, `mysql2` pulled to a
+  patched 3.24, and `mariadb` pinned to `~3.4.7` because
+  `@prisma/adapter-mariadb` pins exactly 3.4.5, which carries three advisories.
+  `npm audit` is clean; keep it that way.
 
 ## Auth
 
@@ -151,7 +175,7 @@ Woo record and are edited locally only.
 
 ## Current state
 
-Phases 0–5 are done and deployed. Phase 6 is hardening and handover.
+Phases 0–6 are built and deployed.
 
 Open, and both need Darrin rather than code:
 
@@ -160,10 +184,15 @@ Open, and both need Darrin rather than code:
    correctly rejects scripted posts, so the Inquiries board has no real data yet.
 2. **Gate 4**: regenerate Woo's report data, then re-run `npm run verify:metrics`.
 
-Test artifacts still in the store, per spec §13, for Phase 6 to remove: product
-3743 (`ZZ TEST — CRM Sync Probe`, private and hidden), order 3744 (pending), and
-customer 57 (`crm-gate5-customer@example.com`). The outbound suite writes to
-those and nothing else.
+Test artifacts are still in the store because the outbound suite writes to them:
+product 3743, order 3744, customer 57. Remove them at handover with
+`npm run fixtures:store -- --remove`; the suite then skips itself with the
+command to recreate them.
+
+Gate 6 is not fully closed. The alert email fires correctly on the third
+consecutive failure and again on recovery — Gmail answers
+`535 Username and Password not accepted`, so only the App Password is missing.
+Inviting the RFS team needs the same credential.
 
 The repo has no remote yet — commit each phase locally; the URL and credentials
 come later.

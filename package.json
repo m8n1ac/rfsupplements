@@ -19,7 +19,8 @@
     "sync": "NODE_OPTIONS=--conditions=react-server tsx scripts/sync.ts",
     "fixtures:capture": "NODE_OPTIONS=--conditions=react-server tsx scripts/capture-fixtures.ts",
     "verify:orders": "NODE_OPTIONS=--conditions=react-server tsx scripts/verify-orders.ts",
-    "verify:metrics": "NODE_OPTIONS=--conditions=react-server tsx scripts/verify-metrics.ts"
+    "verify:metrics": "NODE_OPTIONS=--conditions=react-server tsx scripts/verify-metrics.ts",
+    "fixtures:store": "NODE_OPTIONS=--conditions=react-server tsx scripts/store-fixtures.ts"
   },
   "dependencies": {
     "@node-rs/argon2": "^2.2.1",
@@ -64,6 +65,7 @@
       "nodemailer": "$nodemailer"
     },
     "mysql2": "^3.23.1",
-    "deepmerge-ts": "^8.0.0"
+    "deepmerge-ts": "^8.0.0",
+    "mariadb": "~3.4.7"
   }
 }

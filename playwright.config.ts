@@ -5,6 +5,8 @@ import "dotenv/config";
 // app — which is the point for the 403 and the security headers.
 export default defineConfig({
   testDir: "./tests/e2e",
+  globalSetup: "./tests/e2e/global-setup.ts",
+  globalTeardown: "./tests/e2e/global-teardown.ts",
   fullyParallel: false,
   workers: 1,
   reporter: [["list"]],
