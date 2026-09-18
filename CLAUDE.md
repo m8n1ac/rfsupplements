@@ -173,26 +173,73 @@ accurate if the store's email settings change — the confirm dialog quotes it.
 Customer email is never editable (it is the store login). Guest contacts have no
 Woo record and are edited locally only.
 
-## Current state
+## Where things stand
 
-Phases 0–6 are built and deployed.
+Paused 2026-09-18 ~01:00 UTC, resuming the following day. **All six phases are
+built and deployed**, the site is live, and everything is committed. Nothing is
+half-finished in the working tree.
 
-Open, and both need Darrin rather than code:
+Verified healthy at pause: git clean; `rfs-crm`, both sync timers and the backup
+timer all enabled at boot and active; every sync cursor at zero consecutive
+failures; 31 Playwright and 25 unit tests green; `npm audit` clean.
 
-1. **Gate 2**, last item: the bridge mu-plugin needs reinstalling after its hook
-   change, then a contact-form submission **from a browser** — reCAPTCHA
-   correctly rejects scripted posts, so the Inquiries board has no real data yet.
-2. **Gate 4**: regenerate Woo's report data, then re-run `npm run verify:metrics`.
+Darrin's admin account works — he accepted the invite and signed in on the 17th,
+so no new invite is needed.
 
-Test artifacts are still in the store because the outbound suite writes to them:
-product 3743, order 3744, customer 57. Remove them at handover with
-`npm run fixtures:store -- --remove`; the suite then skips itself with the
-command to recreate them.
+### Pick up here
 
-Gate 6 is not fully closed. The alert email fires correctly on the third
-consecutive failure and again on recovery — Gmail answers
-`535 Username and Password not accepted`, so only the App Password is missing.
-Inviting the RFS team needs the same credential.
+Five things are open. **Four of them need Darrin, not code**, so start by asking
+which he has done rather than assuming:
 
-The repo has no remote yet — commit each phase locally; the URL and credentials
-come later.
+1. **SMTP App Password** → `SMTP_USER`, `SMTP_PASS`, `MAIL_FROM`, `ALERT_EMAIL`
+   in `/etc/rfs-crm/env`, then `sudo systemctl restart rfs-crm`. This alone
+   closes two Gate 6 items: the failure alert and inviting the RFS team. The
+   alert logic is proven — it fires on the third consecutive failure and again
+   on recovery; Gmail answers `535 Username and Password not accepted`, so only
+   the credential is missing.
+2. **Gate 2, last item.** The bridge mu-plugin needs reinstalling after its hook
+   change (`wpcf7_mail_sent` → `wpcf7_submit`), then a contact-form submission
+   **from a browser** — reCAPTCHA correctly rejects scripted posts. Until then
+   the Inquiries board has never seen real data, which makes it the least
+   exercised screen in the app.
+   ```
+   sudo install -o rfs -g rfs -m 644 \
+     /opt/rfs-crm/wordpress/rfs-crm-bridge.php \
+     /var/www/rfsupplements.com/wp-content/mu-plugins/rfs-crm-bridge.php
+   ```
+3. **Gate 4.** WooCommerce → Status → Tools → *Regenerate reports data*, then
+   `npm run verify:metrics`. Three windows currently fail because Woo's own
+   lookup tables have drifted from its orders — order 2285 is counted by
+   Analytics but returns 404, order 2548 has a total and no line items, order
+   2403 shows $5,000 gross live and 0 in the lookup. **Do not change
+   `src/lib/metrics/` to match stale tables**; August already matches to the
+   cent.
+4. **The reboot test** (Gate 1, never run). Every unit is enabled at boot, and a
+   SIGKILL of the main PID was recovered automatically, but the real thing needs
+   a window: this box also serves rfsupplements.com and rfsrx.com.
+5. **Read the runbook** (`README.md`) — Gate 6 asks for Darrin's review of it.
+
+### Loose ends worth raising
+
+- **Test artifacts are deliberately still in the store** because the outbound
+  suite writes to them: product 3743, order 3744, customer 57. Clear them with
+  `npm run fixtures:store -- --remove` when he is ready; the suite then skips
+  itself with the command to recreate them.
+- **Order 2548 is damaged in the store** — a $56.97 total with zero line items.
+  That is a WooCommerce data problem, not a reporting one, and nobody has
+  decided what to do about it.
+- **130 completed orders carry no billing email**, so they can never attach to a
+  contact. Flagged twice; still undecided.
+- **`logrotate.service` fails nightly**, unrelated to this project:
+  `/etc/logrotate.d/rfs-blocked` duplicates a file the nginx glob already covers,
+  so logrotate exits 1. Harmless today, but it leaves the unit permanently
+  "failed", which is how a real rotation failure later goes unnoticed. The fix is
+  deleting that one file; not done, because it is outside this project's scope.
+- **The repo has no remote.** Commit each phase locally; the URL and credentials
+  come later.
+
+### What is not built
+
+Spec §15 "Future" items, all out of scope for v1: rfsrx.com and anything PHI,
+refunds and product edits from the CRM, email ingestion, and marketing
+automation. Phase 7 (`rfs-bots`) is a separate project.
