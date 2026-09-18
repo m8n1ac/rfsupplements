@@ -34,7 +34,7 @@ changes, TypeScript strict.
 
 ```
 npm run dev / build / lint / typecheck
-npm test                 # vitest, unit
+npm test                 # vitest, unit + integration (against rfs_crm_test)
 npm run test:e2e         # playwright, against the live deployment
 ./deploy.sh              # npm ci, migrate, generate, build, stage, restart
 npm run sync -- --mode=incremental|full
@@ -84,6 +84,12 @@ password, run a sync, restore a backup.
 - **A generated shadcn component can be wrong.** `CommandDialog` shipped without
   its `Command` wrapper, so ⌘K threw on open. These files are vendored — fix
   them in place and say why in a comment.
+- **Integration tests run against `rfs_crm_test`, never the live database.**
+  `tests/unit/setup-db.ts` derives that URL from the real `DATABASE_URL` by
+  swapping only the database name, so it holds no credential and follows a
+  rotation. `resetDatabase()` refuses to run if the URL is not the test one.
+  After a schema change, migrate it too:
+  `DATABASE_URL=...rfs_crm_test npx prisma migrate deploy`.
 - **The e2e suite pauses `rfs-crm-sync.timer`** (`tests/e2e/global-setup.ts`).
   The stale-write tests need the CRM's copy to stay older than the store's, and
   a 60-second sync repairs exactly that. Stopping the timer does not stop a run
@@ -199,9 +205,10 @@ which he has done rather than assuming:
    the credential is missing.
 2. **Gate 2, last item.** The bridge mu-plugin needs reinstalling after its hook
    change (`wpcf7_mail_sent` → `wpcf7_submit`), then a contact-form submission
-   **from a browser** — reCAPTCHA correctly rejects scripted posts. Until then
-   the Inquiries board has never seen real data, which makes it the least
-   exercised screen in the app.
+   **from a browser** — reCAPTCHA correctly rejects scripted posts. The
+   submissions → Inquiry path now has unit coverage against a stubbed bridge
+   (`tests/unit/submissions.test.ts`), but it has still never run against a real
+   submission.
    ```
    sudo install -o rfs -g rfs -m 644 \
      /opt/rfs-crm/wordpress/rfs-crm-bridge.php \

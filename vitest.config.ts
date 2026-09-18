@@ -12,6 +12,8 @@ export default defineConfig({
   test: {
     include: ["tests/unit/**/*.test.ts"],
     environment: "node",
-    setupFiles: ["dotenv/config"],
+    // setup-db.ts must come after dotenv so it wins: these tests must never
+    // touch the live database.
+    setupFiles: ["dotenv/config", "./tests/unit/setup-db.ts"],
   },
 });
