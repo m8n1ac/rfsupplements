@@ -150,6 +150,34 @@ describe("revenueTotals", () => {
     expect(totals.returningRate).toBeCloseTo(0.5, 5);
   });
 
+  it("books no gross for a discount that has no coupon behind it", async () => {
+    // Order 2403 in the live store: $5,000 off with no coupon attached.
+    // WooCommerce derives gross from what was charged plus coupon amounts, so
+    // it books this as gross 0 and coupons 0. Summing line subtotals instead
+    // would overstate both by $5,000 — which is exactly what the CRM did until
+    // 2026-09-18.
+    const contact = await seedContact("uncouponed@example.com");
+    const order = await seedOrder({
+      contactId: contact.id,
+      paidAt: new Date("2026-03-11T12:00:00Z"),
+      items: [["2500.00", 10], ["2500.00", 10]],
+    });
+    // Discounted to nothing, with no coupon: line totals 0, couponTotal 0.
+    await prisma.orderItem.updateMany({ where: { orderId: order.id }, data: { total: "0.00" } });
+    await prisma.order.update({
+      where: { id: order.id },
+      data: { discountTotal: "5000.00", couponTotal: "0.00", total: "0.00" },
+    });
+
+    const totals = await revenueTotals(MARCH);
+
+    expect(totals.grossSales.toFixed(2)).toBe("0.00");
+    expect(totals.coupons.toFixed(2)).toBe("0.00");
+    expect(totals.netSales.toFixed(2)).toBe("0.00");
+    // It still counts as an order, which is what moves AOV.
+    expect(totals.orders).toBe(1);
+  });
+
   it("computes the refund rate against gross sales", async () => {
     await seedScenario();
     const totals = await revenueTotals(MARCH);

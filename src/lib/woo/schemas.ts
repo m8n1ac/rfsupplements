@@ -108,7 +108,9 @@ export const wooLineItem = z
   })
   .loose();
 
-export const wooCouponLine = z.object({ code: z.string() }).loose();
+export const wooCouponLine = z
+  .object({ code: z.string(), discount: z.string() })
+  .loose();
 
 // Every order carries a summary of its refunds. It has no date, so it is not
 // enough to build a Refund row, but it tells the sync which orders to fetch

@@ -211,6 +211,11 @@ model Order {
   shippingTotal      Decimal  @db.Decimal(12, 2)
   taxTotal           Decimal  @db.Decimal(12, 2)
   refundTotal        Decimal  @default(0) @db.Decimal(12, 2)
+  // The sum of the order's coupon_lines. This is NOT discountTotal: an order can
+  // carry a discount with no coupon behind it, and WooCommerce Analytics counts
+  // only coupon-backed discounts. Order 2403 is the case in point — $5,000 off
+  // with no coupon attached.
+  couponTotal        Decimal  @default(0) @db.Decimal(12, 2)
   paymentMethod      String?
   paymentMethodTitle String?
   couponCodes        Json?

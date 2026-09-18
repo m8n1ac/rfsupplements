@@ -65,19 +65,22 @@ type AggregateRow = {
 };
 
 export async function revenueTotals(range: Range): Promise<RevenueTotals> {
-  // Gross sales are the sum of line-item subtotals, which is Woo's definition:
-  // what the items were worth before any discount.
+  // Woo derives gross from what was actually charged for the items plus the
+  // coupon amounts that reduced it — not from the line subtotals. The two agree
+  // whenever every discount came from a coupon, which is the normal case. They
+  // diverge on an order discounted without a coupon, where Woo books no gross
+  // and no coupon, and summing subtotals would overstate both.
   const [aggregate] = await prisma.$queryRaw<AggregateRow[]>`
     SELECT
       COUNT(*)                                              AS orders,
       COALESCE(SUM(items.quantity), 0)                      AS items,
-      COALESCE(SUM(items.subtotal), 0)                      AS gross,
-      COALESCE(SUM(o.discountTotal), 0)                     AS coupons,
+      COALESCE(SUM(items.total), 0) + COALESCE(SUM(o.couponTotal), 0) AS gross,
+      COALESCE(SUM(o.couponTotal), 0)                       AS coupons,
       COALESCE(SUM(o.shippingTotal), 0)                     AS shipping,
       COALESCE(SUM(o.taxTotal), 0)                          AS taxes
     FROM \`Order\` o
     LEFT JOIN (
-      SELECT orderId, SUM(quantity) AS quantity, SUM(subtotal) AS subtotal
+      SELECT orderId, SUM(quantity) AS quantity, SUM(total) AS total
       FROM OrderItem GROUP BY orderId
     ) items ON items.orderId = o.id
     WHERE o.deletedInWoo = 0
@@ -184,11 +187,11 @@ export async function netSalesSeries(range: Range, timeZone: string): Promise<Se
   const rows = await prisma.$queryRaw<{ day: string; net: string | number; orders: bigint }[]>`
     SELECT
       DATE_FORMAT(CONVERT_TZ(o.paidAtWoo, '+00:00', ${timeZone}), '%Y-%m-%d') AS day,
-      COALESCE(SUM(items.subtotal), 0) - COALESCE(SUM(o.discountTotal), 0) AS net,
+      COALESCE(SUM(items.total), 0)                                 AS net,
       COUNT(*)                                                      AS orders
     FROM \`Order\` o
     LEFT JOIN (
-      SELECT orderId, SUM(subtotal) AS subtotal FROM OrderItem GROUP BY orderId
+      SELECT orderId, SUM(total) AS total FROM OrderItem GROUP BY orderId
     ) items ON items.orderId = o.id
     WHERE o.deletedInWoo = 0
       AND o.status NOT IN (${Prisma.join(EXCLUDED_STATUSES)})
@@ -246,7 +249,7 @@ export async function topCoupons(range: Range, limit = 10): Promise<CouponLine[]
       status: { notIn: EXCLUDED_STATUSES },
       paidAtWoo: { gte: range.from, lt: range.to },
     },
-    select: { couponCodes: true, discountTotal: true },
+    select: { couponCodes: true, couponTotal: true },
   });
 
   const totals = new Map<string, { discount: number; orders: number }>();
@@ -257,7 +260,7 @@ export async function topCoupons(range: Range, limit = 10): Promise<CouponLine[]
 
     // An order's discount is split evenly when it carries more than one coupon;
     // Woo does not report a per-coupon breakdown on the order.
-    const share = Number(order.discountTotal) / codes.length;
+    const share = Number(order.couponTotal) / codes.length;
     for (const code of codes) {
       const current = totals.get(code) ?? { discount: 0, orders: 0 };
       current.discount += share;

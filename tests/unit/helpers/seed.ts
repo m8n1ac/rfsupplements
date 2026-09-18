@@ -17,8 +17,10 @@ export type SeedOrder = {
   /** Instant the order was paid; null means never paid, so it is invisible to revenue. */
   paidAt: Date | null;
   createdAt?: Date;
-  /** Line items as [unitSubtotal, quantity] pairs. */
+  /** Line items as [unitSubtotal, quantity] pairs, before any discount. */
   items?: [string, number][];
+  /** A coupon-backed discount. Woo reduces the line totals by it and books it
+   *  as a coupon; gross is then line totals plus coupons. */
   discount?: string;
   shipping?: string;
   tax?: string;
@@ -40,6 +42,7 @@ export async function seedOrder(order: SeedOrder) {
       total: (gross - Number(discount) + Number(order.shipping ?? "0")).toFixed(2),
       subtotal: gross.toFixed(2),
       discountTotal: discount,
+      couponTotal: discount,
       shippingTotal: order.shipping ?? "0.00",
       taxTotal: order.tax ?? "0.00",
       createdAtWoo: order.createdAt ?? order.paidAt ?? new Date(),
@@ -48,15 +51,20 @@ export async function seedOrder(order: SeedOrder) {
     },
   });
 
+  // The discount comes off the line totals, exactly as WooCommerce records it,
+  // and is spread across the lines in proportion to their value.
   await prisma.orderItem.createMany({
-    data: items.map(([subtotal, quantity], index) => ({
-      orderId: created.id,
-      wooLineItemId: index + 1,
-      name: `Item ${index + 1}`,
-      quantity,
-      subtotal,
-      total: subtotal,
-    })),
+    data: items.map(([subtotal, quantity], index) => {
+      const share = gross > 0 ? (Number(subtotal) / gross) * Number(discount) : 0;
+      return {
+        orderId: created.id,
+        wooLineItemId: index + 1,
+        name: `Item ${index + 1}`,
+        quantity,
+        subtotal,
+        total: (Number(subtotal) - share).toFixed(2),
+      };
+    }),
   });
 
   return created;

@@ -127,6 +127,12 @@ export function mapOrder(
     .reduce((sum, refund) => sum + Math.abs(Number(refund.total)), 0)
     .toFixed(2);
 
+  // Woo Analytics derives gross from net plus coupon amounts, so only
+  // coupon-backed discounts count. discountTotal can be larger.
+  const couponTotal = order.coupon_lines
+    .reduce((sum, line) => sum + Number(line.discount), 0)
+    .toFixed(2);
+
   return {
     wooId: order.id,
     number: order.number,
@@ -139,6 +145,7 @@ export function mapOrder(
     shippingTotal: order.shipping_total,
     taxTotal: order.total_tax,
     refundTotal,
+    couponTotal,
     paymentMethod: blankToNull(order.payment_method),
     paymentMethodTitle: blankToNull(order.payment_method_title),
     couponCodes: order.coupon_lines.map((line) => line.code) as unknown as Prisma.InputJsonValue,
