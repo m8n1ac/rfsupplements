@@ -25,6 +25,7 @@ import { PageHeader } from "@/components/crm/page-header";
 import { NoteList } from "@/components/crm/notes";
 import { TaskList } from "@/components/crm/tasks";
 import { TagEditor } from "@/components/crm/tags";
+import { ContactEditor, type Address } from "@/components/crm/contact-editor";
 import { prisma } from "@/lib/db";
 import { requireUser } from "@/lib/require-user";
 import { formatDate, formatDateTime, formatMoney, fullName, orderStatusVariant } from "@/lib/format";
@@ -188,7 +189,9 @@ export default async function ContactDetailPage({ params }: PageProps<"/contacts
             <CardHeader>
               <CardTitle>Profile</CardTitle>
               <CardDescription>
-                Editing writes back to WooCommerce, which arrives in Phase 5.
+                {contact.wooCustomerId
+                  ? "Edits are written to WooCommerce."
+                  : "A guest buyer with no WooCommerce customer record."}
               </CardDescription>
             </CardHeader>
             <CardContent className="grid gap-2 text-sm">
@@ -204,6 +207,18 @@ export default async function ContactDetailPage({ params }: PageProps<"/contacts
                   <span className="text-right">{value}</span>
                 </div>
               ))}
+              <div className="mt-2">
+                <ContactEditor
+                  contactId={contact.id}
+                  isWooCustomer={contact.wooCustomerId !== null}
+                  email={contact.email}
+                  firstName={contact.firstName}
+                  lastName={contact.lastName}
+                  phone={contact.phone}
+                  billing={contact.billing as Address | null}
+                  shipping={contact.shipping as Address | null}
+                />
+              </div>
             </CardContent>
           </Card>
 

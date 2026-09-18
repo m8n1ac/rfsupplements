@@ -18,6 +18,8 @@ import { Empty } from "@/components/crm/empty";
 import { PageHeader } from "@/components/crm/page-header";
 import { NoteList } from "@/components/crm/notes";
 import { TaskList } from "@/components/crm/tasks";
+import { OrderStatusControl } from "@/components/crm/order-status-control";
+import { WooNoteForm } from "@/components/crm/woo-note-form";
 import { prisma } from "@/lib/db";
 import { requireUser } from "@/lib/require-user";
 import { formatDateTime, formatMoney, fullName, orderStatusVariant } from "@/lib/format";
@@ -178,6 +180,8 @@ export default async function OrderDetailPage({ params }: PageProps<"/orders/[wo
             </Card>
           ) : null}
 
+          <WooNoteForm wooId={order.wooId} />
+
           <NoteList
             notes={order.notes}
             target={{ orderId: order.id }}
@@ -213,6 +217,16 @@ export default async function OrderDetailPage({ params }: PageProps<"/orders/[wo
                   This order carries no billing email, so it is not linked to a contact.
                 </Empty>
               )}
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle>Status</CardTitle>
+              <CardDescription>Written to WooCommerce, which is the system of record.</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <OrderStatusControl wooId={order.wooId} current={order.status} />
             </CardContent>
           </Card>
 
