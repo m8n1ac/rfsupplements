@@ -134,10 +134,24 @@ always — never a second axis. A legend only when there are two or more series.
 Slot 3 is below 3:1 on the light surface, so charts using it ship the value table
 beside them.
 
+## Outbound writes
+
+Only three are allowed (spec §6.2): order status, order notes, customer contact
+fields. All go through `src/lib/woo/write.ts`, which is Woo-first: read and
+refuse if the store is newer, write to Woo, store Woo's response, audit it. A
+failure writes nothing locally — no queue, no retry.
+
+`src/lib/woo/order-emails.ts` records which statuses email whom, read from this
+store's settings: processing, completed, on-hold and refunded reach the
+**customer**; cancelled and failed reach the three **owner** addresses. Keep it
+accurate if the store's email settings change — the confirm dialog quotes it.
+
+Customer email is never editable (it is the store login). Guest contacts have no
+Woo record and are edited locally only.
+
 ## Current state
 
-Phases 0–4 are done and deployed. Phase 5 is outbound sync — the first phase that
-**writes** to WooCommerce, so Woo-first writes and the stale-write refusal matter.
+Phases 0–5 are done and deployed. Phase 6 is hardening and handover.
 
 Open, and both need Darrin rather than code:
 
@@ -147,7 +161,9 @@ Open, and both need Darrin rather than code:
 2. **Gate 4**: regenerate Woo's report data, then re-run `npm run verify:metrics`.
 
 Test artifacts still in the store, per spec §13, for Phase 6 to remove: product
-3743 (`ZZ TEST — CRM Sync Probe`, private and hidden) and order 3744 (trashed).
+3743 (`ZZ TEST — CRM Sync Probe`, private and hidden), order 3744 (pending), and
+customer 57 (`crm-gate5-customer@example.com`). The outbound suite writes to
+those and nothing else.
 
 The repo has no remote yet — commit each phase locally; the URL and credentials
 come later.
