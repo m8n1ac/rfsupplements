@@ -146,8 +146,20 @@ async function remove(): Promise<void> {
 
   const customerId = await findCustomer();
   if (customerId) {
-    await woo(`/wc/v3/customers/${customerId}?force=true&reassign=0`, { method: "DELETE" });
-    console.log(`customer ${customerId} deleted`);
+    // Deleting a customer means deleting a WordPress user, which Shop Manager
+    // deliberately cannot do — so this reports the outcome rather than assuming
+    // it worked.
+    const result = await woo(`/wc/v3/customers/${customerId}?force=true`, { method: "DELETE" });
+    const failed = (result as WooJson).code;
+    if (failed) {
+      console.log(
+        `customer ${customerId} NOT deleted (${String(failed)}) — the crm-sync ` +
+          `credential cannot delete WordPress users. Remove it in wp-admin: ` +
+          `Users → ${FIXTURE_CUSTOMER_EMAIL} → Delete.`,
+      );
+    } else {
+      console.log(`customer ${customerId} deleted`);
+    }
   }
 }
 
