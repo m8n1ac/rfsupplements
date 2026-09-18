@@ -28,6 +28,13 @@ export const metadata: Metadata = { title: "Order · RF Supplements Ops" };
 
 type Address = Record<string, string | undefined>;
 
+type TrackingItem = {
+  tracking_number?: string;
+  tracking_provider?: string;
+  custom_tracking_provider?: string;
+  custom_tracking_link?: string;
+};
+
 function AddressBlock({ address }: { address: Address | null }) {
   if (!address) return <p className="text-muted-foreground text-sm">—</p>;
 
@@ -85,6 +92,7 @@ export default async function OrderDetailPage({ params }: PageProps<"/orders/[wo
   }
 
   const codes = Array.isArray(order.couponCodes) ? (order.couponCodes as string[]) : [];
+  const tracking = Array.isArray(order.tracking) ? (order.tracking as TrackingItem[]) : [];
   const staff = await prisma.user.findMany({
     where: { active: true },
     select: { id: true, name: true },
@@ -227,6 +235,40 @@ export default async function OrderDetailPage({ params }: PageProps<"/orders/[wo
             </CardHeader>
             <CardContent>
               <OrderStatusControl wooId={order.wooId} current={order.status} />
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle>Shipment</CardTitle>
+              <CardDescription>
+                Tracking comes from whichever label service shipped it.
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="grid gap-3 text-sm">
+              {tracking.length === 0 ? (
+                <p className="text-muted-foreground">Not shipped yet.</p>
+              ) : (
+                tracking.map((item) => (
+                  <div key={item.tracking_number} className="grid gap-1">
+                    <span className="text-muted-foreground text-xs uppercase tracking-wide">
+                      {item.custom_tracking_provider || item.tracking_provider || "Carrier"}
+                    </span>
+                    {item.custom_tracking_link ? (
+                      <a
+                        href={item.custom_tracking_link}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="font-mono text-sm break-all hover:underline"
+                      >
+                        {item.tracking_number}
+                      </a>
+                    ) : (
+                      <span className="font-mono text-sm break-all">{item.tracking_number}</span>
+                    )}
+                  </div>
+                ))
+              )}
             </CardContent>
           </Card>
 

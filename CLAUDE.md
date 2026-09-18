@@ -88,8 +88,9 @@ password, run a sync, restore a backup.
   `tests/unit/setup-db.ts` derives that URL from the real `DATABASE_URL` by
   swapping only the database name, so it holds no credential and follows a
   rotation. `resetDatabase()` refuses to run if the URL is not the test one.
-  After a schema change, migrate it too:
-  `DATABASE_URL=...rfs_crm_test npx prisma migrate deploy`.
+  **After every schema change, migrate it too** or the integration tests fail
+  with confusing Prisma errors:
+  `DATABASE_URL=<live url with /rfs_crm_test> npx prisma migrate deploy`.
 - **The e2e suite pauses `rfs-crm-sync.timer`** (`tests/e2e/global-setup.ts`).
   The stale-write tests need the CRM's copy to stay older than the store's, and
   a 60-second sync repairs exactly that. Stopping the timer does not stop a run
@@ -155,6 +156,41 @@ passes `STORE_TZ`, the Gate 4 check passes UTC.
   discount live but 0/0 in the lookup. August matches to the cent; the year does
   not. The fix is WooCommerce → Status → Tools → *Regenerate reports data*, which
   is Darrin's to run. Do not "fix" `src/lib/metrics/` to match stale tables.
+
+## The WordPress side
+
+Hardening applied 2026-09-18, beyond the original spec §7 scope and with
+Darrin's approval:
+
+- `wordpress/rfs-hardening.php` (installed as an mu-plugin) closes
+  `wp-json/wp/v2/users`, which was returning administrator names and login
+  slugs to anyone, redirects `?author=N`, and stops the site publishing its
+  WordPress version.
+- `wp-login.php` is rate limited to 5/min per IP, burst 3, via
+  `/etc/nginx/conf.d/rfs-wp-login-limit.conf` plus a location block in the store
+  vhost. That vhost is not otherwise version controlled; the applied block is
+  kept in `ops/rfs-wp-login-location.conf` and a pre-change backup sits beside
+  the original.
+
+Already covered before this project and not duplicated: xmlrpc, wp-config,
+PHP execution in uploads, dotfiles, backup directories, and headless checkout
+POSTs (`rfs-bot-block.conf`).
+
+**Shipping.** The store moved from WooCommerce Shipping to **Shippo on 4 Sep
+2026**; Shippo is the standard. Both write tracking to the same carrier-agnostic
+`_wc_shipment_tracking_items` order meta, which the sync lifts into
+`Order.tracking` and the order page shows. ShipStation is installed but unused
+and is to be removed. Flexible Shipping served orders to 3 Sep and its plugin is
+already gone.
+
+**Affiliate.** Solid Affiliate 3.3.0, 20 affiliates, 23 referred orders. It
+exposes no REST namespace, so the agreed approach is to extend
+`rfs-crm-bridge.php` with a read-only affiliate endpoint — the same pattern the
+forms bridge already uses. Not built yet.
+
+**Elementor.** Was stuck in Safe Mode after the migration; cleared 2026-09-18.
+The free edition has no Forms widget, which is why the site's five forms are
+Contact Form 7.
 
 ## Charts
 

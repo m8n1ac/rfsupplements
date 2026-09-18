@@ -191,3 +191,36 @@ describe("mapRefund", () => {
     expect(refund.reason).toBeNull();
   });
 });
+
+describe("shipment tracking", () => {
+  it("lifts tracking out of Woo's meta_data", () => {
+    const order = wooOrder.parse({
+      ...(fixture("order-guest") as object),
+      meta_data: [
+        { id: 1, key: "_unrelated", value: "x" },
+        {
+          id: 2,
+          key: "_wc_shipment_tracking_items",
+          value: [
+            {
+              tracking_number: "9400111899223197428490",
+              custom_tracking_provider: "USPS - Ground Advantage",
+              custom_tracking_link: "https://tools.usps.com/go/TrackConfirmAction?tLabels=9400111899223197428490",
+            },
+          ],
+        },
+      ],
+    });
+
+    const mapped = mapOrder(order, null);
+    const tracking = mapped.tracking as { tracking_number: string }[];
+
+    expect(tracking).toHaveLength(1);
+    expect(tracking[0].tracking_number).toBe("9400111899223197428490");
+  });
+
+  it("is an empty list for an order that has not shipped", () => {
+    const order = wooOrder.parse({ ...(fixture("order-guest") as object), meta_data: [] });
+    expect(mapOrder(order, null).tracking).toEqual([]);
+  });
+});

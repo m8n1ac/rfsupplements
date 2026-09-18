@@ -115,6 +115,22 @@ export const wooCouponLine = z
 // Every order carries a summary of its refunds. It has no date, so it is not
 // enough to build a Refund row, but it tells the sync which orders to fetch
 // details for — 3 requests instead of one per order.
+// Shipment tracking, written by whichever label service is in use. The key is
+// carrier-agnostic: WooCommerce Shipping wrote it before 4 Sep 2026 and Shippo
+// writes it now, in the same shape.
+export const wooTrackingItem = z
+  .object({
+    tracking_number: z.string(),
+    tracking_provider: z.string().optional(),
+    custom_tracking_provider: z.string().optional(),
+    custom_tracking_link: z.string().optional(),
+  })
+  .loose();
+
+export const wooMetaData = z
+  .object({ key: z.string(), value: z.unknown() })
+  .loose();
+
 export const wooRefundSummary = z
   .object({ id: z.number().int(), total: z.string() })
   .loose();
@@ -138,6 +154,7 @@ export const wooOrder = z
     line_items: z.array(wooLineItem),
     coupon_lines: z.array(wooCouponLine),
     refunds: z.array(wooRefundSummary),
+    meta_data: z.array(wooMetaData),
     date_created_gmt: wooDate,
     date_modified_gmt: wooDateNullable,
     date_paid_gmt: wooDateNullable,

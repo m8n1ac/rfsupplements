@@ -216,6 +216,10 @@ model Order {
   // only coupon-backed discounts. Order 2403 is the case in point — $5,000 off
   // with no coupon attached.
   couponTotal        Decimal  @default(0) @db.Decimal(12, 2)
+  // Shipment tracking, lifted out of Woo's meta_data so the UI does not have to
+  // dig through raw. Carrier-agnostic: the same key serves the old WooCommerce
+  // Shipping labels and the Shippo ones that replaced them.
+  tracking           Json?
   paymentMethod      String?
   paymentMethodTitle String?
   couponCodes        Json?

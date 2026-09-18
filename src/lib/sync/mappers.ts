@@ -133,6 +133,11 @@ export function mapOrder(
     .reduce((sum, line) => sum + Number(line.discount), 0)
     .toFixed(2);
 
+  const trackingMeta = order.meta_data.find(
+    (meta) => meta.key === "_wc_shipment_tracking_items",
+  );
+  const tracking = Array.isArray(trackingMeta?.value) ? trackingMeta.value : [];
+
   return {
     wooId: order.id,
     number: order.number,
@@ -146,6 +151,7 @@ export function mapOrder(
     taxTotal: order.total_tax,
     refundTotal,
     couponTotal,
+    tracking: tracking as Prisma.InputJsonValue,
     paymentMethod: blankToNull(order.payment_method),
     paymentMethodTitle: blankToNull(order.payment_method_title),
     couponCodes: order.coupon_lines.map((line) => line.code) as unknown as Prisma.InputJsonValue,
