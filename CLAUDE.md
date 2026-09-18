@@ -221,10 +221,11 @@ which he has done rather than assuming:
    2403 shows $5,000 gross live and 0 in the lookup. **Do not change
    `src/lib/metrics/` to match stale tables**; August already matches to the
    cent.
-4. **The reboot test** (Gate 1, never run). Every unit is enabled at boot, and a
-   SIGKILL of the main PID was recovered automatically, but the real thing needs
-   a window: this box also serves rfsupplements.com and rfsrx.com.
-5. **Read the runbook** (`README.md`) — Gate 6 asks for Darrin's review of it.
+4. **Read the runbook** (`README.md`) — Gate 6 asks for Darrin's review of it.
+
+Gate 1's reboot test passed on 2026-09-18: the box was rebooted and every
+service, both stores, the CRM and all three timers returned unattended, with the
+sync resuming at its 2-minute OnBootSec and no data loss.
 
 ### Loose ends worth raising
 
@@ -242,8 +243,11 @@ which he has done rather than assuming:
   so logrotate exits 1. Harmless today, but it leaves the unit permanently
   "failed", which is how a real rotation failure later goes unnoticed. The fix is
   deleting that one file; not done, because it is outside this project's scope.
-- **The repo has no remote.** Commit each phase locally; the URL and credentials
-  come later.
+- **Remote is `github-rfs-ops-crm:m8n1ac/rfsupplements.git`** (note: the repo is
+  named `rfsupplements`, not `rfs-ops-crm` as the spec assumed). It
+  authenticates with a deploy key at `~/.ssh/rfs-ops-crm-deploy` via the host
+  alias in `~/.ssh/config`, so a plain `git push` works. `.env` is not tracked
+  and no tracked file contains a live credential — keep it that way.
 
 ### What is not built
 
