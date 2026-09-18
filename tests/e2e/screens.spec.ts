@@ -192,3 +192,44 @@ test("navigation is a sidebar on desktop and a drawer on a phone", async ({ page
   await drawerContacts.click();
   await expect(page).toHaveURL("/contacts");
 });
+
+test("the dashboard shows revenue tiles and charts to an ADMIN", async ({ page }) => {
+  await signIn(page, admin);
+  await page.goto("/?period=ytd");
+
+  for (const tile of ["Net sales", "Total sales", "Orders", "Average order", "Refunds"]) {
+    await expect(page.getByText(tile, { exact: true }).first()).toBeVisible();
+  }
+  await expect(page.getByText("Net sales over time")).toBeVisible();
+  await expect(page.getByText("Top products by net sales")).toBeVisible();
+});
+
+test("STAFF gets the ops queues but no revenue on the dashboard", async ({ page }) => {
+  await signIn(page, staff);
+  await page.goto("/");
+
+  // Ops queues are for both roles.
+  await expect(page.getByText("On hold or pending")).toBeVisible();
+  await expect(page.getByText("My tasks due or overdue")).toBeVisible();
+
+  // Revenue is withheld on the server, so it is absent from the HTML entirely.
+  const html = await page.content();
+  for (const forbidden of ["Net sales", "Total sales", "Average order", "Returning rate"]) {
+    expect(html, `STAFF dashboard must not contain "${forbidden}"`).not.toContain(forbidden);
+  }
+  // The period picker is an admin control too.
+  await expect(page.getByRole("button", { name: "Year to date" })).toHaveCount(0);
+});
+
+test("the period picker changes the window and survives a reload", async ({ page }) => {
+  await signIn(page, admin);
+  await page.goto("/?period=mtd");
+  await expect(page.getByText(/Month to date · times in/)).toBeVisible();
+
+  await page.getByRole("button", { name: "7 days" }).click();
+  await expect(page).toHaveURL(/period=7d/);
+  await expect(page.getByText(/7 days · times in/)).toBeVisible();
+
+  await page.reload();
+  await expect(page.getByText(/7 days · times in/)).toBeVisible();
+});
