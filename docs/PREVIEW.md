@@ -115,6 +115,31 @@ Before promoting anything: take a snapshot
 (`sudo /usr/local/sbin/rfs-snapshot.sh run`), make the change, then check the
 store, cart and checkout still load.
 
+### Page content promotes as a surgical edit, not a copy
+
+Diff the two before assuming what changed. `wp post update <file>` reads the
+file as bytes, but anything that reads and rewrites the content in Python's
+text mode silently converts CRLF to LF — and page 1849 is stored with 143
+carriage returns. That made a one-character fix look like a 143-line rewrite,
+and copying preview's version to production would have quietly stripped every
+line ending.
+
+Diff with `--strip-trailing-cr` to see the real change, then patch production's
+own bytes rather than overwriting them:
+
+```sh
+diff --strip-trailing-cr prod.html preview.html     # the actual difference
+```
+
+Read and write in **binary** mode, assert the length and the carriage-return
+count are unchanged, and only then `wp post update`.
+
+### Promoted so far
+
+| Date | Change | How |
+|---|---|---|
+| 2026-09-19 | Athlete Program contrast: headings and body copy were built for a dark background and rendered on white at 1:1 and 1.6:1 | `custom.css` + `custom.scss` copied; page 1849's malformed `</h3>` patched in place |
+
 ## Refreshing the preview from production
 
 The preview drifts as production changes. To rebuild it, repeat the build:

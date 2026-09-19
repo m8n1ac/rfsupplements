@@ -266,28 +266,17 @@ accounts. See `docs/PREVIEW.md` — and never push its database to production.
 
 ### Pick up here
 
-1. **Athlete Program page contrast** is fixed **on preview only**, awaiting
-   Darrin's approval to promote. That section was built for a dark background
-   and renders on white: headings were `#fff` on `#fff`. Fixed in both
-   `custom.css` and `custom.scss` under `molla-child`, scoped to `.athlete` and
-   `.rf-athlete` because the Home page uses `.text-light` correctly on a dark
-   band. Promote by rsyncing those two files plus page 1849's content, which
-   also carries a malformed `</h3>` fix.
-2. **Affiliate integration** — still not built. Solid Affiliate 3.3.0, 20
-   affiliates, 23 referrals, $95.59 unpaid commission, no REST namespace. Agreed
-   approach is a read-only endpoint on `rfs-crm-bridge.php`. Darrin asked for
-   this twice and it has been interrupted twice.
-3. **SMTP App Password** → `SMTP_USER`, `SMTP_PASS`, `MAIL_FROM`, `ALERT_EMAIL`
+1. **SMTP App Password** → `SMTP_USER`, `SMTP_PASS`, `MAIL_FROM`, `ALERT_EMAIL`
    in `/etc/rfs-crm/env`, then `sudo systemctl restart rfs-crm`. Blocks failure
    alerts and self-service invites. The alert logic is proven; Gmail answers
    `535`, so only the credential is missing.
-4. **Roo and Jackie** have not confirmed sign-in. They are the real test of the
+2. **Roo and Jackie** have not confirmed sign-in. They are the real test of the
    repaired login path.
-5. **Two damaged orders** keep `verify:metrics` at 3 of 5 windows: 2285 is a
+3. **Two damaged orders** keep `verify:metrics` at 3 of 5 windows: 2285 is a
    refund placeholder Analytics counts but the API 404s, and 2548 has a $56.97
    total with zero line items. The gap is exactly those two — **do not change
    `src/lib/metrics/` to chase it**. August matches to the cent.
-6. **191 card-testing orders** from 11 August still await a bulk-cancel decision.
+4. **191 card-testing orders** from 11 August still await a bulk-cancel decision.
 
 ### A note on how this has gone wrong before
 
