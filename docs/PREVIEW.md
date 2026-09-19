@@ -182,6 +182,41 @@ preview, restore the four meta values and recreate `col-3` as a `nolink`
 `grid_col` child of 1380. The image itself (attachment 1821) is untouched in the
 media library either way.
 
+**Product categories restructured.** Twelve categories became eleven, but the
+shape changed more than the count: merchandising flags and single-product
+categories are gone, and Merch has structure for the first time.
+
+| Category | Products | Change |
+|---|---|---|
+| Performance | 3 | new — Pre-Workout, Creatine, Endurance |
+| Recovery | 3 | new — Whey Protein, Repair, Sleep |
+| Hydration | 2 | kept — Elixir, Endurance |
+| Elite Formulas | 2 | renamed from Advanced Formulas |
+| Daily Health | 4 | renamed from Wellness |
+| Metabolic | 1 | renamed from Fat Burner |
+| Merch › Apparel / Headwear / Accessories | 10 / 3 / 3 | new children |
+| Bundles | 0 | **untouched — still empty and still in the menu** |
+
+Deleted once empty: Featured Products, New Products, Sleep Aid, Protein Powder,
+Pre-Workout, Uncategorized. All 29 products are categorised; none was orphaned.
+
+Three menu items pointed at individual product pages rather than categories
+(`/product/primal-elixir-hydration/` as "Hydration") and now point at the
+categories.
+
+**Supplement categories were deliberately left at the top level.** WooCommerce
+puts the parent in a child's URL, so nesting them under a "Supplements" parent
+would have changed every existing category URL for no navigational gain. Only
+the new Merch children are nested, and they have no URLs to break.
+
+Two renames do change URLs and need redirects when promoted:
+`advanced-formulas` → `elite-formulas`, and `wellness` → `daily-health`.
+
+To promote: this is all taxonomy and menu data, so none of it rsyncs. Repeat the
+term renames, creations, product assignments and menu changes with WP-CLI on
+production. A rollback of the product assignments is only useful alongside the
+old terms, so restore terms first.
+
 ### Promoted so far
 
 | Date | Change | How |
