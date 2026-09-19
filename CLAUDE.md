@@ -166,11 +166,26 @@ Darrin's approval:
   `wp-json/wp/v2/users`, which was returning administrator names and login
   slugs to anyone, redirects `?author=N`, and stops the site publishing its
   WordPress version.
-- `wp-login.php` is rate limited to 5/min per IP, burst 3, via
-  `/etc/nginx/conf.d/rfs-wp-login-limit.conf` plus a location block in the store
-  vhost. That vhost is not otherwise version controlled; the applied block is
-  kept in `ops/rfs-wp-login-location.conf` and a pre-change backup sits beside
-  the original.
+- `wp-login.php` is rate limited via `/etc/nginx/conf.d/rfs-wp-login-limit.conf`
+  plus a location block in the store vhost. It counts **POSTs only**, 30/min per
+  IP, burst 10. The first attempt counted page loads at 5/min and locked Darrin
+  and potentially customers out: a sign-in is GET + POST, so one retry burned
+  four of five. Never rate limit a path by request count when a normal
+  interaction costs more than one request. Changing a zone's *key* needs
+  `systemctl restart nginx` — a reload keeps the old zone.
+- **Response security headers** (`snippets/rfs-security-headers.conf`): nosniff,
+  SAMEORIGIN, Referrer-Policy, Permissions-Policy and HSTS at `max-age=86400`.
+  Included twice per vhost — at server level and inside the static-asset location
+  — because `add_header` in a location **replaces** every inherited header rather
+  than adding to them. Raise HSTS to six months only after watching a renewal
+  succeed, and never add `preload`.
+- **`robots.txt`** was returning nginx's own 404: `location = /robots.txt` had no
+  `try_files`, so nginx looked on disk and never reached WordPress. It now falls
+  through to `index.php` and Yoast serves it, sitemap reference included.
+
+That vhost is not otherwise version controlled; the applied login block is kept
+in `ops/rfs-wp-login-location.conf` and timestamped backups sit beside the
+original in `/etc/nginx/sites-available/`.
 
 Already covered before this project and not duplicated: xmlrpc, wp-config,
 PHP execution in uploads, dotfiles, backup directories, and headless checkout
@@ -179,14 +194,24 @@ POSTs (`rfs-bot-block.conf`).
 **Shipping.** The store moved from WooCommerce Shipping to **Shippo on 4 Sep
 2026**; Shippo is the standard. Both write tracking to the same carrier-agnostic
 `_wc_shipment_tracking_items` order meta, which the sync lifts into
-`Order.tracking` and the order page shows. ShipStation is installed but unused
-and is to be removed. Flexible Shipping served orders to 3 Sep and its plugin is
-already gone.
+`Order.tracking` and the order page shows. **ShipStation stays** — it is
+installed, updated to 5.3.6, and the team uses it; an earlier recommendation to
+remove it was made on absence of evidence rather than evidence of absence, and
+deactivating it took it down for about two hours. Flexible Shipping served
+orders to 3 Sep and its plugin is already gone.
 
 **Affiliate.** Solid Affiliate 3.3.0, 20 affiliates, 23 referred orders. It
 exposes no REST namespace, so the agreed approach is to extend
 `rfs-crm-bridge.php` with a read-only affiliate endpoint — the same pattern the
 forms bridge already uses. Not built yet.
+
+**Athlete Program.** Form 2039 on `/athlete-program/`. It was always captured —
+`INQUIRY_FORM_IDS` already listed 2039 — but applications landed in the general
+Inquiries queue. They now have their own screen at `/athletes`, still stored as
+Inquiries and worked through the same pipeline, and are excluded from Inquiries
+so nothing sits in two queues. Tier, sport and handle are read out of the
+payload by `src/lib/athlete.ts`. CF7 posts a `[select]` as an **array** and a
+`[text]` as a string, which is the thing to remember when adding a field.
 
 **Elementor.** Was stuck in Safe Mode after the migration; cleared 2026-09-18.
 The free edition has no Forms widget, which is why the site's five forms are
@@ -217,82 +242,47 @@ Woo record and are edited locally only.
 
 ## Where things stand
 
-Paused 2026-09-18 ~01:00 UTC, resuming the following day. **All six phases are
-built and deployed**, the site is live, and everything is committed. Nothing is
-half-finished in the working tree.
+Updated 2026-09-19 ~00:30 UTC. Production audited end to end after the preview
+build and the hardening round: all customer paths healthy, gateway live, mail
+unblocked, backups landing in S3 with versioning on, all four certificates
+renewing, zero failed systemd units, 215 consecutive clean sync runs.
 
-Verified healthy at pause: git clean; `rfs-crm`, both sync timers and the backup
-timer all enabled at boot and active; every sync cursor at zero consecutive
-failures; 31 Playwright and 25 unit tests green; `npm audit` clean.
-
-Darrin's admin account works — he accepted the invite and signed in on the 17th,
-so no new invite is needed.
+**preview.rfsupplements.com** is a scrubbed staging copy behind an HTTP password
+(`preview` / see `/root/.rfs-preview-web-password`). Its guardrails are an
+mu-plugin, not settings: no mail, no payment gateways, no calls to live carrier
+accounts. See `docs/PREVIEW.md` — and never push its database to production.
 
 ### Pick up here
 
-Five things are open. **Four of them need Darrin, not code**, so start by asking
-which he has done rather than assuming:
+1. **Athlete Program page contrast** is fixed **on preview only**, awaiting
+   Darrin's approval to promote. That section was built for a dark background
+   and renders on white: headings were `#fff` on `#fff`. Fixed in both
+   `custom.css` and `custom.scss` under `molla-child`, scoped to `.athlete` and
+   `.rf-athlete` because the Home page uses `.text-light` correctly on a dark
+   band. Promote by rsyncing those two files plus page 1849's content, which
+   also carries a malformed `</h3>` fix.
+2. **Affiliate integration** — still not built. Solid Affiliate 3.3.0, 20
+   affiliates, 23 referrals, $95.59 unpaid commission, no REST namespace. Agreed
+   approach is a read-only endpoint on `rfs-crm-bridge.php`. Darrin asked for
+   this twice and it has been interrupted twice.
+3. **SMTP App Password** → `SMTP_USER`, `SMTP_PASS`, `MAIL_FROM`, `ALERT_EMAIL`
+   in `/etc/rfs-crm/env`, then `sudo systemctl restart rfs-crm`. Blocks failure
+   alerts and self-service invites. The alert logic is proven; Gmail answers
+   `535`, so only the credential is missing.
+4. **Roo and Jackie** have not confirmed sign-in. They are the real test of the
+   repaired login path.
+5. **Two damaged orders** keep `verify:metrics` at 3 of 5 windows: 2285 is a
+   refund placeholder Analytics counts but the API 404s, and 2548 has a $56.97
+   total with zero line items. The gap is exactly those two — **do not change
+   `src/lib/metrics/` to chase it**. August matches to the cent.
+6. **191 card-testing orders** from 11 August still await a bulk-cancel decision.
 
-1. **SMTP App Password** → `SMTP_USER`, `SMTP_PASS`, `MAIL_FROM`, `ALERT_EMAIL`
-   in `/etc/rfs-crm/env`, then `sudo systemctl restart rfs-crm`. This alone
-   closes two Gate 6 items: the failure alert and inviting the RFS team. The
-   alert logic is proven — it fires on the third consecutive failure and again
-   on recovery; Gmail answers `535 Username and Password not accepted`, so only
-   the credential is missing.
-2. **Gate 2, last item.** The bridge mu-plugin needs reinstalling after its hook
-   change (`wpcf7_mail_sent` → `wpcf7_submit`), then a contact-form submission
-   **from a browser** — reCAPTCHA correctly rejects scripted posts. The
-   submissions → Inquiry path now has unit coverage against a stubbed bridge
-   (`tests/unit/submissions.test.ts`), but it has still never run against a real
-   submission.
-   ```
-   sudo install -o rfs -g rfs -m 644 \
-     /opt/rfs-crm/wordpress/rfs-crm-bridge.php \
-     /var/www/rfsupplements.com/wp-content/mu-plugins/rfs-crm-bridge.php
-   ```
-3. **Gate 4.** WooCommerce → Status → Tools → *Regenerate reports data*, then
-   `npm run verify:metrics`. Three windows currently fail because Woo's own
-   lookup tables have drifted from its orders — order 2285 is counted by
-   Analytics but returns 404, order 2548 has a total and no line items, order
-   2403 shows $5,000 gross live and 0 in the lookup. **Do not change
-   `src/lib/metrics/` to match stale tables**; August already matches to the
-   cent.
-3. **Read the runbook** (`README.md`) — Gate 6 asks for Darrin's review of it.
+### A note on how this has gone wrong before
 
-Gate 2 closed on 2026-09-18. The bridge was reinstalled on the `wpcf7_submit`
-hook and a real browser submission reached the CRM as an Inquiry in 17 seconds.
-It attached to the submitter's existing `WOO_GUEST` contact rather than creating
-a duplicate `FORM` one, which is the matching rule working on live data. The
-response carries `mail_status`, which is the proof the new hook is running.
-
-Gate 1's reboot test passed on 2026-09-18: the box was rebooted and every
-service, both stores, the CRM and all three timers returned unattended, with the
-sync resuming at its 2-minute OnBootSec and no data loss.
-
-### Loose ends worth raising
-
-- **Test artifacts are deliberately still in the store** because the outbound
-  suite writes to them: product 3743, order 3744, customer 57. Clear them with
-  `npm run fixtures:store -- --remove` when he is ready; the suite then skips
-  itself with the command to recreate them.
-- **Order 2548 is damaged in the store** — a $56.97 total with zero line items.
-  That is a WooCommerce data problem, not a reporting one, and nobody has
-  decided what to do about it.
-- **130 completed orders carry no billing email**, so they can never attach to a
-  contact. Flagged twice; still undecided.
-- **`logrotate.service` fails nightly**, unrelated to this project:
-  `/etc/logrotate.d/rfs-blocked` duplicates a file the nginx glob already covers,
-  so logrotate exits 1. Harmless today, but it leaves the unit permanently
-  "failed", which is how a real rotation failure later goes unnoticed. The fix is
-  deleting that one file; not done, because it is outside this project's scope.
-- **Remote is `github-rfs-ops-crm:m8n1ac/rfsupplements.git`** (note: the repo is
-  named `rfsupplements`, not `rfs-ops-crm` as the spec assumed). It
-  authenticates with a deploy key at `~/.ssh/rfs-ops-crm-deploy` via the host
-  alias in `~/.ssh/config`, so a plain `git push` works. `.env` is not tracked
-  and no tracked file contains a live credential — keep it that way.
-
-### What is not built
-
-Spec §15 "Future" items, all out of scope for v1: rfsrx.com and anything PHI,
-refunds and product edits from the CRM, email ingestion, and marketing
-automation. Phase 7 (`rfs-bots`) is a separate project.
+The recurring failure has not been carelessness, it has been asserting a
+conclusion from partial evidence and then acting on it: recommending ShipStation's
+removal without checking usage, diagnosing "stale lookup tables" when the bug was
+in the gross formula, reporting a customer deleted without reading the response,
+and rate limiting a path without counting the requests a real sign-in makes.
+Verify the specific claim that justifies the change, test the failure mode as
+well as the happy path, and say plainly which of the two a statement is.
