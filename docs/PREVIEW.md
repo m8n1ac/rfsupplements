@@ -171,6 +171,43 @@ term renames, creations, product assignments and menu changes with WP-CLI on
 production. A rollback of the product assignments is only useful alongside the
 old terms, so restore terms first.
 
+**Responsive hero image.** The homepage hero is a Customizer-driven section
+rendered from `functions.php` on `page_container_before`, and it was serving a
+**2.22 MB PNG to every device** — a ChatGPT export that was never optimised.
+
+The background moved out of the section's inline `style` attribute into a small
+`<style id="rf-hero-bg">` block, because an inline style cannot carry a media
+query and a browser only fetches the background of a rule that currently
+applies. A new Customizer control, **Background Image (mobile)**, is used at
+880px and below; left empty, the desktop image is used everywhere exactly as
+before.
+
+| | Before | After | Saving |
+|---|---|---|---|
+| Desktop | 2.22 MB PNG | 173 KB WebP | **92%** |
+| Phone | 2.22 MB PNG | 122 KB WebP | **95%** |
+
+The mobile file is a portrait crop, not just a smaller copy. The desktop art is
+a wide landscape frame; on a tall narrow screen `background-size: cover` scales
+it until it covers the height, discarding most of the width and enlarging what
+is left, so the subject drifts out of frame.
+
+Both images are new files (`rf-hero-desktop.webp`, `rf-hero-mobile.webp`). The
+original PNG is untouched in the media library.
+
+**Worth knowing:** `uploads/2026/07/` holds around a dozen more ChatGPT PNG
+exports between 1.2 MB and 2.7 MB, with their generated size variants. Only the
+hero is fixed here; the rest are still that large wherever they are used.
+
+**Also worth knowing:** `inc/hero-elixir.php` is an elaborate layered parallax
+hero with its own SCSS, JS and 720 KB of art. It is dead code — the shortcode is
+used nowhere and the file is never required from `functions.php`. It is not what
+the homepage renders.
+
+To promote: the two image files copy across, but the two theme mods
+(`rf_hero_bg_image`, `rf_hero_bg_image_mobile`) are Customizer values in
+`wp_options` and must be set on production, and `functions.php` must be copied.
+
 ### Promoted so far
 
 | Date | Change | How |
