@@ -153,7 +153,7 @@ unchanged.
 | 3657 `col-3` | `_menu_item_menuback` | `…/2025/11/menu-bg-img.webp` | *(deleted)* |
 | 3657 `col-3` | the menu item itself | present | deleted |
 
-**Shop Products flyout — padding evened up.** Removing the banner exposed three
+**Shop Products flyout — padding evened up.** Removing the banner exposed two
 things the image had been hiding.
 
 *Height.* The panel was pinned to `height: 350px` because that was the banner's
@@ -164,17 +164,13 @@ links `0.3rem 1.5rem` — so text sat 2.5rem from the sides and 2.3rem from the
 top. Each edge is now one contribution and comes to 1.5rem: vertical from the
 panel (1.2rem) plus the link (0.3rem), horizontal from the column (1.5rem).
 
-*Width.* This was the left-to-right unevenness, and it was not a padding problem
-at all. The panel carried an inline width from `_menu_item_megamenu_width`,
-sized back when there were three columns, while `.menu-col-2` pins each column
-to half of it. The padding either side was equal, but the text stopped well
-short of the right edge, so the panel read as lopsided. Clearing the meta drops
-the inline style, and with the panel and its columns sizing to their content the
-surplus has nowhere to collect.
-
-| Menu item | Meta | Was | Now |
-|---|---|---|---|
-| 1380 | `_menu_item_megamenu_width` | `694` | *(empty — no inline width)* |
+**Do not remove the panel's width to make it hug its content.** It was tried and
+reverted. `.menu .megamenu > ul` is `position: absolute` with **both** `left: 0`
+and `right: 0`, so the inline width from `_menu_item_megamenu_width` is the only
+thing holding the panel in. Take it away and the white panel stretches the full
+width of the page. The two columns are `flex: 0 0 50%` of that width, so if the
+links look like they leave too much space on the right, the fix is a smaller
+width value in the menu item's meta — not `width: auto`.
 
 In `molla-child`'s `custom.css` and `custom.scss`, scoped to `.megamenu` so
 other dropdowns keep their behaviour.
