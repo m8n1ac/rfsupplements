@@ -136,52 +136,6 @@ count are unchanged, and only then `wp post update`.
 
 ### Waiting on approval
 
-**Shop Products flyout — banner image removed.** The picture on the right of the
-mega menu was not a theme setting or a CSS rule: it was an inline `background`
-style on menu item **3657** (`col-3`), an otherwise empty third column that
-existed only to hold it, fed by `_menu_item_menuback`.
-
-Removing just the image would have left a blank third of the flyout, so the
-column went too and the menu reflowed to two. All seven product links are
-unchanged.
-
-| Menu item | Meta | Was | Now |
-|---|---|---|---|
-| 1380 Shop Products | `_menu_item_classes` | `mmenu-with-banner` | *(empty)* |
-| 1380 | `_menu_item_megamenu_col` | `3` | `2` |
-| 1380 | `_menu_item_megamenu_width` | `694` | `463` |
-| 3657 `col-3` | `_menu_item_menuback` | `…/2025/11/menu-bg-img.webp` | *(deleted)* |
-| 3657 `col-3` | the menu item itself | present | deleted |
-
-**Shop Products flyout — padding evened up.** Removing the banner exposed two
-things the image had been hiding.
-
-*Height.* The panel was pinned to `height: 350px` because that was the banner's
-height, leaving roughly 165px of dead space under the links once it was gone.
-
-*Padding.* It came from three places at once — panel `0`, columns `2rem 1rem`,
-links `0.3rem 1.5rem` — so text sat 2.5rem from the sides and 2.3rem from the
-top. Each edge is now one contribution and comes to 1.5rem: vertical from the
-panel (1.2rem) plus the link (0.3rem), horizontal from the column (1.5rem).
-
-**Do not remove the panel's width to make it hug its content.** It was tried and
-reverted. `.menu .megamenu > ul` is `position: absolute` with **both** `left: 0`
-and `right: 0`, so the inline width from `_menu_item_megamenu_width` is the only
-thing holding the panel in. Take it away and the white panel stretches the full
-width of the page. The two columns are `flex: 0 0 50%` of that width, so if the
-links look like they leave too much space on the right, the fix is a smaller
-width value in the menu item's meta — not `width: auto`.
-
-In `molla-child`'s `custom.css` and `custom.scss`, scoped to `.megamenu` so
-other dropdowns keep their behaviour.
-
-To promote, repeat those five menu changes on production with `wp post meta` —
-menu structure lives in `wp_posts`/`wp_postmeta` and does not rsync — and copy
-the two theme files as usual. To roll back on
-preview, restore the four meta values and recreate `col-3` as a `nolink`
-`grid_col` child of 1380. The image itself (attachment 1821) is untouched in the
-media library either way.
-
 **Product categories restructured.** Twelve categories became eleven, but the
 shape changed more than the count: merchandising flags and single-product
 categories are gone, and Merch has structure for the first time.
@@ -221,6 +175,7 @@ old terms, so restore terms first.
 
 | Date | Change | How |
 |---|---|---|
+| 2026-09-19 | Shop Products flyout: banner image, the empty third column it lived in, the 350px height and the uneven padding | five `wp post meta` / `wp post delete` commands, plus the two theme files |
 | 2026-09-19 | Athlete Program contrast: headings and body copy were built for a dark background and rendered on white at 1:1 and 1.6:1 | `custom.css` + `custom.scss` copied; page 1849's malformed `</h3>` patched in place |
 
 ## Refreshing the preview from production
