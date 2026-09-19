@@ -134,6 +134,31 @@ diff --strip-trailing-cr prod.html preview.html     # the actual difference
 Read and write in **binary** mode, assert the length and the carriage-return
 count are unchanged, and only then `wp post update`.
 
+### Waiting on approval
+
+**Shop Products flyout — banner image removed.** The picture on the right of the
+mega menu was not a theme setting or a CSS rule: it was an inline `background`
+style on menu item **3657** (`col-3`), an otherwise empty third column that
+existed only to hold it, fed by `_menu_item_menuback`.
+
+Removing just the image would have left a blank third of the flyout, so the
+column went too and the menu reflowed to two. All seven product links are
+unchanged.
+
+| Menu item | Meta | Was | Now |
+|---|---|---|---|
+| 1380 Shop Products | `_menu_item_classes` | `mmenu-with-banner` | *(empty)* |
+| 1380 | `_menu_item_megamenu_col` | `3` | `2` |
+| 1380 | `_menu_item_megamenu_width` | `694` | `463` |
+| 3657 `col-3` | `_menu_item_menuback` | `…/2025/11/menu-bg-img.webp` | *(deleted)* |
+| 3657 `col-3` | the menu item itself | present | deleted |
+
+To promote, repeat those five changes on production with `wp post meta` — menu
+structure lives in `wp_posts`/`wp_postmeta` and does not rsync. To roll back on
+preview, restore the four meta values and recreate `col-3` as a `nolink`
+`grid_col` child of 1380. The image itself (attachment 1821) is untouched in the
+media library either way.
+
 ### Promoted so far
 
 | Date | Change | How |
