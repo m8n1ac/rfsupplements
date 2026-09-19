@@ -153,8 +153,24 @@ unchanged.
 | 3657 `col-3` | `_menu_item_menuback` | `…/2025/11/menu-bg-img.webp` | *(deleted)* |
 | 3657 `col-3` | the menu item itself | present | deleted |
 
-To promote, repeat those five changes on production with `wp post meta` — menu
-structure lives in `wp_posts`/`wp_postmeta` and does not rsync. To roll back on
+**Shop Products flyout — padding evened up.** Removing the banner exposed two
+things the image had been hiding. The panel was pinned to `height: 350px`
+(`.menu.lazy-menu .sub-menu`) because that was the banner's height, leaving
+roughly 165px of dead space under the links once it was gone. And the padding
+was assembled from three different places — panel `0`, columns `2rem 1rem`,
+links `0.3rem 1.5rem` — so text sat 2.5rem from the side and 2.3rem from the
+top.
+
+Each edge is now one contribution rather than three, giving a uniform 1.5rem:
+vertical from the panel (1.2rem) plus the link (0.3rem), horizontal from the
+column (1.5rem). The columns keep horizontal padding instead of taking a
+`column-gap`, because `.menu-col-2` sets `flex: 0 0 50%` and a gap would
+overflow the panel. In `molla-child`'s `custom.css` and `custom.scss`, scoped to
+`.megamenu` so other dropdowns keep their height.
+
+To promote, repeat those five menu changes on production with `wp post meta` —
+menu structure lives in `wp_posts`/`wp_postmeta` and does not rsync — and copy
+the two theme files as usual. To roll back on
 preview, restore the four meta values and recreate `col-3` as a `nolink`
 `grid_col` child of 1380. The image itself (attachment 1821) is untouched in the
 media library either way.
