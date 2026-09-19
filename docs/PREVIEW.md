@@ -153,20 +153,31 @@ unchanged.
 | 3657 `col-3` | `_menu_item_menuback` | `…/2025/11/menu-bg-img.webp` | *(deleted)* |
 | 3657 `col-3` | the menu item itself | present | deleted |
 
-**Shop Products flyout — padding evened up.** Removing the banner exposed two
-things the image had been hiding. The panel was pinned to `height: 350px`
-(`.menu.lazy-menu .sub-menu`) because that was the banner's height, leaving
-roughly 165px of dead space under the links once it was gone. And the padding
-was assembled from three different places — panel `0`, columns `2rem 1rem`,
-links `0.3rem 1.5rem` — so text sat 2.5rem from the side and 2.3rem from the
-top.
+**Shop Products flyout — padding evened up.** Removing the banner exposed three
+things the image had been hiding.
 
-Each edge is now one contribution rather than three, giving a uniform 1.5rem:
-vertical from the panel (1.2rem) plus the link (0.3rem), horizontal from the
-column (1.5rem). The columns keep horizontal padding instead of taking a
-`column-gap`, because `.menu-col-2` sets `flex: 0 0 50%` and a gap would
-overflow the panel. In `molla-child`'s `custom.css` and `custom.scss`, scoped to
-`.megamenu` so other dropdowns keep their height.
+*Height.* The panel was pinned to `height: 350px` because that was the banner's
+height, leaving roughly 165px of dead space under the links once it was gone.
+
+*Padding.* It came from three places at once — panel `0`, columns `2rem 1rem`,
+links `0.3rem 1.5rem` — so text sat 2.5rem from the sides and 2.3rem from the
+top. Each edge is now one contribution and comes to 1.5rem: vertical from the
+panel (1.2rem) plus the link (0.3rem), horizontal from the column (1.5rem).
+
+*Width.* This was the left-to-right unevenness, and it was not a padding problem
+at all. The panel carried an inline width from `_menu_item_megamenu_width`,
+sized back when there were three columns, while `.menu-col-2` pins each column
+to half of it. The padding either side was equal, but the text stopped well
+short of the right edge, so the panel read as lopsided. Clearing the meta drops
+the inline style, and with the panel and its columns sizing to their content the
+surplus has nowhere to collect.
+
+| Menu item | Meta | Was | Now |
+|---|---|---|---|
+| 1380 | `_menu_item_megamenu_width` | `694` | *(empty — no inline width)* |
+
+In `molla-child`'s `custom.css` and `custom.scss`, scoped to `.megamenu` so
+other dropdowns keep their behaviour.
 
 To promote, repeat those five menu changes on production with `wp post meta` —
 menu structure lives in `wp_posts`/`wp_postmeta` and does not rsync — and copy
