@@ -73,6 +73,9 @@ export default async function ContactDetailPage({ params }: PageProps<"/contacts
         orderBy: [{ doneAt: "asc" }, { dueAt: "asc" }],
       },
       activities: { orderBy: { occurredAt: "desc" }, take: 50 },
+      affiliate: {
+        select: { id: true, status: true, commissionRate: true, unpaidCommission: true },
+      },
     },
   });
 
@@ -91,6 +94,18 @@ export default async function ContactDetailPage({ params }: PageProps<"/contacts
       <PageHeader title={fullName(contact)} description={contact.email}>
         <Badge variant="secondary">{contact.source.replace("WOO_", "").toLowerCase()}</Badge>
         {contact.deletedInWoo ? <Badge variant="destructive">deleted in Woo</Badge> : null}
+        {/* A contact who is also an affiliate is a different relationship: they
+            are owed money as well as having spent it. */}
+        {contact.affiliate ? (
+          <Badge asChild variant="outline">
+            <Link href={`/affiliates/${contact.affiliate.id}`}>
+              affiliate · {Number(contact.affiliate.commissionRate).toFixed(0)}%
+              {Number(contact.affiliate.unpaidCommission) > 0
+                ? ` · ${formatMoney(contact.affiliate.unpaidCommission)} owed`
+                : ""}
+            </Link>
+          </Badge>
+        ) : null}
       </PageHeader>
 
       <div className="grid gap-6 lg:grid-cols-3">

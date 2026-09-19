@@ -39,7 +39,22 @@ describe("cursorParams", () => {
 
 describe("sync configuration", () => {
   it("runs resources in the order the spec requires", () => {
-    expect(RESOURCES).toEqual(["products", "customers", "orders", "refunds", "submissions"]);
+    expect(RESOURCES).toEqual([
+      "products",
+      "customers",
+      "orders",
+      "refunds",
+      "submissions",
+      "affiliates",
+      "referrals",
+    ]);
+  });
+
+  it("syncs affiliates before referrals", () => {
+    // A referral whose affiliate is not in the database yet is skipped rather
+    // than invented, so the order is a correctness requirement and not a
+    // preference. Reversing it silently drops referrals on a first run.
+    expect(RESOURCES.indexOf("affiliates")).toBeLessThan(RESOURCES.indexOf("referrals"));
   });
 
   it("promotes only the contact and athlete-program forms to inquiries", () => {

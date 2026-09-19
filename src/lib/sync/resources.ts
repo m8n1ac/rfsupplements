@@ -1,6 +1,8 @@
 import { prisma } from "@/lib/db";
 import { fetchPage, paginate, PER_PAGE } from "@/lib/woo/client";
 import {
+  bridgeAffiliate,
+  bridgeReferral,
   bridgeSubmission,
   wooCustomer,
   wooOrder,
@@ -364,4 +366,188 @@ async function contactForSubmission(
     },
   });
   return created.id;
+}
+
+// ---------------------------------------------------------------------------
+// Affiliate programme
+//
+// Solid Affiliate stays the only writer. This mirrors its two tables so an
+// affiliate can be read next to the contact and the orders they produced.
+// Commission is never recalculated here — the figures are carried across as
+// Solid Affiliate computed them.
+// ---------------------------------------------------------------------------
+
+export async function syncAffiliates(since: Date | null): Promise<SyncResult> {
+  const counts = { ...NEWLY_SEEN };
+
+  for await (const page of paginate("/rfs-crm/v1/affiliates", bridgeAffiliate, {
+    ...(since ? { modified_after: since.toISOString().replace(/\.\d{3}Z$/, "") } : {}),
+  })) {
+    counts.fetched += page.length;
+
+    for (const affiliate of page) {
+      // An affiliate is a person the store already knows: match on the WP user's
+      // email, which is how they signed up. paymentEmail is where the money goes
+      // and is often a different address, so it is never used to match.
+      const email = affiliate.email ? normalizeEmail(affiliate.email) : null;
+      const contact = email ? await prisma.contact.findUnique({ where: { email } }) : null;
+
+      await prisma.affiliate.upsert({
+        where: { wooId: affiliate.id },
+        create: {
+          wooId: affiliate.id,
+          wpUserId: affiliate.user_id || null,
+          contactId: contact?.id ?? null,
+          email: email ?? "",
+          paymentEmail: affiliate.payment_email || null,
+          firstName: affiliate.first_name || null,
+          lastName: affiliate.last_name || null,
+          status: affiliate.status,
+          commissionType: affiliate.commission_type,
+          commissionRate: affiliate.commission_rate,
+          createdAtWoo: affiliate.created_at_gmt,
+          modifiedAtWoo: affiliate.updated_at_gmt,
+          syncedAt: new Date(),
+          raw: affiliate as object,
+        },
+        update: {
+          wpUserId: affiliate.user_id || null,
+          contactId: contact?.id ?? null,
+          email: email ?? "",
+          paymentEmail: affiliate.payment_email || null,
+          firstName: affiliate.first_name || null,
+          lastName: affiliate.last_name || null,
+          status: affiliate.status,
+          commissionType: affiliate.commission_type,
+          commissionRate: affiliate.commission_rate,
+          modifiedAtWoo: affiliate.updated_at_gmt,
+          syncedAt: new Date(),
+          raw: affiliate as object,
+        },
+      });
+
+      counts.upserted += 1;
+    }
+
+    const cursor = maxModified(page.map((affiliate) => affiliate.updated_at_gmt));
+    if (cursor) {
+      await advanceCursor("affiliates", cursor);
+    }
+  }
+
+  // Solid Affiliate has no delete: affiliates are moved to a rejected status.
+  return { counts, seenWooIds: [] };
+}
+
+export async function syncReferrals(since: Date | null): Promise<SyncResult> {
+  const counts = { ...NEWLY_SEEN };
+  const touched = new Set<string>();
+
+  for await (const page of paginate("/rfs-crm/v1/referrals", bridgeReferral, {
+    ...(since ? { modified_after: since.toISOString().replace(/\.\d{3}Z$/, "") } : {}),
+  })) {
+    counts.fetched += page.length;
+
+    for (const referral of page) {
+      const affiliate = await prisma.affiliate.findUnique({
+        where: { wooId: referral.affiliate_id },
+        select: { id: true },
+      });
+
+      // A referral whose affiliate has not been synced yet is skipped rather
+      // than invented. The affiliates resource runs first, and a full sync
+      // picks up anything that raced.
+      if (!affiliate) continue;
+
+      const fields = {
+        affiliateId: affiliate.id,
+        orderWooId: referral.order_id,
+        orderAmount: referral.order_amount,
+        commissionAmount: referral.commission_amount,
+        status: referral.status,
+        referralType: referral.referral_type || null,
+        referralSource: referral.referral_source || null,
+        description: referral.description || null,
+        refundedAtWoo: referral.refunded_at_gmt,
+        modifiedAtWoo: referral.updated_at_gmt,
+        syncedAt: new Date(),
+      };
+
+      await prisma.referral.upsert({
+        where: { wooId: referral.id },
+        create: { wooId: referral.id, createdAtWoo: referral.created_at_gmt, ...fields },
+        update: fields,
+      });
+
+      touched.add(affiliate.id);
+      counts.upserted += 1;
+    }
+
+    const cursor = maxModified(page.map((referral) => referral.updated_at_gmt));
+    if (cursor) {
+      await advanceCursor("referrals", cursor);
+    }
+  }
+
+  await recomputeAffiliateStats(touched);
+  return { counts, seenWooIds: [] };
+}
+
+// The same shape as recomputeContactStats: the list screen reads one row per
+// affiliate instead of aggregating their referrals on every render.
+export async function recomputeAffiliateStats(affiliateIds: Iterable<string>): Promise<void> {
+  for (const affiliateId of affiliateIds) {
+    const referrals = await prisma.referral.findMany({
+      where: { affiliateId },
+      select: { status: true, commissionAmount: true, orderAmount: true, createdAtWoo: true },
+    });
+
+    // Summed as integer ten-thousandths rather than as floats. These figures
+    // carry four decimals because a percentage commission lands on quarter-cents,
+    // and adding twenty-odd of them as JS numbers is how a total drifts a cent
+    // away from the plugin it is supposed to mirror.
+    const tenThousandths = (value: { toString(): string }): bigint => {
+      const [whole, frac = ""] = value.toString().split(".");
+      return BigInt(whole + frac.padEnd(4, "0").slice(0, 4));
+    };
+    const toDecimal = (total: bigint): string => {
+      const negative = total < BigInt(0);
+      const digits = (negative ? -total : total).toString().padStart(5, "0");
+      const result = `${digits.slice(0, -4)}.${digits.slice(-4)}`;
+      return negative ? `-${result}` : result;
+    };
+
+    const sum = (status: string) =>
+      toDecimal(
+        referrals
+          .filter((referral) => referral.status === status)
+          .reduce((total, referral) => total + tenThousandths(referral.commissionAmount), BigInt(0)),
+      );
+
+    // Rejected referrals are excluded from revenue: the sale is not credited to
+    // the affiliate, so counting it would overstate what the programme produced.
+    const revenue = toDecimal(
+      referrals
+        .filter((referral) => referral.status !== "rejected")
+        .reduce((total, referral) => total + tenThousandths(referral.orderAmount), BigInt(0)),
+    );
+
+    const dates = referrals
+      .map((referral) => referral.createdAtWoo)
+      .filter((date): date is Date => date !== null);
+
+    await prisma.affiliate.update({
+      where: { id: affiliateId },
+      data: {
+        referralCount: referrals.length,
+        paidCommission: sum("paid"),
+        unpaidCommission: sum("unpaid"),
+        rejectedCommission: sum("rejected"),
+        referredRevenue: revenue,
+        lastReferralAt: dates.length
+          ? new Date(Math.max(...dates.map((date) => date.getTime())))
+          : null,
+      },
+    });
+  }
 }

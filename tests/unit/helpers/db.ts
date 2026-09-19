@@ -7,6 +7,8 @@ export async function resetDatabase(): Promise<void> {
     throw new Error("Refusing to reset: DATABASE_URL is not the test database");
   }
 
+  await prisma.referral.deleteMany();
+  await prisma.affiliate.deleteMany();
   await prisma.activity.deleteMany();
   await prisma.orderItem.deleteMany();
   await prisma.refund.deleteMany();

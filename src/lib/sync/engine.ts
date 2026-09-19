@@ -11,14 +11,20 @@ export type SyncResource =
   | "customers"
   | "orders"
   | "refunds"
-  | "submissions";
+  | "submissions"
+  | "affiliates"
+  | "referrals";
 
+// Order matters: affiliates before referrals, because a referral is skipped if
+// its affiliate is not in the database yet.
 export const RESOURCES: SyncResource[] = [
   "products",
   "customers",
   "orders",
   "refunds",
   "submissions",
+  "affiliates",
+  "referrals",
 ];
 
 // Full mode re-reads everything, so it starts from a null cursor (spec §6.1).

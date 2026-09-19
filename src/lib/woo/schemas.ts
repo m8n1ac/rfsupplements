@@ -188,9 +188,47 @@ export const bridgeSubmission = z
   })
   .loose();
 
+// Also from the bridge: Solid Affiliate's tables, which publish no REST API of
+// their own. Money crosses as a decimal string for the same reason Woo's does.
+export const bridgeAffiliate = z
+  .object({
+    id: z.number().int(),
+    user_id: z.number().int(),
+    email: z.string(),
+    payment_email: z.string(),
+    first_name: z.string(),
+    last_name: z.string(),
+    status: z.string(),
+    commission_type: z.string(),
+    commission_rate: money,
+    created_at_gmt: wooDateNullable,
+    updated_at_gmt: wooDateNullable,
+  })
+  .loose();
+
+export const bridgeReferral = z
+  .object({
+    id: z.number().int(),
+    affiliate_id: z.number().int(),
+    // Null when Solid Affiliate recorded no order against the referral.
+    order_id: z.number().int().nullable(),
+    order_amount: money,
+    commission_amount: money,
+    status: z.string(),
+    referral_type: z.string(),
+    referral_source: z.string(),
+    description: z.string(),
+    refunded_at_gmt: wooDateNullable,
+    created_at_gmt: wooDateNullable,
+    updated_at_gmt: wooDateNullable,
+  })
+  .loose();
+
 export type WooCustomer = z.infer<typeof wooCustomer>;
 export type WooProduct = z.infer<typeof wooProduct>;
 export type WooVariation = z.infer<typeof wooVariation>;
 export type WooOrder = z.infer<typeof wooOrder>;
 export type WooRefund = z.infer<typeof wooRefund>;
 export type BridgeSubmission = z.infer<typeof bridgeSubmission>;
+export type BridgeAffiliate = z.infer<typeof bridgeAffiliate>;
+export type BridgeReferral = z.infer<typeof bridgeReferral>;

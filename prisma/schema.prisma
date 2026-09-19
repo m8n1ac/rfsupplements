@@ -134,6 +134,7 @@ model Contact {
   updatedAt DateTime @updatedAt
 
   owner      User?        @relation("ContactOwner", fields: [ownerId], references: [id], onDelete: SetNull)
+  affiliate  Affiliate?
   tags       ContactTag[]
   orders     Order[]
   inquiries  Inquiry[]
@@ -429,4 +430,86 @@ model AuditLog {
   @@index([userId])
   @@index([entity, entityId])
   @@index([at])
+}
+
+// ---------------------------------------------------------------------------
+// Affiliate programme
+//
+// Solid Affiliate owns this data and remains the only writer. The CRM mirrors
+// it read-only so that an affiliate can be seen next to the contact, the orders
+// and the athlete application that produced them — and so "what do we owe" can
+// be answered without opening wp-admin. Commission is never recalculated here;
+// the numbers are Solid Affiliate's, carried across as decimals.
+// ---------------------------------------------------------------------------
+
+model Affiliate {
+  id        String  @id @default(cuid())
+  wooId     Int     @unique
+  wpUserId  Int?
+  contactId String? @unique
+
+  email        String
+  paymentEmail String?
+  firstName    String?
+  lastName     String?
+
+  status         String
+  commissionType String
+  commissionRate Decimal @db.Decimal(8, 2)
+
+  // Denormalised from Referral the way Contact's order figures are, so the list
+  // screen does not aggregate 23 rows per affiliate on every render.
+  referralCount     Int     @default(0)
+  paidCommission    Decimal @default(0) @db.Decimal(14, 4)
+  unpaidCommission  Decimal @default(0) @db.Decimal(14, 4)
+  rejectedCommission Decimal @default(0) @db.Decimal(14, 4)
+  referredRevenue   Decimal @default(0) @db.Decimal(14, 4)
+  lastReferralAt    DateTime?
+
+  createdAtWoo  DateTime?
+  modifiedAtWoo DateTime?
+  syncedAt      DateTime?
+  raw           Json?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  contact   Contact?   @relation(fields: [contactId], references: [id], onDelete: SetNull)
+  referrals Referral[]
+
+  @@index([status])
+  @@index([email])
+}
+
+model Referral {
+  id          String @id @default(cuid())
+  wooId       Int    @unique
+  affiliateId String
+
+  // The Woo order id as Solid Affiliate recorded it. Deliberately not a foreign
+  // key to Order: a referral can point at an order the CRM has not synced, or
+  // at one that was deleted in Woo, and losing the referral in either case
+  // would be worse than holding an id that resolves to nothing.
+  orderWooId Int?
+
+  orderAmount      Decimal @db.Decimal(14, 4)
+  commissionAmount Decimal @db.Decimal(14, 4)
+  status           String
+  referralType     String?
+  referralSource   String?
+  description      String? @db.Text
+
+  refundedAtWoo DateTime?
+  createdAtWoo  DateTime?
+  modifiedAtWoo DateTime?
+  syncedAt      DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  affiliate Affiliate @relation(fields: [affiliateId], references: [id], onDelete: Cascade)
+
+  @@index([affiliateId])
+  @@index([status])
+  @@index([orderWooId])
 }

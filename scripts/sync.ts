@@ -22,6 +22,8 @@ import {
   syncOrders,
   syncProducts,
   syncRefunds,
+  syncAffiliates,
+  syncReferrals,
   syncSubmissions,
   type SyncResult,
 } from "../src/lib/sync/resources";
@@ -33,6 +35,8 @@ const RUNNERS: Record<SyncResource, (since: Date | null) => Promise<SyncResult>>
   orders: syncOrders,
   refunds: syncRefunds,
   submissions: syncSubmissions,
+  affiliates: syncAffiliates,
+  referrals: syncReferrals,
 };
 
 // Three consecutive failures for a resource sends one alert, and recovery sends

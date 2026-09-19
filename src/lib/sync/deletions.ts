@@ -47,7 +47,12 @@ export async function markDeletions(
       });
       return result.count;
     }
+    // The bridge inbox is append-only, and Solid Affiliate has no delete —
+    // affiliates and referrals move to a rejected status instead. Nothing to
+    // reconcile for any of the three.
     case "submissions":
+    case "affiliates":
+    case "referrals":
       return 0;
   }
 }
