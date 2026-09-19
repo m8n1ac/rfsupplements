@@ -136,7 +136,7 @@ export default async function AthletesPage({ searchParams }: PageProps<"/athlete
                   <TableRow key={inquiry.id}>
                     <TableCell>
                       <Link
-                        href={`/inquiries/${inquiry.id}`}
+                        href={`/athletes/${inquiry.id}`}
                         className="font-medium hover:underline"
                       >
                         {app.name ?? (inquiry.contact ? fullName(inquiry.contact) : "—")}
@@ -181,9 +181,8 @@ export default async function AthletesPage({ searchParams }: PageProps<"/athlete
       )}
 
       <p className="text-muted-foreground text-xs">
-        An application opens on the shared submission screen: same pipeline, notes and tasks as
-        every other form. It is listed here rather than under Inquiries so the two do not compete
-        for the same queue.
+        The Athlete Program and the affiliate programme are separate. An application is a
+        sponsorship request reviewed here; it creates nothing elsewhere.
       </p>
     </div>
   );

@@ -205,6 +205,18 @@ exposes no REST namespace, so the agreed approach is to extend
 `rfs-crm-bridge.php` with a read-only affiliate endpoint — the same pattern the
 forms bridge already uses. Not built yet.
 
+**Athlete Program and Affiliates are two different programmes.** Do not wire
+one into the other without asking. The athlete application (form 2039) emails
+`jackie@rfsupplements.com` and is reviewed by hand; it creates nothing and has
+no autoreply. Affiliates register separately through the Affiliate Portal page
+(`/affiliates`, shortcode `[solid_affiliate_portal]`) and Solid Affiliate sets
+their rate. The evidence they are not one pipeline: the page advertises tiers at
+25% / 15% / codes-only, while 19 of 20 live affiliates sit at a flat 20%
+`site_default` and one at 15%; affiliate `registration_notes` and
+`custom_registration_data` are empty on every row; and 15 of the 20 were created
+in a two-day cluster on 30–31 July 2026. The CRM shows an affiliate account on
+an athlete application as a **cross-reference only**.
+
 **Athlete Program.** Form 2039 on `/athlete-program/`. It was always captured —
 `INQUIRY_FORM_IDS` already listed 2039 — but applications landed in the general
 Inquiries queue. They now have their own screen at `/athletes`, still stored as

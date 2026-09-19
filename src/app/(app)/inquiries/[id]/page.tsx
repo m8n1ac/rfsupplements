@@ -50,21 +50,6 @@ export default async function InquiryDetailPage({ params }: PageProps<"/inquirie
   // raw field list instead of being read from it.
   const athlete = inquiry.formName === ATHLETE_FORM_NAME ? athleteApplication(payload) : null;
 
-  // An athlete application usually ends in an affiliate account, so the first
-  // question when reviewing one is whether this person already has it. Matched
-  // on the contact where there is one, otherwise on the email they typed.
-  const existingAffiliate = athlete
-    ? await prisma.affiliate.findFirst({
-        where: {
-          OR: [
-            ...(inquiry.contactId ? [{ contactId: inquiry.contactId }] : []),
-            ...(athlete.email ? [{ email: athlete.email.toLowerCase() }] : []),
-          ],
-        },
-        select: { id: true, status: true, commissionRate: true, unpaidCommission: true },
-      })
-    : null;
-
   return (
     <div className="grid gap-6">
       <PageHeader
@@ -84,7 +69,7 @@ export default async function InquiryDetailPage({ params }: PageProps<"/inquirie
                   Athlete Program — what this person is asking for.
                 </CardDescription>
               </CardHeader>
-              <CardContent className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+              <CardContent className="grid gap-4 sm:grid-cols-3">
                 <div className="grid gap-0.5">
                   <span className="text-muted-foreground text-xs tracking-wide uppercase">
                     Tier requested
@@ -98,21 +83,6 @@ export default async function InquiryDetailPage({ params }: PageProps<"/inquirie
                     Sport
                   </span>
                   <span className="text-sm">{athlete.sport ?? "—"}</span>
-                </div>
-                <div className="grid gap-0.5">
-                  <span className="text-muted-foreground text-xs tracking-wide uppercase">
-                    Affiliate account
-                  </span>
-                  <span className="text-sm">
-                    {existingAffiliate ? (
-                      <Link href={`/affiliates/${existingAffiliate.id}`} className="underline">
-                        {existingAffiliate.status} ·{" "}
-                        {Number(existingAffiliate.commissionRate).toFixed(0)}%
-                      </Link>
-                    ) : (
-                      <span className="text-muted-foreground">none yet</span>
-                    )}
-                  </span>
                 </div>
                 <div className="grid gap-0.5">
                   <span className="text-muted-foreground text-xs tracking-wide uppercase">
