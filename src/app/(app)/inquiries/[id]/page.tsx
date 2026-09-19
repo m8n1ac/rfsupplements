@@ -12,6 +12,7 @@ import { requireUser } from "@/lib/require-user";
 import { formatDateTime, fullName } from "@/lib/format";
 import { assignInquiry, setInquiryStatus } from "@/actions/inquiries";
 import { INQUIRY_STATUSES } from "@/lib/inquiry";
+import { ATHLETE_FORM_NAME, athleteApplication } from "@/lib/athlete";
 
 export const metadata: Metadata = { title: "Inquiry · RF Supplements Ops" };
 
@@ -44,6 +45,11 @@ export default async function InquiryDetailPage({ params }: PageProps<"/inquirie
 
   const payload = (inquiry.payload ?? {}) as Record<string, unknown>;
 
+  // An athlete application is an ordinary submission, but the tier, sport and
+  // handle are what someone actually decides on, so they are lifted out of the
+  // raw field list instead of being read from it.
+  const athlete = inquiry.formName === ATHLETE_FORM_NAME ? athleteApplication(payload) : null;
+
   return (
     <div className="grid gap-6">
       <PageHeader
@@ -55,6 +61,52 @@ export default async function InquiryDetailPage({ params }: PageProps<"/inquirie
 
       <div className="grid gap-6 lg:grid-cols-3">
         <div className="grid gap-6 lg:col-span-2">
+          {athlete ? (
+            <Card>
+              <CardHeader>
+                <CardTitle>Application</CardTitle>
+                <CardDescription>
+                  Athlete Program — what this person is asking for.
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="grid gap-4 sm:grid-cols-3">
+                <div className="grid gap-0.5">
+                  <span className="text-muted-foreground text-xs tracking-wide uppercase">
+                    Tier requested
+                  </span>
+                  <span className="text-sm">
+                    {athlete.tier ? <Badge variant="secondary">{athlete.tier}</Badge> : "—"}
+                  </span>
+                </div>
+                <div className="grid gap-0.5">
+                  <span className="text-muted-foreground text-xs tracking-wide uppercase">
+                    Sport
+                  </span>
+                  <span className="text-sm">{athlete.sport ?? "—"}</span>
+                </div>
+                <div className="grid gap-0.5">
+                  <span className="text-muted-foreground text-xs tracking-wide uppercase">
+                    Instagram
+                  </span>
+                  <span className="text-sm">
+                    {athlete.instagramUrl ? (
+                      <a
+                        href={athlete.instagramUrl}
+                        target="_blank"
+                        rel="noreferrer noopener"
+                        className="underline"
+                      >
+                        @{athlete.instagram}
+                      </a>
+                    ) : (
+                      "—"
+                    )}
+                  </span>
+                </div>
+              </CardContent>
+            </Card>
+          ) : null}
+
           <Card>
             <CardHeader>
               <CardTitle>Submission</CardTitle>

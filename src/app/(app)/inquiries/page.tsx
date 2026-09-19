@@ -12,12 +12,14 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Empty } from "@/components/crm/empty";
+import { FilterGroup } from "@/components/crm/filter-group";
 import { PageHeader } from "@/components/crm/page-header";
 import { prisma } from "@/lib/db";
 import { requireUser } from "@/lib/require-user";
 import { formatDate, formatRelative, fullName } from "@/lib/format";
 import { buildQuery, single, type Query } from "@/lib/search-params";
 import { INQUIRY_STATUSES } from "@/lib/inquiry";
+import { ATHLETE_FORM_NAME } from "@/lib/athlete";
 import type { Prisma } from "@/generated/prisma/client";
 
 export const metadata: Metadata = { title: "Inquiries · RF Supplements Ops" };
@@ -32,8 +34,10 @@ export default async function InquiriesPage({ searchParams }: PageProps<"/inquir
   const age = single(query, "age");
 
   const now = new Date();
+  // Athlete Program applications have their own section, so they are excluded
+  // here rather than appearing in two queues at once.
   const where: Prisma.InquiryWhereInput = {
-    ...(form ? { formName: form } : {}),
+    ...(form ? { formName: form } : { formName: { not: ATHLETE_FORM_NAME } }),
     ...(assignee === "unassigned"
       ? { assigneeId: null }
       : assignee
@@ -51,7 +55,11 @@ export default async function InquiriesPage({ searchParams }: PageProps<"/inquir
         assignee: { select: { name: true } },
       },
     }),
-    prisma.inquiry.findMany({ distinct: ["formName"], select: { formName: true } }),
+    prisma.inquiry.findMany({
+      where: { formName: { not: ATHLETE_FORM_NAME } },
+      distinct: ["formName"],
+      select: { formName: true },
+    }),
     prisma.user.findMany({ where: { active: true }, select: { id: true, name: true } }),
   ]);
 
@@ -74,6 +82,7 @@ export default async function InquiriesPage({ searchParams }: PageProps<"/inquir
             options={forms.map((row) => ({ value: row.formName, label: row.formName }))}
             query={query}
             param="form"
+            basePath="/inquiries"
           />
           <FilterGroup
             label="Assignee"
@@ -84,6 +93,7 @@ export default async function InquiriesPage({ searchParams }: PageProps<"/inquir
             ]}
             query={query}
             param="assignee"
+            basePath="/inquiries"
           />
           <FilterGroup
             label="Age"
@@ -95,6 +105,7 @@ export default async function InquiriesPage({ searchParams }: PageProps<"/inquir
             ]}
             query={query}
             param="age"
+            basePath="/inquiries"
           />
         </CardContent>
       </Card>
@@ -179,46 +190,6 @@ export default async function InquiriesPage({ searchParams }: PageProps<"/inquir
           })}
         </div>
       )}
-    </div>
-  );
-}
-
-function FilterGroup({
-  label,
-  current,
-  options,
-  query,
-  param,
-}: {
-  label: string;
-  current: string | undefined;
-  options: { value: string; label: string }[];
-  query: Query;
-  param: string;
-}) {
-  if (options.length === 0) return null;
-
-  return (
-    <div className="grid gap-1.5">
-      <span className="text-muted-foreground text-xs uppercase tracking-wide">{label}</span>
-      <div className="flex flex-wrap gap-1">
-        {options.map((option) => (
-          <Button
-            key={option.value}
-            asChild
-            size="sm"
-            variant={current === option.value ? "secondary" : "ghost"}
-          >
-            <Link
-              href={`/inquiries${buildQuery(query, {
-                [param]: current === option.value ? undefined : option.value,
-              })}`}
-            >
-              {option.label}
-            </Link>
-          </Button>
-        ))}
-      </div>
     </div>
   );
 }

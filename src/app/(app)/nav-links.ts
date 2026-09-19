@@ -6,6 +6,7 @@ export const NAV_LINKS = [
   { href: "/orders", label: "Orders", adminOnly: false },
   { href: "/contacts", label: "Contacts", adminOnly: false },
   { href: "/inquiries", label: "Inquiries", adminOnly: false },
+  { href: "/athletes", label: "Athlete Program", adminOnly: false },
   { href: "/products", label: "Products", adminOnly: false },
   { href: "/tasks", label: "Tasks", adminOnly: false },
   { href: "/settings/users", label: "Users", adminOnly: true },
