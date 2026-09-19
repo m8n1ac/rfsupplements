@@ -40,6 +40,12 @@ export default async function AffiliatesPage({ searchParams }: PageProps<"/affil
     }),
   ]);
 
+  // Every affiliate in this programme is "approved". A column repeating one word
+  // twenty times and a filter offering a single choice are both noise, so status
+  // is shown only once it distinguishes anything — which is also the moment it
+  // starts to matter.
+  const statusVaries = statuses.length > 1;
+
   return (
     <div className="grid gap-6">
       <PageHeader
@@ -58,18 +64,20 @@ export default async function AffiliatesPage({ searchParams }: PageProps<"/affil
         <StatCard label="Referred revenue" value={formatMoney(totals._sum.referredRevenue ?? 0)} />
       </div>
 
-      <Card>
-        <CardContent className="flex flex-wrap gap-4 pt-6">
-          <FilterGroup
-            label="Status"
-            current={status}
-            options={statuses.map((row) => ({ value: row.status, label: row.status }))}
-            query={query}
-            param="status"
-            basePath="/affiliates"
-          />
-        </CardContent>
-      </Card>
+      {statusVaries ? (
+        <Card>
+          <CardContent className="flex flex-wrap gap-4 pt-6">
+            <FilterGroup
+              label="Status"
+              current={status}
+              options={statuses.map((row) => ({ value: row.status, label: row.status }))}
+              query={query}
+              param="status"
+              basePath="/affiliates"
+            />
+          </CardContent>
+        </Card>
+      ) : null}
 
       {affiliates.length === 0 ? (
         <Empty>No affiliates match this filter.</Empty>
@@ -80,7 +88,7 @@ export default async function AffiliatesPage({ searchParams }: PageProps<"/affil
               <TableHeader>
                 <TableRow>
                   <TableHead>Affiliate</TableHead>
-                  <TableHead>Status</TableHead>
+                  {statusVaries ? <TableHead>Status</TableHead> : null}
                   <TableHead className="text-right">Rate</TableHead>
                   <TableHead className="text-right">Referrals</TableHead>
                   <TableHead className="text-right">Referred revenue</TableHead>
@@ -101,11 +109,13 @@ export default async function AffiliatesPage({ searchParams }: PageProps<"/affil
                       </Link>
                       <div className="text-muted-foreground text-xs">{affiliate.email}</div>
                     </TableCell>
-                    <TableCell>
-                      <Badge variant={affiliate.status === "approved" ? "secondary" : "outline"}>
-                        {affiliate.status}
-                      </Badge>
-                    </TableCell>
+                    {statusVaries ? (
+                      <TableCell>
+                        <Badge variant={affiliate.status === "approved" ? "secondary" : "outline"}>
+                          {affiliate.status}
+                        </Badge>
+                      </TableCell>
+                    ) : null}
                     <TableCell className="text-muted-foreground text-right">
                       {Number(affiliate.commissionRate).toFixed(0)}%
                     </TableCell>
