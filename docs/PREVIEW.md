@@ -54,6 +54,43 @@ Administrators keep their logins so the team and client can sign in.
 The CRM bridge (`rfs-crm-bridge.php`) is deliberately **not** copied, so the
 preview can never feed form submissions into the Ops CRM.
 
+Two things live *outside* the tables the scrub touches and were missed on the
+first pass. Both are part of the scrub now:
+
+- **`wp-content/uploads/wc-logs/`** — WooCommerce debug and webhook logs, 140
+  files, containing real order payloads. The database scrub does not reach
+  them because they are files. Delete them.
+- **`wp-content/uploads/woo-feed/`** — generated product feeds carrying
+  production URLs. A preview must not publish a live product feed. Delete them.
+
+## The URL replacement is two passes, not one
+
+`search-replace` unserialises PHP, so it finds `https://rfsupplements.com`
+wherever PHP put it. It does **not** decode JSON, and Elementor stores its
+widget data as JSON *inside* the serialised meta, with forward slashes escaped.
+Those rows read `https:\/\/rfsupplements.com` and the ordinary pass reports
+zero replacements while leaving live URLs in the page.
+
+Run both, second form quoted so the shell keeps the backslashes:
+
+```sh
+wp search-replace 'https://rfsupplements.com'   'https://preview.rfsupplements.com'   --all-tables --skip-columns=guid
+wp search-replace 'https:\/\/rfsupplements.com' 'https:\/\/preview.rfsupplements.com' --all-tables --skip-columns=guid
+```
+
+The second pass caught 58 rows the first declared clean, including a hero
+button whose `onclick` sent visitors to the production product page.
+
+Theme-generated CSS is a third place: `uploads/molla_css/dynamic_style*.css` is
+written to disk and holds the logo and background URLs. `sed` it directly.
+
+Afterwards `wp cache flush` and `wp elementor flush-css`, then confirm:
+
+```sh
+curl -su "preview:$(sudo cat /root/.rfs-preview-web-password)" \
+  https://preview.rfsupplements.com/ | grep -c 'https://rfsupplements\.com'   # want 0
+```
+
 ## Promoting changes to production
 
 **Never push the preview database to production.** The live store takes orders
@@ -82,7 +119,8 @@ store, cart and checkout still load.
 
 The preview drifts as production changes. To rebuild it, repeat the build:
 copy files (excluding `rfs-crm-bridge.php`), copy the database, run the scrub,
-search-replace the URLs, and re-deactivate the integrations. Keep
+delete `wc-logs/` and `woo-feed/`, search-replace the URLs in **both** forms,
+`sed` the theme CSS, and re-deactivate the integrations. Keep
 `wp-config.php` and `preview-guardrails.php` — they are preview-specific and
 must not be overwritten by the copy.
 
